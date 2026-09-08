@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCB Digibank - Giao dịch thành công</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0a0f14;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+        }
+
+        .phone-frame {
+            width: 393px;
+            height: 852px;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            /* Gradient: dark green-teal at top, transitioning to very dark at bottom */
+            background: linear-gradient(180deg,
+                    #143028 0%,
+                    #112a23 8%,
+                    #0e241e 15%,
+                    #0b1f19 25%,
+                    #091a15 40%,
+                    #071612 55%,
+                    #061411 70%,
+                    #05120f 85%,
+                    #04100d 100%);
+        }
+
+        /* ===== BOKEH / SPARKLE PARTICLES ===== */
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        /* Tiny scattered sparkles across the screen */
+        .particle:nth-child(1) {
+            width: 2px;
+            height: 2px;
+            background: rgba(180, 220, 160, 0.35);
+            top: 12%;
+            left: 8%;
+        }
+
+        .particle:nth-child(2) {
+            width: 1.5px;
+            height: 1.5px;
+            background: rgba(200, 233, 74, 0.3);
+            top: 18%;
+            left: 72%;
+        }
+
+        .particle:nth-child(3) {
+            width: 2px;
+            height: 2px;
+            background: rgba(78, 223, 138, 0.25);
+            top: 28%;
+            left: 45%;
+        }
+
+        .particle:nth-child(4) {
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+            top: 35%;
+            left: 15%;
+        }
+
+        .particle:nth-child(5) {
+            width: 1.5px;
+            height: 1.5px;
+            background: rgba(168, 217, 72, 0.3);
+            top: 42%;
+            left: 88%;
+        }
+
+        .particle:nth-child(6) {
+            width: 2px;
+            height: 2px;
+            background: rgba(78, 223, 138, 0.2);
+            top: 50%;
+            left: 5%;
+        }
+
+        .particle:nth-child(7) {
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            top: 55%;
+            left: 60%;
+        }
+
+        .particle:nth-child(8) {
+            width: 1.5px;
+            height: 1.5px;
+            background: rgba(200, 233, 74, 0.25);
+            top: 62%;
+            left: 30%;
+        }
+
+        /* Larger bokeh glows in the bottom area */
+        .particle:nth-child(9) {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(168, 217, 72, 0.12) 0%, transparent 70%);
+            top: 78%;
+            left: 5%;
+            filter: blur(8px);
+        }
+
+        .particle:nth-child(10) {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(78, 223, 138, 0.1) 0%, transparent 70%);
+            top: 82%;
+            left: 25%;
+            filter: blur(10px);
+        }
+
+        .particle:nth-child(11) {
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, rgba(200, 233, 74, 0.15) 0%, transparent 70%);
+            top: 85%;
+            left: 55%;
+            filter: blur(6px);
+        }
+
+        .particle:nth-child(12) {
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(circle, rgba(78, 223, 138, 0.08) 0%, transparent 70%);
+            top: 80%;
+            left: 70%;
+            filter: blur(12px);
+        }
+
+        .particle:nth-child(13) {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(200, 233, 74, 0.12) 0%, transparent 70%);
+            top: 88%;
+            left: 40%;
+            filter: blur(7px);
+        }
+
+        .particle:nth-child(14) {
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, rgba(168, 217, 72, 0.06) 0%, transparent 70%);
+            top: 75%;
+            left: 45%;
+            filter: blur(15px);
+        }
+
+        /* Yellow-green visible dots at bottom */
+        .particle:nth-child(15) {
+            width: 5px;
+            height: 5px;
+            background: rgba(200, 233, 74, 0.45);
+            top: 86%;
+            left: 15%;
+            filter: blur(2px);
+        }
+
+        .particle:nth-child(16) {
+            width: 4px;
+            height: 4px;
+            background: rgba(168, 217, 72, 0.4);
+            top: 89%;
+            left: 60%;
+            filter: blur(1.5px);
+        }
+
+        .particle:nth-child(17) {
+            width: 6px;
+            height: 6px;
+            background: rgba(200, 233, 74, 0.35);
+            top: 84%;
+            left: 75%;
+            filter: blur(2px);
+        }
+
+        .particle:nth-child(18) {
+            width: 3px;
+            height: 3px;
+            background: rgba(78, 223, 138, 0.4);
+            top: 91%;
+            left: 35%;
+            filter: blur(1px);
+        }
+
+        .particle:nth-child(19) {
+            width: 4px;
+            height: 4px;
+            background: rgba(200, 233, 74, 0.3);
+            top: 83%;
+            left: 90%;
+            filter: blur(1.5px);
+        }
+
+        .particle:nth-child(20) {
+            width: 3px;
+            height: 3px;
+            background: rgba(78, 223, 138, 0.35);
+            top: 87%;
+            left: 48%;
+            filter: blur(1px);
+        }
+
+        /* Subtle bottom ambient glow */
+        .bottom-glow {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: radial-gradient(ellipse at 50% 100%, rgba(120, 200, 80, 0.06) 0%, rgba(78, 223, 138, 0.03) 40%, transparent 75%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px 0;
+            height: 50px;
+        }
+
+        .status-time {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .signal-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 1.2px;
+            height: 11px;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: #fff;
+            border-radius: 0.8px;
+        }
+
+        .signal-bar:nth-child(1) {
+            height: 3px;
+        }
+
+        .signal-bar:nth-child(2) {
+            height: 5.5px;
+        }
+
+        .signal-bar:nth-child(3) {
+            height: 8px;
+        }
+
+        .signal-bar:nth-child(4) {
+            height: 11px;
+        }
+
+        .network-type {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #fff;
+            margin-left: 3px;
+        }
+
+        .battery {
+            display: flex;
+            align-items: center;
+            margin-left: 3px;
+        }
+
+        .battery-body {
+            width: 24px;
+            height: 11px;
+            border: 1.5px solid #fff;
+            border-radius: 2.5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 1.5px;
+        }
+
+        .battery-body::after {
+            content: '';
+            position: absolute;
+            right: -3.5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.5px;
+            height: 4.5px;
+            background: #fff;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-level {
+            width: 70%;
+            height: 100%;
+            background: #4cd964;
+            border-radius: 1px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 22px 6px;
+        }
+
+        .header-logo {
+            font-size: 19px;
+            color: #fff;
+        }
+
+        .header-logo span:first-child {
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .header-logo span:last-child {
+            font-weight: 400;
+            opacity: 0.9;
+            margin-left: 3px;
+            font-size: 18px;
+        }
+
+        .header-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icon svg {
+            width: 22px;
+            height: 22px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== SUCCESS SECTION ===== */
+        .success-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 24px 20px;
+        }
+
+        .check-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #34d058 0%, #28a745 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 16px rgba(46, 204, 113, 0.25);
+        }
+
+        .check-circle svg {
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            stroke-width: 3;
+        }
+
+        .success-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.2px;
+        }
+
+        .amount-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 3px;
+        }
+
+        .amount {
+            font-size: 27px;
+            font-weight: 700;
+            color: #7ed91a;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .currency {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+            margin-top: 2px;
+        }
+
+        .datetime {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.65);
+            font-weight: 400;
+            letter-spacing: 0.1px;
+        }
+
+        /* ===== DETAILS CARD ===== */
+        .details-card {
+            margin: 8px 18px 0;
+            background: rgba(18, 48, 40, 0.55);
+            border-radius: 14px;
+            padding: 2px 0;
+            backdrop-filter: blur(12px);
+            /* No visible border - matches original */
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row.multi-line {
+            align-items: flex-start;
+        }
+
+        .detail-label {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+            flex-shrink: 0;
+            max-width: 130px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            color: #fff;
+            font-weight: 600;
+            text-align: right;
+            letter-spacing: 0.2px;
+        }
+
+        .detail-value.green {
+            color: #4edf8a;
+            font-weight: 700;
+        }
+
+        .detail-value.bold {
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* Bank row */
+        .bank-info {
+            text-align: right;
+        }
+
+        .bank-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            margin-bottom: 2px;
+        }
+
+        .mb-logo-img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mb-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .bank-subtitle {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.38);
+            font-weight: 400;
+        }
+
+        /* Multi line values */
+        .detail-value-multiline {
+            font-size: 15px;
+            color: #fff;
+            font-weight: 700;
+            text-align: right;
+            line-height: 1.45;
+            letter-spacing: 0.2px;
+        }
+
+        /* ===== SAVE TEMPLATE TOGGLE ===== */
+        .save-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 22px 16px;
+        }
+
+        .save-toggle-label {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .toggle-switch {
+            width: 48px;
+            height: 28px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.18);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-knob {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e8e8e8;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== BOTTOM BUTTON ===== */
+        .bottom-section {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 18px 50px;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 26px;
+            /* Green to yellow-green gradient matching original */
+            background: linear-gradient(90deg,
+                    #3aad6a 0%,
+                    #50bf5e 20%,
+                    #72cc4e 40%,
+                    #94d843 60%,
+                    #b0e23a 75%,
+                    #c8ec32 90%,
+                    #d4f02e 100%);
+            border: none;
+            font-size: 15.5px;
+            font-weight: 700;
+            color: #1a2e1a;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== CONTROL PANEL ===== */
+        .control-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            width: 300px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .control-panel h3 {
+            font-size: 15px;
+            margin-bottom: 14px;
+            color: #4edf8a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 7px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .control-group input:focus {
+            outline: none;
+            border-color: #4edf8a;
+        }
+
+        .control-panel .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .control-panel button {
+            flex: 1;
+            padding: 9px;
+            border-radius: 8px;
+            border: none;
+            background: #4edf8a;
+            color: #1a2e1a;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .control-panel button:hover {
+            background: #3cb371;
+        }
+
+        .control-panel button.btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .control-panel button.btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .toggle-panel-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4edf8a;
+            color: #1a2e1a;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        /* Scrollbar styling for control panel */
+        .control-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .control-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .control-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Control Panel for editing fields -->
+    <div class="control-panel" id="controlPanel">
+        <h3>⚙️ Chỉnh sửa thông tin</h3>
+
+        <div class="control-group">
+            <label>Thời gian</label>
+            <input type="text" id="inputTime" value="11:31" oninput="updateField('displayTime', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Số tiền</label>
+            <input type="text" id="inputAmount" value="70,000" oninput="updateField('displayAmount', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Ngày giờ giao dịch</label>
+            <input type="text" id="inputDatetime" value="11:31 Thứ Tư 26/08/2026"
+                oninput="updateField('displayDatetime', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Tài khoản nhận</label>
+            <input type="text" id="inputAccount" value="0967850076" oninput="updateField('displayAccount', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Tên người nhận</label>
+            <input type="text" id="inputName" value="HOANG VIET DUC" oninput="updateField('displayName', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Ngân hàng nhận</label>
+            <input type="text" id="inputBank" value="MB" oninput="updateField('displayBank', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Tên ngân hàng đầy đủ</label>
+            <input type="text" id="inputBankFull" value="Ngân hàng Quân Đội"
+                oninput="updateField('displayBankFull', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Nội dung chuyển tiền</label>
+            <input type="text" id="inputContent" value="NGUYEN DINH GIANG chuyen tien"
+                oninput="updateContentField(this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Phí chuyển tiền</label>
+            <input type="text" id="inputFee" value="Miễn phí" oninput="updateField('displayFee', this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Hình thức chuyển</label>
+            <input type="text" id="inputMethod" value="Chuyển tiền nhanh 24/7" oninput="updateMethodField(this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Mã giao dịch</label>
+            <input type="text" id="inputTxId" value="15753979010" oninput="updateField('displayTxId', this.value)">
+        </div>
+
+        <div class="btn-row">
+            <button onclick="togglePanel()">Ẩn panel</button>
+        </div>
+    </div>
+
+    <button class="toggle-panel-btn" id="toggleBtn" onclick="togglePanel()">⚙️</button>
+
+    <!-- Phone Frame -->
+    <div class="phone-frame" id="phoneFrame">
+        <!-- Background particles / bokeh -->
+        <div class="bg-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="bottom-glow"></div>
+
+        <div class="content">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span class="status-time" id="displayTime">11:31</span>
+                <div class="status-icons">
+                    <div class="signal-bars">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                    <span class="network-type">4G</span>
+                    <div class="battery">
+                        <div class="battery-body">
+                            <div class="battery-level"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-logo">
+                    <span>VCB</span><span>Digibank</span>
+                </div>
+                <div class="header-icon">
+                    <!-- Cloud/download icon similar to original -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Success Section -->
+            <div class="success-section">
+                <div class="check-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="success-text">Giao dịch thành công!</div>
+                <div class="amount-row">
+                    <span class="amount" id="displayAmount">70,000</span>
+                    <span class="currency">VND</span>
+                </div>
+                <div class="datetime" id="displayDatetime">11:31 Thứ Tư 26/08/2026</div>
+            </div>
+
+            <!-- Details Card -->
+            <div class="details-card">
+                <div class="detail-row">
+                    <span class="detail-label">Tài khoản nhận</span>
+                    <span class="detail-value" id="displayAccount">0967850076</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tên người nhận</span>
+                    <span class="detail-value bold" id="displayName">HOANG VIET DUC</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Ngân hàng nhận</span>
+                    <div class="bank-info">
+                        <div class="bank-name-row">
+                            <img src="mb_logo.png" class="mb-logo-img" alt="MB Bank">
+                            <span class="mb-text" id="displayBank">MB</span>
+                        </div>
+                        <div class="bank-subtitle" id="displayBankFull">Ngân hàng Quân Đội</div>
+                    </div>
+                </div>
+                <div class="detail-row multi-line">
+                    <span class="detail-label">Nội dung</span>
+                    <div class="detail-value-multiline" id="displayContent">NGUYEN DINH GIANG<br>chuyen tien</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phí chuyển tiền</span>
+                    <span class="detail-value" id="displayFee">Miễn phí</span>
+                </div>
+                <div class="detail-row multi-line">
+                    <span class="detail-label">Hình thức chuyển</span>
+                    <div class="detail-value-multiline" id="displayMethod">Chuyển tiền nhanh<br>24/7</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Mã giao dịch</span>
+                    <span class="detail-value" id="displayTxId">15753979010</span>
+                </div>
+            </div>
+
+            <!-- Save Toggle -->
+            <div class="save-toggle">
+                <span class="save-toggle-label">Lưu mẫu chuyển tiền</span>
+                <div class="toggle-switch" onclick="toggleSwitch(this)">
+                    <div class="toggle-knob"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Button -->
+            <div class="bottom-section">
+                <div class="cta-button">Thực hiện giao dịch mới</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateField(elementId, value) {
+            document.getElementById(elementId).textContent = value;
+            if (elementId === 'displayTime') {
+                document.querySelector('.status-time').textContent = value;
+            }
+        }
+
+        function updateContentField(value) {
+            const el = document.getElementById('displayContent');
+            const idx = value.toLowerCase().indexOf('chuyen');
+            if (idx > 0) {
+                el.innerHTML = value.substring(0, idx).trim() + '<br>' + value.substring(idx).trim();
+            } else {
+                el.textContent = value;
+            }
+        }
+
+        function updateMethodField(value) {
+            const el = document.getElementById('displayMethod');
+            const idx = value.indexOf('24/7');
+            if (idx > 0) {
+                el.innerHTML = value.substring(0, idx).trim() + '<br>' + value.substring(idx).trim();
+            } else {
+                el.textContent = value;
+            }
+        }
+
+        function toggleSwitch(el) {
+            const knob = el.querySelector('.toggle-knob');
+            const isOn = el.classList.toggle('active');
+            if (isOn) {
+                knob.style.transform = 'translateX(20px)';
+                el.style.background = '#4edf8a';
+            } else {
+                knob.style.transform = 'translateX(0)';
+                el.style.background = 'rgba(255,255,255,0.18)';
+            }
+        }
+
+        let panelVisible = true;
+        function togglePanel() {
+            const panel = document.getElementById('controlPanel');
+            const btn = document.getElementById('toggleBtn');
+            panelVisible = !panelVisible;
+            if (panelVisible) {
+                panel.style.display = 'block';
+                btn.style.display = 'none';
+            } else {
+                panel.style.display = 'none';
+                btn.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>
