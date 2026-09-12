@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VCB Digibank - Giao dịch thành công</title>
+    <title>VCB Bill Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -15,974 +15,1308 @@
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0c0c14;
+            color: #e0e0ec;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ===== LAYOUT ===== */
+        .app {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #0a0f14;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            height: 100vh;
         }
 
-        .phone-frame {
-            width: 393px;
-            height: 852px;
-            border-radius: 0;
-            overflow: hidden;
-            position: relative;
-            /* Gradient: dark green-teal at top, transitioning to very dark at bottom */
-            background: linear-gradient(180deg,
-                    #143028 0%,
-                    #112a23 8%,
-                    #0e241e 15%,
-                    #0b1f19 25%,
-                    #091a15 40%,
-                    #071612 55%,
-                    #061411 70%,
-                    #05120f 85%,
-                    #04100d 100%);
-        }
-
-        /* ===== BOKEH / SPARKLE PARTICLES ===== */
-        .bg-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-        }
-
-        /* Tiny scattered sparkles across the screen */
-        .particle:nth-child(1) {
-            width: 2px;
-            height: 2px;
-            background: rgba(180, 220, 160, 0.35);
-            top: 12%;
-            left: 8%;
-        }
-
-        .particle:nth-child(2) {
-            width: 1.5px;
-            height: 1.5px;
-            background: rgba(200, 233, 74, 0.3);
-            top: 18%;
-            left: 72%;
-        }
-
-        .particle:nth-child(3) {
-            width: 2px;
-            height: 2px;
-            background: rgba(78, 223, 138, 0.25);
-            top: 28%;
-            left: 45%;
-        }
-
-        .particle:nth-child(4) {
-            width: 1px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-            top: 35%;
-            left: 15%;
-        }
-
-        .particle:nth-child(5) {
-            width: 1.5px;
-            height: 1.5px;
-            background: rgba(168, 217, 72, 0.3);
-            top: 42%;
-            left: 88%;
-        }
-
-        .particle:nth-child(6) {
-            width: 2px;
-            height: 2px;
-            background: rgba(78, 223, 138, 0.2);
-            top: 50%;
-            left: 5%;
-        }
-
-        .particle:nth-child(7) {
-            width: 1px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.25);
-            top: 55%;
-            left: 60%;
-        }
-
-        .particle:nth-child(8) {
-            width: 1.5px;
-            height: 1.5px;
-            background: rgba(200, 233, 74, 0.25);
-            top: 62%;
-            left: 30%;
-        }
-
-        /* Larger bokeh glows in the bottom area */
-        .particle:nth-child(9) {
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, rgba(168, 217, 72, 0.12) 0%, transparent 70%);
-            top: 78%;
-            left: 5%;
-            filter: blur(8px);
-        }
-
-        .particle:nth-child(10) {
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle, rgba(78, 223, 138, 0.1) 0%, transparent 70%);
-            top: 82%;
-            left: 25%;
-            filter: blur(10px);
-        }
-
-        .particle:nth-child(11) {
-            width: 35px;
-            height: 35px;
-            background: radial-gradient(circle, rgba(200, 233, 74, 0.15) 0%, transparent 70%);
-            top: 85%;
-            left: 55%;
-            filter: blur(6px);
-        }
-
-        .particle:nth-child(12) {
-            width: 45px;
-            height: 45px;
-            background: radial-gradient(circle, rgba(78, 223, 138, 0.08) 0%, transparent 70%);
-            top: 80%;
-            left: 70%;
-            filter: blur(12px);
-        }
-
-        .particle:nth-child(13) {
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, rgba(200, 233, 74, 0.12) 0%, transparent 70%);
-            top: 88%;
-            left: 40%;
-            filter: blur(7px);
-        }
-
-        .particle:nth-child(14) {
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle, rgba(168, 217, 72, 0.06) 0%, transparent 70%);
-            top: 75%;
-            left: 45%;
-            filter: blur(15px);
-        }
-
-        /* Yellow-green visible dots at bottom */
-        .particle:nth-child(15) {
-            width: 5px;
-            height: 5px;
-            background: rgba(200, 233, 74, 0.45);
-            top: 86%;
-            left: 15%;
-            filter: blur(2px);
-        }
-
-        .particle:nth-child(16) {
-            width: 4px;
-            height: 4px;
-            background: rgba(168, 217, 72, 0.4);
-            top: 89%;
-            left: 60%;
-            filter: blur(1.5px);
-        }
-
-        .particle:nth-child(17) {
-            width: 6px;
-            height: 6px;
-            background: rgba(200, 233, 74, 0.35);
-            top: 84%;
-            left: 75%;
-            filter: blur(2px);
-        }
-
-        .particle:nth-child(18) {
-            width: 3px;
-            height: 3px;
-            background: rgba(78, 223, 138, 0.4);
-            top: 91%;
-            left: 35%;
-            filter: blur(1px);
-        }
-
-        .particle:nth-child(19) {
-            width: 4px;
-            height: 4px;
-            background: rgba(200, 233, 74, 0.3);
-            top: 83%;
-            left: 90%;
-            filter: blur(1.5px);
-        }
-
-        .particle:nth-child(20) {
-            width: 3px;
-            height: 3px;
-            background: rgba(78, 223, 138, 0.35);
-            top: 87%;
-            left: 48%;
-            filter: blur(1px);
-        }
-
-        /* Subtle bottom ambient glow */
-        .bottom-glow {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: radial-gradient(ellipse at 50% 100%, rgba(120, 200, 80, 0.06) 0%, rgba(78, 223, 138, 0.03) 40%, transparent 75%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 380px;
+            min-width: 380px;
+            background: #13131e;
+            border-right: 1px solid #2a2a3a;
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* ===== STATUS BAR ===== */
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px 0;
-            height: 50px;
-        }
-
-        .status-time {
-            font-size: 15px;
-            font-weight: 600;
-            color: #fff;
-            letter-spacing: 0.3px;
-        }
-
-        .status-icons {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .signal-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 1.2px;
-            height: 11px;
-        }
-
-        .signal-bar {
-            width: 3px;
-            background: #fff;
-            border-radius: 0.8px;
-        }
-
-        .signal-bar:nth-child(1) {
-            height: 3px;
-        }
-
-        .signal-bar:nth-child(2) {
-            height: 5.5px;
-        }
-
-        .signal-bar:nth-child(3) {
-            height: 8px;
-        }
-
-        .signal-bar:nth-child(4) {
-            height: 11px;
-        }
-
-        .network-type {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #fff;
-            margin-left: 3px;
-        }
-
-        .battery {
-            display: flex;
-            align-items: center;
-            margin-left: 3px;
-        }
-
-        .battery-body {
-            width: 24px;
-            height: 11px;
-            border: 1.5px solid #fff;
-            border-radius: 2.5px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 1.5px;
-        }
-
-        .battery-body::after {
-            content: '';
-            position: absolute;
-            right: -3.5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1.5px;
-            height: 4.5px;
-            background: #fff;
-            border-radius: 0 1px 1px 0;
-        }
-
-        .battery-level {
-            width: 70%;
-            height: 100%;
-            background: #4cd964;
-            border-radius: 1px;
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 22px 6px;
-        }
-
-        .header-logo {
-            font-size: 19px;
-            color: #fff;
-        }
-
-        .header-logo span:first-child {
-            font-weight: 800;
-            letter-spacing: 0.3px;
-        }
-
-        .header-logo span:last-child {
-            font-weight: 400;
-            opacity: 0.9;
-            margin-left: 3px;
-            font-size: 18px;
-        }
-
-        .header-icon {
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-icon svg {
-            width: 22px;
-            height: 22px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* ===== SUCCESS SECTION ===== */
-        .success-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 24px 20px;
-        }
-
-        .check-circle {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #34d058 0%, #28a745 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 16px rgba(46, 204, 113, 0.25);
-        }
-
-        .check-circle svg {
-            width: 30px;
-            height: 30px;
-            color: #fff;
-            stroke-width: 3;
-        }
-
-        .success-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 10px;
-            letter-spacing: -0.2px;
-        }
-
-        .amount-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 8px;
-            gap: 3px;
-        }
-
-        .amount {
-            font-size: 27px;
-            font-weight: 700;
-            color: #7ed91a;
-            line-height: 1;
-            letter-spacing: -0.5px;
-        }
-
-        .currency {
-            font-size: 11.5px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.55);
-            margin-top: 2px;
-        }
-
-        .datetime {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.65);
-            font-weight: 400;
-            letter-spacing: 0.1px;
-        }
-
-        /* ===== DETAILS CARD ===== */
-        .details-card {
-            margin: 8px 18px 0;
-            background: rgba(18, 48, 40, 0.55);
-            border-radius: 14px;
-            padding: 2px 0;
-            backdrop-filter: blur(12px);
-            /* No visible border - matches original */
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 20px;
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-row.multi-line {
-            align-items: flex-start;
-        }
-
-        .detail-label {
-            font-size: 13.5px;
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 400;
+        .sidebar-header {
+            padding: 18px 22px 14px;
+            border-bottom: 1px solid #2a2a3a;
             flex-shrink: 0;
-            max-width: 130px;
         }
 
-        .detail-value {
-            font-size: 15px;
-            color: #fff;
-            font-weight: 600;
-            text-align: right;
-            letter-spacing: 0.2px;
-        }
-
-        .detail-value.green {
-            color: #4edf8a;
+        .sidebar-header h1 {
+            font-size: 18px;
             font-weight: 700;
+            background: linear-gradient(135deg, #4edf8a, #c8e94a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
         }
 
-        .detail-value.bold {
-            font-weight: 700;
-            letter-spacing: 0.3px;
+        .sidebar-header .subtitle {
+            font-size: 11px;
+            color: #6a6a80;
+            margin-top: 3px;
         }
 
-        /* Bank row */
-        .bank-info {
-            text-align: right;
-        }
-
-        .bank-name-row {
+        /* Tabs */
+        .tabs {
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 5px;
-            margin-bottom: 2px;
+            padding: 10px 16px 0;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
-        .mb-logo-img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
+        .tab {
+            flex: 1;
+            padding: 9px 0;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            background: transparent;
+            color: #6a6a80;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .tab:hover {
+            color: #a0a0b8;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab.active {
+            color: #0c0c14;
+            background: #4edf8a;
+            font-weight: 600;
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+            padding: 14px 18px 18px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .tab-content.active {
             display: block;
         }
 
-        .mb-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
+        .tab-content::-webkit-scrollbar {
+            width: 5px;
         }
 
-        .bank-subtitle {
-            font-size: 11.5px;
-            color: rgba(255, 255, 255, 0.38);
-            font-weight: 400;
+        .tab-content::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        /* Multi line values */
-        .detail-value-multiline {
-            font-size: 15px;
-            color: #fff;
-            font-weight: 700;
-            text-align: right;
-            line-height: 1.45;
-            letter-spacing: 0.2px;
+        .tab-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
         }
 
-        /* ===== SAVE TEMPLATE TOGGLE ===== */
-        .save-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px 22px 16px;
+        /* Input groups */
+        .input-group {
+            margin-bottom: 12px;
         }
 
-        .save-toggle-label {
-            font-size: 14.5px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 400;
-        }
-
-        .toggle-switch {
-            width: 48px;
-            height: 28px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.18);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .toggle-knob {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #e8e8e8;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.2s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-        }
-
-        /* ===== BOTTOM BUTTON ===== */
-        .bottom-section {
-            flex: 1;
-            display: flex;
-            align-items: flex-end;
-            padding: 0 18px 50px;
-        }
-
-        .cta-button {
-            width: 100%;
-            padding: 15px;
-            border-radius: 26px;
-            /* Green to yellow-green gradient matching original */
-            background: linear-gradient(90deg,
-                    #3aad6a 0%,
-                    #50bf5e 20%,
-                    #72cc4e 40%,
-                    #94d843 60%,
-                    #b0e23a 75%,
-                    #c8ec32 90%,
-                    #d4f02e 100%);
-            border: none;
-            font-size: 15.5px;
-            font-weight: 700;
-            color: #1a2e1a;
-            cursor: pointer;
-            text-align: center;
-            letter-spacing: 0.3px;
-        }
-
-        /* ===== CONTROL PANEL ===== */
-        .control-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            width: 300px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .control-panel h3 {
-            font-size: 15px;
-            margin-bottom: 14px;
-            color: #4edf8a;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 8px;
-        }
-
-        .control-group {
-            margin-bottom: 10px;
-        }
-
-        .control-group label {
+        .input-group label {
             display: block;
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 3px;
+            font-weight: 500;
+            color: #8888a0;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .control-group input {
+        .input-group input[type="text"],
+        .input-group input[type="number"],
+        .input-group textarea,
+        .input-group select {
             width: 100%;
-            padding: 7px 10px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
+            padding: 9px 12px;
+            background: #1e1e2e;
+            border: 1px solid #2e2e42;
+            border-radius: 7px;
+            color: #e0e0ec;
             font-size: 13px;
-            font-family: 'Inter', sans-serif;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s;
         }
 
-        .control-group input:focus {
-            outline: none;
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
             border-color: #4edf8a;
         }
 
-        .control-panel .btn-row {
+        .input-group textarea {
+            resize: vertical;
+            min-height: 55px;
+        }
+
+        .input-group select {
+            cursor: pointer;
+        }
+
+        .input-row {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 6px;
+            align-items: center;
         }
 
-        .control-panel button {
+        .input-row input[type="text"],
+        .input-row input[type="number"] {
             flex: 1;
-            padding: 9px;
+        }
+
+        .input-row input[type="color"] {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #2e2e42;
+            border-radius: 7px;
+            background: #1e1e2e;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .input-row .icon-btn,
+        .btn-sm {
+            padding: 8px 12px;
+            background: #1e1e2e;
+            border: 1px solid #2e2e42;
+            border-radius: 7px;
+            color: #e0e0ec;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all .2s;
+            flex-shrink: 0;
+            font-family: inherit;
+        }
+
+        .icon-btn:hover,
+        .btn-sm:hover {
+            background: #2a2a3e;
+            border-color: #4edf8a;
+        }
+
+        /* Separator */
+        .sep {
+            height: 1px;
+            background: #2a2a3a;
+            margin: 16px 0;
+        }
+
+        /* Position controls */
+        .pos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .pos-grid .input-group {
+            margin-bottom: 6px;
+        }
+
+        .pos-grid input[type="number"] {
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .nudge-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .nudge-btn {
+            flex: 1;
+            padding: 6px 0;
+            background: #1e1e2e;
+            border: 1px solid #2e2e42;
+            border-radius: 5px;
+            color: #a0a0b8;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .nudge-btn:hover {
+            background: #2a2a3e;
+            color: #4edf8a;
+            border-color: #4edf8a;
+        }
+
+        .nudge-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Font controls */
+        .font-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .font-row select,
+        .font-row input {
+            flex: 1;
+        }
+
+        /* ===== ACTIONS BAR ===== */
+        .actions {
+            padding: 14px 18px;
+            border-top: 1px solid #2a2a3a;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            background: linear-gradient(135deg, #4edf8a, #3cc875);
+            border: none;
             border-radius: 8px;
-            border: none;
-            background: #4edf8a;
-            color: #1a2e1a;
-            font-weight: 600;
-            font-size: 13px;
+            color: #0a0a12;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
             cursor: pointer;
+            transition: all .2s;
+            letter-spacing: -0.2px;
         }
 
-        .control-panel button:hover {
-            background: #3cb371;
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(78, 223, 138, 0.3);
         }
 
-        .control-panel button.btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .control-panel button.btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .toggle-panel-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4edf8a;
-            color: #1a2e1a;
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 99;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            display: none;
-        }
-
-        /* Scrollbar styling for control panel */
-        .control-panel::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .control-panel::-webkit-scrollbar-track {
+        .btn-secondary {
+            padding: 11px;
             background: transparent;
+            border: 1px solid #3a3a50;
+            border-radius: 8px;
+            color: #c0c0d4;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
         }
 
-        .control-panel::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
+        .btn-secondary:hover {
+            border-color: #4edf8a;
+            color: #4edf8a;
+        }
+
+        .btn-row-2 {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-row-2 button {
+            flex: 1;
+        }
+
+        /* ===== PREVIEW AREA ===== */
+        .preview {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a12;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 50%, rgba(78, 223, 138, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(200, 233, 74, 0.02) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            height: 100%;
+        }
+
+        #billCanvas {
+            max-height: calc(100vh - 40px);
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            box-shadow:
+                0 0 0 1px rgba(78, 223, 138, 0.1),
+                0 8px 40px rgba(0, 0, 0, 0.5),
+                0 0 80px rgba(78, 223, 138, 0.05);
+            cursor: crosshair;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 22px;
+            background: #1e1e2e;
+            border: 1px solid #4edf8a;
+            border-radius: 8px;
+            color: #4edf8a;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all .3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Field highlight badge */
+        .field-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(78, 223, 138, 0.1);
+            border: 1px solid rgba(78, 223, 138, 0.25);
+            border-radius: 4px;
+            font-size: 10px;
+            color: #4edf8a;
+            margin-bottom: 8px;
+        }
+
+        /* Keyboard hint */
+        .hint {
+            font-size: 10px;
+            color: #555570;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .hint kbd {
+            padding: 1px 5px;
+            background: #1e1e2e;
+            border: 1px solid #333348;
+            border-radius: 3px;
+            font-size: 10px;
+            font-family: inherit;
+            color: #8888a0;
         }
     </style>
 </head>
 
 <body>
-    <!-- Control Panel for editing fields -->
-    <div class="control-panel" id="controlPanel">
-        <h3>⚙️ Chỉnh sửa thông tin</h3>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>⚡ VCB Bill Studio</h1>
+                <div class="subtitle">Chỉnh sửa bill trên template gốc · WYSIWYG</div>
+            </div>
 
-        <div class="control-group">
-            <label>Thời gian</label>
-            <input type="text" id="inputTime" value="11:31" oninput="updateField('displayTime', this.value)">
-        </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('data')">📝 Dữ liệu</button>
+                <button class="tab" onclick="switchTab('position')">📐 Căn chỉnh</button>
+            </div>
 
-        <div class="control-group">
-            <label>Số tiền</label>
-            <input type="text" id="inputAmount" value="70,000" oninput="updateField('displayAmount', this.value)">
-        </div>
+            <!-- ===== TAB: DỮ LIỆU ===== -->
+            <div class="tab-content active" id="tab-data">
+                <div class="input-group">
+                    <label>Số tiền</label>
+                    <input type="text" id="inputAmount" value="70,000" oninput="render()" onblur="formatAmountInput()">
+                </div>
 
-        <div class="control-group">
-            <label>Ngày giờ giao dịch</label>
-            <input type="text" id="inputDatetime" value="11:31 Thứ Tư 26/08/2026"
-                oninput="updateField('displayDatetime', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Tài khoản nhận</label>
-            <input type="text" id="inputAccount" value="0967850076" oninput="updateField('displayAccount', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Tên người nhận</label>
-            <input type="text" id="inputName" value="HOANG VIET DUC" oninput="updateField('displayName', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Ngân hàng nhận</label>
-            <input type="text" id="inputBank" value="MB" oninput="updateField('displayBank', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Tên ngân hàng đầy đủ</label>
-            <input type="text" id="inputBankFull" value="Ngân hàng Quân Đội"
-                oninput="updateField('displayBankFull', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Nội dung chuyển tiền</label>
-            <input type="text" id="inputContent" value="NGUYEN DINH GIANG chuyen tien"
-                oninput="updateContentField(this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Phí chuyển tiền</label>
-            <input type="text" id="inputFee" value="Miễn phí" oninput="updateField('displayFee', this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Hình thức chuyển</label>
-            <input type="text" id="inputMethod" value="Chuyển tiền nhanh 24/7" oninput="updateMethodField(this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Mã giao dịch</label>
-            <input type="text" id="inputTxId" value="15753979010" oninput="updateField('displayTxId', this.value)">
-        </div>
-
-        <div class="btn-row">
-            <button onclick="togglePanel()">Ẩn panel</button>
-        </div>
-    </div>
-
-    <button class="toggle-panel-btn" id="toggleBtn" onclick="togglePanel()">⚙️</button>
-
-    <!-- Phone Frame -->
-    <div class="phone-frame" id="phoneFrame">
-        <!-- Background particles / bokeh -->
-        <div class="bg-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
-
-        <div class="bottom-glow"></div>
-
-        <div class="content">
-            <!-- Status Bar -->
-            <div class="status-bar">
-                <span class="status-time" id="displayTime">11:31</span>
-                <div class="status-icons">
-                    <div class="signal-bars">
-                        <div class="signal-bar"></div>
-                        <div class="signal-bar"></div>
-                        <div class="signal-bar"></div>
-                        <div class="signal-bar"></div>
+                <div class="input-group">
+                    <label>Ngày giờ giao dịch</label>
+                    <div class="input-row">
+                        <input type="text" id="inputDatetime" value="11:31 Thứ Tư 26/08/2026" oninput="render()">
+                        <button class="icon-btn" onclick="setCurrentTime()" title="Lấy giờ hiện tại">🕐</button>
                     </div>
-                    <span class="network-type">4G</span>
-                    <div class="battery">
-                        <div class="battery-body">
-                            <div class="battery-level"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Giờ thanh trạng thái</label>
+                    <div class="input-row">
+                        <input type="text" id="inputStatusTime" value="11:31" oninput="render()">
+                        <input type="color" id="statusCoverColor" value="#112a23" onchange="render()"
+                            title="Màu nền che giờ cũ">
+                    </div>
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="input-group">
+                    <label>Tài khoản nhận</label>
+                    <input type="text" id="inputAccount" value="0967850076" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Tên người nhận</label>
+                    <div class="input-row">
+                        <input type="text" id="inputName" value="HOANG VIET DUC" oninput="render()">
+                        <button class="icon-btn" onclick="toUpper('inputName')" title="VIẾT HOA">Aa</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Ngân hàng nhận</label>
+                    <select id="selectBank" onchange="onBankChange()">
+                        <option value="MB|Ngân hàng Quân Đội" selected>MB - Ngân hàng Quân Đội</option>
+                        <option value="VCB|Ngân hàng Ngoại Thương VN">VCB - Vietcombank</option>
+                        <option value="BIDV|Ngân hàng Đầu tư & Phát triển">BIDV</option>
+                        <option value="VietinBank|Ngân hàng Công Thương">VietinBank</option>
+                        <option value="Techcombank|Ngân hàng Kỹ Thương">Techcombank</option>
+                        <option value="ACB|Ngân hàng Á Châu">ACB</option>
+                        <option value="TPBank|Ngân hàng Tiên Phong">TPBank</option>
+                        <option value="VPBank|Ngân hàng Việt Nam Thịnh Vượng">VPBank</option>
+                        <option value="Sacombank|Ngân hàng Sài Gòn Thương Tín">Sacombank</option>
+                        <option value="Agribank|Ngân hàng Nông nghiệp">Agribank</option>
+                        <option value="MSB|Ngân hàng Hàng Hải">MSB</option>
+                        <option value="HDBank|Ngân hàng Phát triển TP.HCM">HDBank</option>
+                        <option value="SHB|Ngân hàng Sài Gòn - Hà Nội">SHB</option>
+                        <option value="MoMo|Ví MoMo">MoMo</option>
+                        <option value="custom">✏️ Tự nhập...</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="customBankGroup" style="display:none">
+                    <div class="input-row">
+                        <input type="text" id="inputBankShort" placeholder="Tên viết tắt (VD: MB)" oninput="render()">
+                        <input type="text" id="inputBankFull" placeholder="Tên đầy đủ" oninput="render()">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Logo ngân hàng</label>
+                    <input type="file" id="inputBankLogo" accept="image/*" onchange="onBankLogoUpload(event)"
+                        style="font-size:12px; color:#8888a0;">
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="input-group">
+                    <label>Nội dung chuyển tiền</label>
+                    <textarea id="inputContent" rows="2" oninput="render()">NGUYEN DINH GIANG
+chuyen tien</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Phí chuyển tiền</label>
+                    <input type="text" id="inputFee" value="Miễn phí" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Hình thức chuyển</label>
+                    <textarea id="inputMethod" rows="2" oninput="render()">Chuyển tiền nhanh
+24/7</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Mã giao dịch</label>
+                    <div class="input-row">
+                        <input type="text" id="inputTxId" value="15753979010" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomTxId()" title="Tạo mã ngẫu nhiên">🎲</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB: CĂN CHỈNH ===== -->
+            <div class="tab-content" id="tab-position">
+                <div class="input-group">
+                    <label>Chọn trường chỉnh sửa</label>
+                    <select id="selectField" onchange="onFieldSelect()">
+                        <option value="statusTime">⏰ Giờ status bar</option>
+                        <option value="amount" selected>💰 Số tiền</option>
+                        <option value="currency">💱 VND</option>
+                        <option value="datetime">📅 Ngày giờ giao dịch</option>
+                        <option value="account">🔢 Tài khoản nhận</option>
+                        <option value="name">👤 Tên người nhận</option>
+                        <option value="bankLogo">🏦 Logo ngân hàng</option>
+                        <option value="bankShort">🏷️ Tên NH viết tắt</option>
+                        <option value="bankFull">📋 Tên NH đầy đủ</option>
+                        <option value="content">📝 Nội dung</option>
+                        <option value="fee">💸 Phí chuyển tiền</option>
+                        <option value="method">🔄 Hình thức chuyển</option>
+                        <option value="txId">🆔 Mã giao dịch</option>
+                    </select>
+                </div>
+
+                <div class="field-badge" id="fieldBadge">amount</div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>X (px)</label>
+                        <input type="number" id="posX" value="0" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                    <div class="input-group">
+                        <label>Y (px)</label>
+                        <input type="number" id="posY" value="0" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                </div>
+
+                <div class="nudge-row">
+                    <button class="nudge-btn" onclick="nudge('x',-10)">◀◀ 10</button>
+                    <button class="nudge-btn" onclick="nudge('x',-1)">◀ 1</button>
+                    <button class="nudge-btn" onclick="nudge('x',1)">1 ▶</button>
+                    <button class="nudge-btn" onclick="nudge('x',10)">10 ▶▶</button>
+                </div>
+                <div class="nudge-row" style="margin-bottom:12px;">
+                    <button class="nudge-btn" onclick="nudge('y',-10)">▲▲ 10</button>
+                    <button class="nudge-btn" onclick="nudge('y',-1)">▲ 1</button>
+                    <button class="nudge-btn" onclick="nudge('y',1)">1 ▼</button>
+                    <button class="nudge-btn" onclick="nudge('y',10)">10 ▼▼</button>
+                </div>
+
+                <div class="sep"></div>
+
+                <!-- Font controls (hidden for bankLogo) -->
+                <div id="fontControls">
+                    <div class="pos-grid">
+                        <div class="input-group">
+                            <label>Font Size (px)</label>
+                            <input type="number" id="posFontSize" value="24" min="8" max="100"
+                                onchange="onPosInput()" oninput="onPosInput()">
+                        </div>
+                        <div class="input-group">
+                            <label>Màu chữ</label>
+                            <input type="color" id="posFontColor" value="#ffffff" onchange="onPosInput()">
+                        </div>
+                    </div>
+                    <div class="pos-grid">
+                        <div class="input-group">
+                            <label>Font Weight</label>
+                            <select id="posFontWeight" onchange="onPosInput()">
+                                <option value="400">Regular</option>
+                                <option value="500">Medium</option>
+                                <option value="600">SemiBold</option>
+                                <option value="700">Bold</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Text Align</label>
+                            <select id="posTextAlign" onchange="onPosInput()">
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Opacity</label>
+                        <input type="range" id="posOpacity" min="0" max="100" value="100"
+                            oninput="onPosInput()" style="width:100%;">
+                    </div>
+                </div>
+
+                <!-- Logo size controls (shown only for bankLogo) -->
+                <div id="logoControls" style="display:none;">
+                    <div class="pos-grid">
+                        <div class="input-group">
+                            <label>Chiều rộng</label>
+                            <input type="number" id="logoW" value="42" min="10" max="200"
+                                onchange="onPosInput()" oninput="onPosInput()">
+                        </div>
+                        <div class="input-group">
+                            <label>Chiều cao</label>
+                            <input type="number" id="logoH" value="42" min="10" max="200"
+                                onchange="onPosInput()" oninput="onPosInput()">
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Header -->
-            <div class="header">
-                <div class="header-logo">
-                    <span>VCB</span><span>Digibank</span>
+                <div class="sep"></div>
+
+                <div class="btn-row-2">
+                    <button class="btn-secondary" onclick="resetConfig()">🔄 Mặc định</button>
+                    <button class="btn-secondary" onclick="saveConfig()">💾 Lưu vị trí</button>
                 </div>
-                <div class="header-icon">
-                    <!-- Cloud/download icon similar to original -->
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-                    </svg>
+
+                <div class="hint" style="margin-top:12px;">
+                    💡 <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> dịch 1px ·
+                    <kbd>Shift</kbd>+mũi tên dịch 10px<br>
+                    Click vào canvas để đặt vị trí trường đang chọn.
                 </div>
             </div>
 
-            <!-- Success Section -->
-            <div class="success-section">
-                <div class="check-circle">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                    </svg>
+            <!-- ===== ACTIONS ===== -->
+            <div class="actions">
+                <button class="btn-primary" onclick="downloadPNG()">📥 Tải ảnh bill PNG</button>
+                <div class="btn-row-2">
+                    <button class="btn-secondary" onclick="copyToClipboard()">📋 Copy Clipboard</button>
+                    <button class="btn-secondary" onclick="downloadJPG()">🖼️ Tải JPG</button>
                 </div>
-                <div class="success-text">Giao dịch thành công!</div>
-                <div class="amount-row">
-                    <span class="amount" id="displayAmount">70,000</span>
-                    <span class="currency">VND</span>
-                </div>
-                <div class="datetime" id="displayDatetime">11:31 Thứ Tư 26/08/2026</div>
             </div>
+        </aside>
 
-            <!-- Details Card -->
-            <div class="details-card">
-                <div class="detail-row">
-                    <span class="detail-label">Tài khoản nhận</span>
-                    <span class="detail-value" id="displayAccount">0967850076</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Tên người nhận</span>
-                    <span class="detail-value bold" id="displayName">HOANG VIET DUC</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Ngân hàng nhận</span>
-                    <div class="bank-info">
-                        <div class="bank-name-row">
-                            <img src="mb_logo.png" class="mb-logo-img" alt="MB Bank">
-                            <span class="mb-text" id="displayBank">MB</span>
-                        </div>
-                        <div class="bank-subtitle" id="displayBankFull">Ngân hàng Quân Đội</div>
-                    </div>
-                </div>
-                <div class="detail-row multi-line">
-                    <span class="detail-label">Nội dung</span>
-                    <div class="detail-value-multiline" id="displayContent">NGUYEN DINH GIANG<br>chuyen tien</div>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Phí chuyển tiền</span>
-                    <span class="detail-value" id="displayFee">Miễn phí</span>
-                </div>
-                <div class="detail-row multi-line">
-                    <span class="detail-label">Hình thức chuyển</span>
-                    <div class="detail-value-multiline" id="displayMethod">Chuyển tiền nhanh<br>24/7</div>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Mã giao dịch</span>
-                    <span class="detail-value" id="displayTxId">15753979010</span>
-                </div>
+        <!-- ===== PREVIEW ===== -->
+        <main class="preview">
+            <div class="canvas-wrapper">
+                <canvas id="billCanvas" width="946" height="2047"></canvas>
             </div>
-
-            <!-- Save Toggle -->
-            <div class="save-toggle">
-                <span class="save-toggle-label">Lưu mẫu chuyển tiền</span>
-                <div class="toggle-switch" onclick="toggleSwitch(this)">
-                    <div class="toggle-knob"></div>
-                </div>
-            </div>
-
-            <!-- Bottom Button -->
-            <div class="bottom-section">
-                <div class="cta-button">Thực hiện giao dịch mới</div>
-            </div>
-        </div>
+        </main>
     </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
     <script>
-        function updateField(elementId, value) {
-            document.getElementById(elementId).textContent = value;
-            if (elementId === 'displayTime') {
-                document.querySelector('.status-time').textContent = value;
+        // ================================================================
+        // CONFIGURATION DEFAULTS
+        // ================================================================
+        const DEFAULT_CONFIG = {
+            statusTime: { x: 153, y: 63,   size: 36, weight: '600', color: '#ffffff', align: 'center', opacity: 1 },
+            amount:     { x: 473, y: 535,  size: 68, weight: '700', color: '#a2e838', align: 'center', opacity: 1 },
+            currency:   { x: 0,   y: 0,    size: 26, weight: '600', color: '#6fa87e', align: 'left', opacity: 0.9 },
+            datetime:   { x: 473, y: 618,  size: 28, weight: '400', color: '#a5c1cb', align: 'center', opacity: 1 },
+            account:    { x: 865, y: 751,  size: 32, weight: '600', color: '#ffffff', align: 'right', opacity: 1 },
+            name:       { x: 865, y: 876,  size: 32, weight: '700', color: '#ffffff', align: 'right', opacity: 1 },
+            bankLogo:   { x: 745, y: 972,  w: 46, h: 46, autoAlign: true },
+            bankShort:  { x: 865, y: 995,  size: 32, weight: '700', color: '#ffffff', align: 'right', opacity: 1 },
+            bankFull:   { x: 865, y: 1042, size: 23, weight: '400', color: 'rgba(255,255,255,0.65)', align: 'right', opacity: 1 },
+            content:    { x: 865, y: 1148, size: 32, weight: '700', color: '#ffffff', align: 'right', opacity: 1, lh: 46 },
+            fee:        { x: 865, y: 1321, size: 32, weight: '500', color: '#ffffff', align: 'right', opacity: 1 },
+            method:     { x: 865, y: 1440, size: 32, weight: '700', color: '#ffffff', align: 'right', opacity: 1, lh: 46 },
+            txId:       { x: 865, y: 1552, size: 32, weight: '600', color: '#ffffff', align: 'right', opacity: 1 },
+        };
+
+        const FIELD_LABELS = {
+            statusTime: 'Giờ status bar', amount: 'Số tiền', currency: 'VND',
+            datetime: 'Ngày giờ', account: 'Tài khoản nhận', name: 'Tên người nhận',
+            bankLogo: 'Logo NH', bankShort: 'Tên NH viết tắt', bankFull: 'Tên NH đầy đủ',
+            content: 'Nội dung', fee: 'Phí', method: 'Hình thức', txId: 'Mã GD'
+        };
+
+        // ================================================================
+        // STATE
+        // ================================================================
+        let config = deepClone(DEFAULT_CONFIG);
+        let currentTab = 'data';
+        let selectedField = 'amount';
+
+        const templateImg = new Image();
+        templateImg.src = 'vcbdark_fake.jpg';
+
+        let bankLogoImg = new Image();
+        bankLogoImg.src = 'mb_logo.png';
+
+        const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
+        // ================================================================
+        // INITIALIZATION
+        // ================================================================
+        function init() {
+            // Clear deprecated v1 config if present
+            localStorage.removeItem('vcb_bill_config');
+
+            // Load saved config from localStorage v2
+            const saved = localStorage.getItem('vcb_bill_config_v2');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    for (const key in DEFAULT_CONFIG) {
+                        if (parsed[key]) {
+                            config[key] = { ...DEFAULT_CONFIG[key], ...parsed[key] };
+                        }
+                    }
+                } catch (e) { /* ignore parse errors */ }
+            }
+
+            // Wait for template image + fonts then render
+            Promise.all([
+                new Promise(r => {
+                    if (templateImg.complete) r();
+                    else templateImg.onload = r;
+                }),
+                document.fonts.ready
+            ]).then(() => {
+                cacheStatusStrip();
+                render();
+            });
+
+            bankLogoImg.onload = () => render();
+
+            // Keyboard controls
+            document.addEventListener('keydown', handleKeydown);
+
+            // Canvas click
+            document.getElementById('billCanvas').addEventListener('click', handleCanvasClick);
+
+            // Initial position UI sync
+            onFieldSelect();
+        }
+
+        // ================================================================
+        // RENDERING
+        // ================================================================
+        function render() {
+            const canvas = document.getElementById('billCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 1. Draw template image
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (templateImg.complete && templateImg.naturalWidth > 0) {
+                ctx.drawImage(templateImg, 0, 0, canvas.width, canvas.height);
+            }
+
+            // 2. Status bar time (cover old + draw new)
+            drawStatusTime(ctx);
+
+            // 3. Amount + VND
+            drawAmountAndCurrency(ctx);
+
+            // 4. Datetime
+            drawText(ctx, 'datetime', gv('inputDatetime'));
+
+            // 5. Detail card values
+            drawText(ctx, 'account', gv('inputAccount'));
+            drawText(ctx, 'name', gv('inputName'));
+
+            // Bank information (Logo, short name, full name)
+            drawBankInfo(ctx);
+
+            // Multi-line fields
+            drawMultiLine(ctx, 'content', gv('inputContent'));
+            drawText(ctx, 'fee', gv('inputFee'));
+            drawMultiLine(ctx, 'method', gv('inputMethod'));
+            drawText(ctx, 'txId', gv('inputTxId'));
+
+            // 6. Draw selection highlight (only in position tab)
+            if (currentTab === 'position') {
+                drawHighlight(ctx, selectedField);
             }
         }
 
-        function updateContentField(value) {
-            const el = document.getElementById('displayContent');
-            const idx = value.toLowerCase().indexOf('chuyen');
-            if (idx > 0) {
-                el.innerHTML = value.substring(0, idx).trim() + '<br>' + value.substring(idx).trim();
-            } else {
-                el.textContent = value;
+        // Pre-render a clean template strip for status bar cover
+        let cleanStatusStrip = null;
+        function cacheStatusStrip() {
+            if (!templateImg.complete || templateImg.naturalWidth === 0) return;
+            const cv = document.createElement('canvas');
+            cv.width = 130; cv.height = 55;
+            const cx = cv.getContext('2d');
+            // Sample a clean horizontal strip from safe area without text or icons
+            cx.drawImage(templateImg, 230, 38, 130, 55, 0, 0, 130, 55);
+            cleanStatusStrip = cv;
+        }
+
+        function drawStatusTime(ctx) {
+            const cfg = config.statusTime;
+            const newTime = gv('inputStatusTime');
+            // If time is the default 11:31, keep template's native sharpness
+            if (newTime !== '11:31') {
+                if (cleanStatusStrip) {
+                    ctx.drawImage(cleanStatusStrip, 95, 38);
+                } else {
+                    const coverColor = document.getElementById('statusCoverColor').value;
+                    ctx.fillStyle = coverColor;
+                    ctx.fillRect(95, 38, 120, 50);
+                }
+                ctx.save();
+                ctx.globalAlpha = cfg.opacity;
+                ctx.font = `${cfg.weight} ${cfg.size}px 'Inter'`;
+                ctx.fillStyle = cfg.color;
+                ctx.textAlign = cfg.align;
+                ctx.textBaseline = 'middle';
+                ctx.fillText(newTime, cfg.x, cfg.y);
+                ctx.restore();
             }
         }
 
-        function updateMethodField(value) {
-            const el = document.getElementById('displayMethod');
-            const idx = value.indexOf('24/7');
-            if (idx > 0) {
-                el.innerHTML = value.substring(0, idx).trim() + '<br>' + value.substring(idx).trim();
-            } else {
-                el.textContent = value;
+        function drawAmountAndCurrency(ctx) {
+            const amountText = gv('inputAmount') || '0';
+            const currencyText = 'VND';
+            const cfgA = config.amount;
+            const cfgC = config.currency;
+
+            ctx.save();
+            ctx.font = `${cfgA.weight} ${cfgA.size}px 'Inter'`;
+            const aWidth = ctx.measureText(amountText).width;
+
+            ctx.font = `${cfgC.weight} ${cfgC.size}px 'Inter'`;
+            const cWidth = ctx.measureText(currencyText).width;
+
+            const gap = 10;
+            const totalWidth = aWidth + gap + cWidth;
+
+            let startX = cfgA.x;
+            if (cfgA.align === 'center') {
+                startX = cfgA.x - totalWidth / 2;
+            } else if (cfgA.align === 'right') {
+                startX = cfgA.x - totalWidth;
+            }
+
+            // Draw amount
+            ctx.globalAlpha = cfgA.opacity;
+            ctx.font = `${cfgA.weight} ${cfgA.size}px 'Inter'`;
+            ctx.fillStyle = cfgA.color;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(amountText, startX, cfgA.y);
+
+            // Draw currency (superscript style: aligned near upper edge of amount)
+            ctx.globalAlpha = cfgC.opacity;
+            ctx.font = `${cfgC.weight} ${cfgC.size}px 'Inter'`;
+            ctx.fillStyle = cfgC.color;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            const vndY = cfgA.y - (cfgA.size * 0.42);
+            ctx.fillText(currencyText, startX + aWidth + gap, vndY);
+
+            ctx.restore();
+        }
+
+        function drawText(ctx, key, text) {
+            const cfg = config[key];
+            if (!cfg || cfg.size === undefined) return;
+            ctx.save();
+            ctx.globalAlpha = cfg.opacity;
+            ctx.font = `${cfg.weight} ${cfg.size}px 'Inter'`;
+            ctx.fillStyle = cfg.color;
+            ctx.textAlign = cfg.align;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, cfg.x, cfg.y);
+            ctx.restore();
+        }
+
+        function drawMultiLine(ctx, key, text) {
+            const cfg = config[key];
+            if (!cfg) return;
+            const lines = text.split('\n');
+            ctx.save();
+            ctx.globalAlpha = cfg.opacity;
+            ctx.font = `${cfg.weight} ${cfg.size}px 'Inter'`;
+            ctx.fillStyle = cfg.color;
+            ctx.textAlign = cfg.align;
+            ctx.textBaseline = 'middle';
+            const lh = cfg.lh || 46;
+            lines.forEach((line, i) => {
+                ctx.fillText(line.trim(), cfg.x, cfg.y + i * lh);
+            });
+            ctx.restore();
+        }
+
+        function drawBankInfo(ctx) {
+            const shortText = getBankShort();
+            const fullText = getBankFull();
+            const cfgShort = config.bankShort;
+            const cfgFull = config.bankFull;
+            const cfgLogo = config.bankLogo;
+
+            // Draw Short Name
+            ctx.save();
+            ctx.globalAlpha = cfgShort.opacity;
+            ctx.font = `${cfgShort.weight} ${cfgShort.size}px 'Inter'`;
+            ctx.fillStyle = cfgShort.color;
+            ctx.textAlign = cfgShort.align;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(shortText, cfgShort.x, cfgShort.y);
+            const shortWidth = ctx.measureText(shortText).width;
+            ctx.restore();
+
+            // Draw Full Name (subtext)
+            if (fullText) {
+                ctx.save();
+                ctx.globalAlpha = cfgFull.opacity;
+                ctx.font = `${cfgFull.weight} ${cfgFull.size}px 'Inter'`;
+                ctx.fillStyle = cfgFull.color;
+                ctx.textAlign = cfgFull.align;
+                ctx.textBaseline = 'middle';
+                ctx.fillText(fullText, cfgFull.x, cfgFull.y);
+                ctx.restore();
+            }
+
+            // Draw Bank Logo
+            if (bankLogoImg.complete && bankLogoImg.naturalWidth > 0) {
+                let lx = cfgLogo.x;
+                let ly = cfgLogo.y;
+                if (cfgShort.align === 'right' && cfgLogo.autoAlign !== false) {
+                    lx = cfgShort.x - shortWidth - 14 - cfgLogo.w;
+                    ly = cfgShort.y - cfgLogo.h / 2;
+                }
+
+                ctx.save();
+                ctx.beginPath();
+                const r = cfgLogo.w / 2;
+                ctx.arc(lx + r, ly + r, r, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+                ctx.drawImage(bankLogoImg, lx, ly, cfgLogo.w, cfgLogo.h);
+                ctx.restore();
             }
         }
 
-        function toggleSwitch(el) {
-            const knob = el.querySelector('.toggle-knob');
-            const isOn = el.classList.toggle('active');
-            if (isOn) {
-                knob.style.transform = 'translateX(20px)';
-                el.style.background = '#4edf8a';
+        function drawHighlight(ctx, fieldKey) {
+            const cfg = config[fieldKey];
+            if (!cfg) return;
+
+            ctx.save();
+            ctx.strokeStyle = '#4edf8a';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+
+            if (fieldKey === 'bankLogo') {
+                ctx.strokeRect(cfg.x - 3, cfg.y - 3, cfg.w + 6, cfg.h + 6);
             } else {
-                knob.style.transform = 'translateX(0)';
-                el.style.background = 'rgba(255,255,255,0.18)';
+                const px = cfg.x;
+                const py = cfg.y;
+                ctx.beginPath();
+                ctx.moveTo(px - 15, py);
+                ctx.lineTo(px + 15, py);
+                ctx.moveTo(px, py - 15);
+                ctx.lineTo(px, py + 15);
+                ctx.stroke();
+
+                ctx.setLineDash([]);
+                ctx.fillStyle = 'rgba(78, 223, 138, 0.85)';
+                ctx.font = '500 14px Inter';
+                ctx.textAlign = cfg.align === 'right' ? 'right' : 'left';
+                ctx.textBaseline = 'bottom';
+                const label = FIELD_LABELS[fieldKey] || fieldKey;
+                const tx = cfg.align === 'right' ? px - 18 : px + 18;
+                ctx.fillText(`◆ ${label}`, tx, py - 5);
+            }
+            ctx.restore();
+        }
+
+        // ================================================================
+        // UI HANDLERS
+        // ================================================================
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'data') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('tab-data').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('tab-position').classList.add('active');
+            }
+            render();
+        }
+
+        function onFieldSelect() {
+            selectedField = document.getElementById('selectField').value;
+            const cfg = config[selectedField];
+            document.getElementById('fieldBadge').textContent = selectedField;
+
+            const isLogo = selectedField === 'bankLogo';
+            document.getElementById('fontControls').style.display = isLogo ? 'none' : 'block';
+            document.getElementById('logoControls').style.display = isLogo ? 'block' : 'none';
+
+            // Sync UI inputs
+            document.getElementById('posX').value = cfg.x;
+            document.getElementById('posY').value = cfg.y;
+
+            if (isLogo) {
+                document.getElementById('logoW').value = cfg.w;
+                document.getElementById('logoH').value = cfg.h;
+            } else {
+                document.getElementById('posFontSize').value = cfg.size;
+                document.getElementById('posFontColor').value = toHex(cfg.color);
+                document.getElementById('posFontWeight').value = cfg.weight;
+                document.getElementById('posTextAlign').value = cfg.align;
+                document.getElementById('posOpacity').value = Math.round((cfg.opacity || 1) * 100);
+            }
+
+            render();
+        }
+
+        function onPosInput() {
+            const cfg = config[selectedField];
+            cfg.x = parseInt(document.getElementById('posX').value) || 0;
+            cfg.y = parseInt(document.getElementById('posY').value) || 0;
+
+            if (selectedField === 'bankLogo') {
+                cfg.w = parseInt(document.getElementById('logoW').value) || 42;
+                cfg.h = parseInt(document.getElementById('logoH').value) || 42;
+            } else {
+                cfg.size = parseInt(document.getElementById('posFontSize').value) || 24;
+                cfg.color = document.getElementById('posFontColor').value;
+                cfg.weight = document.getElementById('posFontWeight').value;
+                cfg.align = document.getElementById('posTextAlign').value;
+                cfg.opacity = (parseInt(document.getElementById('posOpacity').value) || 100) / 100;
+            }
+
+            render();
+        }
+
+        function onBankChange() {
+            const val = document.getElementById('selectBank').value;
+            const customGroup = document.getElementById('customBankGroup');
+
+            if (val === 'custom') {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+            render();
+        }
+
+        function onBankLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                bankLogoImg = new Image();
+                bankLogoImg.onload = render;
+                bankLogoImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ================================================================
+        // VALUE GETTERS
+        // ================================================================
+        function gv(id) {
+            const el = document.getElementById(id);
+            return el ? (el.value || '') : '';
+        }
+
+        function getBankShort() {
+            const sel = document.getElementById('selectBank').value;
+            if (sel === 'custom') return gv('inputBankShort');
+            return sel.split('|')[0] || '';
+        }
+
+        function getBankFull() {
+            const sel = document.getElementById('selectBank').value;
+            if (sel === 'custom') return gv('inputBankFull');
+            return sel.split('|')[1] || '';
+        }
+
+        // ================================================================
+        // UTILITY FUNCTIONS
+        // ================================================================
+        function formatAmountInput() {
+            const el = document.getElementById('inputAmount');
+            const digits = el.value.replace(/[^\d]/g, '');
+            if (digits) {
+                el.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+            render();
+        }
+
+        function setCurrentTime() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const mo = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            const wd = weekdays[now.getDay()];
+
+            const timeStr = `${h}:${m}`;
+            const fullStr = `${timeStr} ${wd} ${d}/${mo}/${y}`;
+
+            document.getElementById('inputDatetime').value = fullStr;
+            document.getElementById('inputStatusTime').value = timeStr;
+            render();
+            showToast('✅ Đã cập nhật thời gian hiện tại');
+        }
+
+        function genRandomTxId() {
+            let id = '';
+            for (let i = 0; i < 11; i++) id += Math.floor(Math.random() * 10);
+            document.getElementById('inputTxId').value = id;
+            render();
+            showToast('🎲 Đã tạo mã giao dịch ngẫu nhiên');
+        }
+
+        function toUpper(inputId) {
+            const el = document.getElementById(inputId);
+            el.value = el.value.toUpperCase();
+            render();
+        }
+
+        function deepClone(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        function toHex(color) {
+            if (color.startsWith('#') && color.length <= 7) return color;
+            // Handle rgba/named colors by drawing to temp canvas
+            const cv = document.createElement('canvas');
+            cv.width = cv.height = 1;
+            const cx = cv.getContext('2d');
+            cx.fillStyle = color;
+            cx.fillRect(0, 0, 1, 1);
+            const [r, g, b] = cx.getImageData(0, 0, 1, 1).data;
+            return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ================================================================
+        // POSITION CONTROLS
+        // ================================================================
+        function nudge(axis, delta) {
+            const cfg = config[selectedField];
+            if (axis === 'x') cfg.x += delta;
+            else cfg.y += delta;
+
+            document.getElementById('posX').value = cfg.x;
+            document.getElementById('posY').value = cfg.y;
+            render();
+        }
+
+        function handleKeydown(e) {
+            if (currentTab !== 'position') return;
+            // Don't hijack if user is typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+            const step = e.shiftKey ? 10 : 1;
+            let handled = false;
+
+            switch (e.key) {
+                case 'ArrowLeft': nudge('x', -step); handled = true; break;
+                case 'ArrowRight': nudge('x', step); handled = true; break;
+                case 'ArrowUp': nudge('y', -step); handled = true; break;
+                case 'ArrowDown': nudge('y', step); handled = true; break;
+            }
+
+            if (handled) e.preventDefault();
+        }
+
+        function handleCanvasClick(e) {
+            if (currentTab !== 'position') return;
+
+            const canvas = document.getElementById('billCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const cx = Math.round((e.clientX - rect.left) * scaleX);
+            const cy = Math.round((e.clientY - rect.top) * scaleY);
+
+            const cfg = config[selectedField];
+            cfg.x = cx;
+            cfg.y = cy;
+
+            document.getElementById('posX').value = cx;
+            document.getElementById('posY').value = cy;
+
+            render();
+            showToast(`📍 ${FIELD_LABELS[selectedField]}: (${cx}, ${cy})`);
+        }
+
+        // ================================================================
+        // PERSISTENCE
+        // ================================================================
+        function saveConfig() {
+            localStorage.setItem('vcb_bill_config_v2', JSON.stringify(config));
+            showToast('💾 Đã lưu cấu hình vị trí');
+        }
+
+        function loadConfig() {
+            const saved = localStorage.getItem('vcb_bill_config_v2');
+            if (saved) {
+                config = JSON.parse(saved);
+                onFieldSelect();
+                render();
             }
         }
 
-        let panelVisible = true;
-        function togglePanel() {
-            const panel = document.getElementById('controlPanel');
-            const btn = document.getElementById('toggleBtn');
-            panelVisible = !panelVisible;
-            if (panelVisible) {
-                panel.style.display = 'block';
-                btn.style.display = 'none';
-            } else {
-                panel.style.display = 'none';
-                btn.style.display = 'block';
-            }
+        function resetConfig() {
+            localStorage.removeItem('vcb_bill_config_v2');
+            localStorage.removeItem('vcb_bill_config');
+            config = deepClone(DEFAULT_CONFIG);
+            onFieldSelect();
+            render();
+            showToast('🔄 Đã khôi phục vị trí mặc định');
         }
+
+        // ================================================================
+        // EXPORT
+        // ================================================================
+        function downloadPNG() {
+            // Temporarily hide highlight
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = 'vcb-bill-' + Date.now() + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('📥 Đã tải ảnh PNG');
+        }
+
+        function downloadJPG() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = 'vcb-bill-' + Date.now() + '.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('🖼️ Đã tải ảnh JPG');
+        }
+
+        async function copyToClipboard() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            try {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                await navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blob })
+                ]);
+                showToast('📋 Đã sao chép ảnh vào clipboard!');
+            } catch (err) {
+                showToast('❌ Lỗi: ' + err.message);
+            }
+
+            currentTab = prevTab;
+            render();
+        }
+
+        // ================================================================
+        // TOAST
+        // ================================================================
+        let toastTimer = null;
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+        }
+
+        // ================================================================
+        // START
+        // ================================================================
+        init();
     </script>
 </body>
 
