@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lowtechbank Bill Studio - Chuẩn Layout techvn_origin.jpg</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #07090e;
+            color: #e2e8f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ===== APP CONTAINER ===== */
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 420px;
+            min-width: 420px;
+            background: #0e121b;
+            border-right: 1px solid #1e2535;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid #1e2535;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header .title-group h1 {
+            font-size: 17px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e41e28, #ff5e62, #ffa502);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .header-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(228, 30, 40, 0.15);
+            color: #e41e28;
+            border: 1px solid rgba(228, 30, 40, 0.35);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            padding: 8px 14px 0;
+            gap: 4px;
+            flex-shrink: 0;
+            background: #090d15;
+            border-bottom: 1px solid #1e2535;
+        }
+
+        .tab {
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab:hover {
+            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab.active {
+            color: #ffffff;
+            background: #e41e28;
+            font-weight: 700;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 14px 18px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .tab-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #252e42;
+            border-radius: 3px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff5e62;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin: 14px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 8px 11px;
+            background: #141923;
+            border: 1px solid #232c3e;
+            border-radius: 7px;
+            color: #f1f5f9;
+            font-size: 13px;
+            font-family: inherit;
+            transition: border-color .15s, box-shadow .15s;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: #e41e28;
+            box-shadow: 0 0 0 2px rgba(228, 30, 40, 0.25);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 52px;
+            line-height: 1.4;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .input-row input[type="color"] {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #232c3e;
+            border-radius: 7px;
+            background: #141923;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .icon-btn,
+        .btn-sm {
+            padding: 7px 11px;
+            background: #19202f;
+            border: 1px solid #28344c;
+            border-radius: 7px;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .icon-btn:hover,
+        .btn-sm:hover {
+            background: #242e44;
+            border-color: #e41e28;
+            color: #ff7675;
+        }
+
+        .toggle-box {
+            background: #141923;
+            border: 1px solid #232c3e;
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #334155;
+            border-radius: 22px;
+            transition: .2s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: .2s;
+        }
+
+        input:checked+.slider {
+            background-color: #e41e28;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(18px);
+        }
+
+        .toggle-body {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #232c3e;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sep {
+            height: 1px;
+            background: #1e2535;
+            margin: 12px 0;
+        }
+
+        .pos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .nudge-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 6px;
+        }
+
+        .nudge-btn {
+            flex: 1;
+            padding: 5px 0;
+            background: #141923;
+            border: 1px solid #232c3e;
+            border-radius: 5px;
+            color: #94a3b8;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .nudge-btn:hover {
+            background: #21293c;
+            color: #ff5e62;
+            border-color: #e41e28;
+        }
+
+        .preset-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        /* Actions Bar */
+        .actions {
+            padding: 12px 18px 14px;
+            border-top: 1px solid #1e2535;
+            background: #090d15;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            padding: 11px;
+            background: linear-gradient(135deg, #e41e28, #c0392b);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(228, 30, 40, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(228, 30, 40, 0.45);
+        }
+
+        .btn-secondary {
+            padding: 8px 12px;
+            background: #141923;
+            border: 1px solid #232c3e;
+            border-radius: 7px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-secondary:hover {
+            border-color: #e41e28;
+            color: #ff7675;
+            background: #1c2333;
+        }
+
+        .btn-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        /* ===== CANVAS PREVIEW AREA ===== */
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #06080d;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .preview-area::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 45% 35%, rgba(228, 30, 40, 0.04) 0%, transparent 60%),
+                radial-gradient(circle at 75% 75%, rgba(52, 200, 90, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .phone-frame {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 36px;
+            padding: 8px;
+            background: #141822;
+            border: 2px solid #222a3a;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 25px 70px rgba(0, 0, 0, 0.85),
+                0 0 80px rgba(228, 30, 40, 0.08);
+            transition: all .3s;
+        }
+
+        #billCanvas {
+            max-height: calc(100vh - 55px);
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            border-radius: 28px;
+            display: block;
+            cursor: default;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 11px 18px;
+            background: #141923;
+            border: 1px solid #e41e28;
+            border-radius: 8px;
+            color: #ff7675;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all .25s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .field-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(228, 30, 40, 0.12);
+            border: 1px solid rgba(228, 30, 40, 0.35);
+            border-radius: 4px;
+            font-size: 11px;
+            color: #ff7675;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.4;
+            margin-top: 4px;
+        }
+
+        .hint kbd {
+            padding: 1px 5px;
+            background: #141923;
+            border: 1px solid #232c3e;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="title-group">
+                    <h1>Lowtechbank Bill Studio</h1>
+                    <div class="subtitle">Chuẩn Từng Pixel · Layout techvn_origin.jpg</div>
+                </div>
+                <span class="header-badge">Lowtechbank App</span>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('data')">📝 Dữ liệu</button>
+                <button class="tab" onclick="switchTab('position')">📐 Căn chỉnh vị trí</button>
+                <button class="tab" onclick="switchTab('theme')">🎨 Giao diện & So sánh</button>
+            </div>
+
+            <!-- ===== TAB 1: DỮ LIỆU ===== -->
+            <div class="tab-content active" id="tab-data">
+                <div class="section-title">💰 Thông Tin Giao Dịch</div>
+
+                <div class="input-group">
+                    <label>Thương hiệu ngân hàng (Logo Header)</label>
+                    <div class="input-row">
+                        <input type="text" id="inputBrandRed" value="LOWTECH" placeholder="Phần chữ đỏ" oninput="render()" style="flex:1;">
+                        <input type="text" id="inputBrandBlack" value="BANK" placeholder="Phần chữ đen" oninput="render()" style="flex:1;">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Số tiền giao dịch (VND)</label>
+                    <input type="text" id="inputAmount" value="1,000,000" oninput="render()" onblur="formatAmountInput()">
+                </div>
+
+                <div class="input-group">
+                    <label>Tiêu đề trạng thái</label>
+                    <input type="text" id="inputStatusTitle" value="Chuyển thành công" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Ngày chuyển tiền</label>
+                    <div class="input-row">
+                        <input type="text" id="inputDatetime" value="29 thg 11, 2025 lúc 12:09" oninput="render()">
+                        <button class="icon-btn" onclick="setCurrentTime()" title="Lấy giờ hiện tại">🕐 Giờ</button>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group" style="flex:1;">
+                        <label>Giờ Status bar</label>
+                        <input type="text" id="inputStatusTime" value="12:09" oninput="render()">
+                    </div>
+                    <div class="input-group" style="flex:1;">
+                        <label>Phần trăm pin (%)</label>
+                        <input type="number" id="inputBattery" value="69" min="1" max="100" oninput="render()">
+                    </div>
+                </div>
+
+                <div class="section-title">👤 Thông Tin Người Nhận</div>
+
+                <div class="input-group">
+                    <label>Tên người nhận</label>
+                    <div class="input-row">
+                        <input type="text" id="inputName" value="NGHIEM VAN HAI" oninput="render()">
+                        <button class="icon-btn" onclick="toUpper('inputName')" title="Chuyển thành chữ IN HOA">Aa</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Số tài khoản / Số điện thoại nhận</label>
+                    <div class="input-row">
+                        <input type="text" id="inputAccount" value="0971090199" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomAccount()" title="Sinh số tài khoản">🎲</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Ngân hàng nhận</label>
+                    <select id="selectBank" onchange="onBankChange()">
+                        <option value="Ngân hàng TMCP Tiên Phong" selected>TPBank - Ngân hàng TMCP Tiên Phong</option>
+                        <option value="Lowtechbank">Lowtechbank - Ngân hàng Kỹ Thương</option>
+                        <option value="Vietcombank">Vietcombank - Ngân hàng Ngoại Thương</option>
+                        <option value="MB - Ngân hàng Quân Đội">MB - Ngân hàng Quân Đội</option>
+                        <option value="BIDV - Ngân hàng Đầu tư & Phát triển">BIDV</option>
+                        <option value="VietinBank - Ngân hàng Công Thương">VietinBank</option>
+                        <option value="VPBank - Ngân hàng Việt Nam Thịnh Vượng">VPBank</option>
+                        <option value="ACB - Ngân hàng Á Châu">ACB</option>
+                        <option value="Sacombank - Ngân hàng Sài Gòn Thương Tín">Sacombank</option>
+                        <option value="Agribank - Ngân hàng Nông nghiệp">Agribank</option>
+                        <option value="custom">✏️ Tự nhập tên ngân hàng...</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="customBankGroup" style="display:none;">
+                    <label>Tên ngân hàng tự nhập</label>
+                    <input type="text" id="inputCustomBank" placeholder="Ví dụ: Ngân hàng TMCP Á Châu (ACB)" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Lời nhắn chuyển tiền (Hỗ trợ xuống dòng)</label>
+                    <textarea id="inputContent" rows="2" oninput="render()">NGUYEN HUY NGUYEN idc 3 freestyle 1 hiphop</textarea>
+                </div>
+
+                <div class="section-title">🆔 Mã Giao Dịch & Tham Chiếu</div>
+
+                <div class="input-group">
+                    <label>Mã giao dịch (FT)</label>
+                    <div class="input-row">
+                        <input type="text" id="inputTxId" value="FT25333970098330" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomTxId()" title="Tạo mã FT ngẫu nhiên">🎲</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Mã tham chiếu (6 số)</label>
+                    <div class="input-row">
+                        <input type="text" id="inputRefCode" value="298134" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomRefCode()" title="Tạo mã tham chiếu ngẫu nhiên">🎲</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Dòng liên kết chi tiêu</label>
+                    <input type="text" id="inputLinkSpending" value="Đây là khoản chi tiêu gì?" oninput="render()">
+                </div>
+
+                <!-- Danh bạ người nhận -->
+                <div class="toggle-box">
+                    <div class="toggle-header">
+                        <span class="toggle-label">
+                            <span>👤</span> Danh bạ người nhận đã lưu
+                        </span>
+                        <button class="btn-sm" style="padding:3px 8px; font-size:10px;" onclick="saveCurrentRecipient()">💾 Lưu vào danh bạ</button>
+                    </div>
+                    <div class="toggle-body" style="border-top:none; padding-top:2px;">
+                        <select id="selectSavedRecipient" style="width:100%; padding:6px; font-size:11px;" onchange="loadSavedRecipient()">
+                            <option value="">-- Chọn người nhận đã lưu --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sep"></div>
+
+                <button class="btn-secondary" style="width:100%; font-weight:700;" onclick="randomizeAll()">
+                    🎲 Sinh toàn bộ dữ liệu mẫu ngẫu nhiên
+                </button>
+            </div>
+
+            <!-- ===== TAB 2: CĂN CHỈNH VỊ TRÍ ===== -->
+            <div class="tab-content" id="tab-position">
+                <div class="input-group">
+                    <label>Chọn trường cần căn chỉnh</label>
+                    <select id="selectField" onchange="onFieldSelect()">
+                        <option value="amount" selected>💰 Số tiền (VND 1,000,000)</option>
+                        <option value="statusTitle">✅ Tiêu đề: Chuyển thành công</option>
+                        <option value="brandHeader">🏢 Logo Lowtechbank</option>
+                        <option value="checkIcon">🟢 Biểu tượng dấu tích xanh</option>
+                        <option value="statusTime">⏰ Giờ thanh trạng thái</option>
+                        <option value="receiverLabel">🏷️ Nhãn "Người nhận"</option>
+                        <option value="receiverName">👤 Tên người nhận</option>
+                        <option value="receiverAccount">🔢 STK người nhận</option>
+                        <option value="bankLabel">🏷️ Nhãn "Ngân hàng nhận"</option>
+                        <option value="bankName">🏦 Tên ngân hàng nhận</option>
+                        <option value="contentLabel">🏷️ Nhãn "Lời nhắn"</option>
+                        <option value="content">📝 Nội dung lời nhắn</option>
+                        <option value="dateLabel">🏷️ Nhãn "Ngày chuyển"</option>
+                        <option value="datetime">📅 Thời gian ngày chuyển</option>
+                        <option value="txIdLabel">🏷️ Nhãn "Mã giao dịch"</option>
+                        <option value="txId">🆔 Mã giao dịch (FT)</option>
+                        <option value="refCodeLabel">🏷️ Nhãn "Mã tham chiếu"</option>
+                        <option value="refCode">🔢 Mã tham chiếu (6 số)</option>
+                        <option value="linkSpending">🔗 Link "Đây là khoản chi tiêu gì?"</option>
+                        <option value="actionIcons">🔘 Thanh 3 nút hành động phụ</option>
+                        <option value="btnComplete">🔘 Nút "Hoàn thành"</option>
+                    </select>
+                </div>
+
+                <div class="field-badge" id="currentFieldBadge">Đang chỉnh: Số tiền</div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Tọa độ X (px)</label>
+                        <input type="number" id="posX" value="60" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                    <div class="input-group">
+                        <label>Tọa độ Y (px)</label>
+                        <input type="number" id="posY" value="728" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                </div>
+
+                <div class="nudge-controls">
+                    <button class="nudge-btn" onclick="nudge('x', -5)">◀ -5</button>
+                    <button class="nudge-btn" onclick="nudge('x', -1)">◀ -1</button>
+                    <button class="nudge-btn" onclick="nudge('x', 1)">+1 ▶</button>
+                    <button class="nudge-btn" onclick="nudge('x', 5)">+5 ▶</button>
+                </div>
+                <div class="nudge-controls" style="margin-bottom: 10px;">
+                    <button class="nudge-btn" onclick="nudge('y', -5)">▲ -5</button>
+                    <button class="nudge-btn" onclick="nudge('y', -1)">▲ -1</button>
+                    <button class="nudge-btn" onclick="nudge('y', 1)">+1 ▼</button>
+                    <button class="nudge-btn" onclick="nudge('y', 5)">+5 ▼</button>
+                </div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Cỡ chữ (Font Size)</label>
+                        <input type="number" id="posFontSize" value="58" min="8" max="140" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                    <div class="input-group">
+                        <label>Màu chữ</label>
+                        <input type="color" id="posFontColor" value="#080604" onchange="onPosInput()">
+                    </div>
+                </div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Độ đậm (Weight)</label>
+                        <select id="posFontWeight" onchange="onPosInput()">
+                            <option value="400">Regular (400)</option>
+                            <option value="500">Medium (500)</option>
+                            <option value="600">SemiBold (600)</option>
+                            <option value="700">Bold (700)</option>
+                            <option value="800" selected>ExtraBold (800)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Căn lề (Align)</label>
+                        <select id="posTextAlign" onchange="onPosInput()">
+                            <option value="left" selected>Căn Trái (Left)</option>
+                            <option value="center">Căn Giữa (Center)</option>
+                            <option value="right">Căn Phải (Right)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Độ trong suốt (Opacity %)</label>
+                    <input type="range" id="posOpacity" min="10" max="100" value="100" oninput="onPosInput()" style="width:100%;">
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="hint">
+                    💡 <b>Mẹo thao tác trực tiếp:</b><br>
+                    • Nhấp chuột trực tiếp lên ảnh bill để đặt tọa độ X, Y cho trường đang chọn.<br>
+                    • Sử dụng phím mũi tên <kbd>◀</kbd> <kbd>▲</kbd> <kbd>▼</kbd> <kbd>▶</kbd> để di chuyển từng pixel. Giữ <kbd>Shift</kbd> để di chuyển 5px.
+                </div>
+            </div>
+
+            <!-- ===== TAB 3: GIAO DIỆN & SO SÁNH ===== -->
+            <div class="tab-content" id="tab-theme">
+                <div class="section-title">📱 Tuỳ Chọn Thành Phần Bill</div>
+
+                <div class="input-group">
+                    <label>Thanh trạng thái đỉnh (Status Bar)</label>
+                    <select id="selectShowStatusBar" onchange="render()">
+                        <option value="true" selected>Bật thanh trạng thái (Giờ, Sóng, Wifi, Pin)</option>
+                        <option value="false">Tắt thanh trạng thái</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Thanh 3 nút phụ ("Chia sẻ", "Lưu mẫu", "Giao dịch mới")</label>
+                    <select id="selectShowActionIcons" onchange="render()">
+                        <option value="true" selected>Bật thanh 3 icon phụ</option>
+                        <option value="false">Tắt</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Dòng liên kết "Đây là khoản chi tiêu gì?"</label>
+                    <select id="selectShowLinkSpending" onchange="render()">
+                        <option value="true" selected>Bật dòng liên kết</option>
+                        <option value="false">Tắt</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Nút chính "Hoàn thành" phía dưới</label>
+                    <select id="selectShowCompleteBtn" onchange="render()">
+                        <option value="true" selected>Bật nút "Hoàn thành"</option>
+                        <option value="false">Tắt nút</option>
+                    </select>
+                </div>
+
+                <div class="section-title">🔍 So Sánh Đối Chiếu Với Ảnh Gốc</div>
+
+                <div class="toggle-box">
+                    <div class="toggle-header">
+                        <span class="toggle-label">
+                            <span>🖼️</span> Lớp phủ ảnh gốc (techvn_origin.jpg)
+                        </span>
+                        <label class="switch">
+                            <input type="checkbox" id="checkEnableOverlay" onchange="render()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-body">
+                        <div class="input-group" style="margin-bottom:4px;">
+                            <label>Độ mờ lớp phủ ảnh gốc: <span id="overlayOpacityLabel">50%</span></label>
+                            <input type="range" id="rangeOverlayOpacity" min="0" max="100" value="50" oninput="onOverlayOpacityChange()" style="width:100%;">
+                        </div>
+                        <div class="hint">
+                            Kéo thanh trượt để so sánh trực quan độ lệch từng ký tự giữa bill render và ảnh gốc `techvn_origin.jpg`.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ACTIONS BAR ===== -->
+            <div class="actions">
+                <button class="btn-primary" onclick="downloadPNG()">
+                    <span>📥</span> Tải ảnh Bill PNG (946 × 2048)
+                </button>
+
+                <div class="btn-row-2">
+                    <button class="btn-secondary" onclick="downloadJPG()">
+                        <span>🖼️</span> Tải ảnh JPG
+                    </button>
+                    <button class="btn-secondary" onclick="saveConfig()">
+                        <span>💾</span> Lưu vị trí
+                    </button>
+                </div>
+
+                <button class="btn-secondary" onclick="resetConfig()" style="font-size:11px; padding:6px;">
+                    <span>🔄</span> Khôi phục vị trí mặc định chuẩn
+                </button>
+            </div>
+        </aside>
+
+        <!-- ===== CANVAS PREVIEW ===== -->
+        <main class="preview-area">
+            <div class="phone-frame">
+                <canvas id="billCanvas"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✅</span>
+        <span id="toastMsg">Thông báo</span>
+    </div>
+
+    <script>
+        // ================================================================
+        // EXACT TECHCOMBANK HIGH-DPI CONFIGURATION (946 x 2048)
+        // ================================================================
+        const DEFAULT_CONFIG = {
+            statusTime:      { x: 102, y: 62,   size: 38, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            batteryLevel:    { x: 835, y: 62,   size: 22, weight: '700', color: '#ffffff', align: 'center', opacity: 1 },
+            checkIcon:       { x: 145, y: 385,  size: 86, weight: '700', color: '#34c85a', align: 'center', opacity: 1 },
+            brandHeader:     { x: 60,  y: 538,  size: 32, weight: '800', color: '#e41e28', align: 'left',   opacity: 1 },
+            statusTitle:     { x: 60,  y: 645,  size: 50, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            amount:          { x: 60,  y: 728,  size: 58, weight: '800', color: '#080604', align: 'left',   opacity: 1 },
+            receiverLabel:   { x: 60,  y: 880,  size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            receiverName:    { x: 60,  y: 928,  size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            receiverAccount: { x: 60,  y: 971,  size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            bankLabel:       { x: 60,  y: 1042, size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            bankName:        { x: 60,  y: 1090, size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            contentLabel:    { x: 60,  y: 1153, size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            content:         { x: 60,  y: 1208, size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1, lh: 46 },
+            dateLabel:       { x: 60,  y: 1273, size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            datetime:        { x: 60,  y: 1324, size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            txIdLabel:       { x: 60,  y: 1393, size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            txId:            { x: 60,  y: 1440, size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            refCodeLabel:    { x: 60,  y: 1505, size: 28, weight: '400', color: '#9b9893', align: 'left',   opacity: 1 },
+            refCode:         { x: 60,  y: 1557, size: 34, weight: '700', color: '#080604', align: 'left',   opacity: 1 },
+            linkSpending:    { x: 60,  y: 1647, size: 30, weight: '500', color: '#2d7fcd', align: 'left',   opacity: 1 },
+            actionIcons:     { x: 473, y: 1740, size: 70, weight: '600', color: '#080604', align: 'center', opacity: 1 },
+            btnComplete:     { x: 473, y: 1912, size: 38, weight: '700', color: '#ffffff', align: 'center', opacity: 1 }
+        };
+
+        let currentTab = 'data';
+        let selectedField = 'amount';
+        let config = deepClone(DEFAULT_CONFIG);
+
+        // Assets
+        const originImage = new Image();
+        originImage.src = 'techvn_origin.jpg';
+        originImage.onload = () => {
+            if (document.getElementById('checkEnableOverlay').checked) render();
+        };
+
+        const VIETNAMESE_NAMES = [
+            "NGHIEM VAN HAI", "HOANG VIET DUC", "NGUYEN VAN AN", "TRAN THI THAO", 
+            "LE HOANG DUONG", "PHAM MINH DUC", "VU THI LINH", "NGUYEN DINH GIANG", "DO QUANG HUY"
+        ];
+        const VIETNAMESE_MESSAGES = [
+            "NGUYEN HUY NGUYEN idc 3 freestyle 1 hiphop",
+            "Chuyen tien hoc phi hoc ky 1 nam hoc 2026",
+            "Thanh toan tien thue nha thang 11",
+            "Chuc mung sinh nhat vui ve",
+            "Tien an trua va cafe cuoi tuan"
+        ];
+        const VIETNAMESE_BANKS = [
+            "Ngân hàng TMCP Tiên Phong",
+            "Ngân hàng TMCP Ngoại Thương Việt Nam (Vietcombank)",
+            "Ngân hàng TMCP Quân Đội (MB)",
+            "Ngân hàng TMCP Kỹ Thương Việt Nam (Lowtechbank)",
+            "Ngân hàng TMCP Công Thương Việt Nam (VietinBank)",
+            "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)",
+            "Ngân hàng TMCP Á Châu (ACB)"
+        ];
+
+        // ================================================================
+        // INITIALIZATION
+        // ================================================================
+        window.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            loadConfig();
+            loadSavedPresets();
+
+            document.addEventListener('keydown', handleKeydown);
+            const canvas = document.getElementById('billCanvas');
+            canvas.addEventListener('click', handleCanvasClick);
+            canvas.addEventListener('mousemove', handleCanvasMouseMove);
+
+            document.fonts.ready.then(() => render());
+            onFieldSelect();
+            render();
+        }
+
+        // ================================================================
+        // MAIN CANVAS RENDERER (EXACT TECHCOMBANK)
+        // ================================================================
+        function render() {
+            const canvas = document.getElementById('billCanvas');
+            const ctx = canvas.getContext('2d');
+            const W = 946;
+            const H = 2048;
+
+            canvas.width = W;
+            canvas.height = H;
+
+            // 1. Warm cream background gradient (matching techvn_origin.jpg)
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+            bgGrad.addColorStop(0, '#fef5e7');
+            bgGrad.addColorStop(0.35, '#fef7ed');
+            bgGrad.addColorStop(0.70, '#fdf8f0');
+            bgGrad.addColorStop(1, '#fbfaf8');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, W, H);
+
+            // 2. Status Bar (Top)
+            if (document.getElementById('selectShowStatusBar').value === 'true') {
+                drawStatusBar(ctx, W);
+            }
+
+            // 3. Green Checkmark Badge (Left Aligned)
+            drawCheckmarkBadge(ctx);
+
+            // 4. Techcombank Logo Header (TECHCOM in red, BANK in black + dual-rhombus emblem)
+            drawBrandHeader(ctx);
+
+            // 5. Title & Amount
+            drawTitleAndAmount(ctx);
+
+            // 6. Details List (6 rows: Người nhận, Ngân hàng nhận, Lời nhắn, Ngày chuyển, Mã GD, Mã tham chiếu)
+            drawDetailsList(ctx);
+
+            // 7. Spending link ("Đây là khoản chi tiêu gì?")
+            if (document.getElementById('selectShowLinkSpending').value === 'true') {
+                drawSpendingLink(ctx);
+            }
+
+            // 8. 3 Action Icons (Chia sẻ, Lưu mẫu giao dịch, Giao dịch mới)
+            if (document.getElementById('selectShowActionIcons').value === 'true') {
+                drawActionIcons(ctx);
+            }
+
+            // 9. Bottom Button ("Hoàn thành")
+            if (document.getElementById('selectShowCompleteBtn').value === 'true') {
+                drawCompleteButton(ctx, W);
+            }
+
+            // 10. Home Indicator Bar
+            drawHomeIndicator(ctx, W);
+
+            // 11. Overlay Image (techvn_origin.jpg) for pixel comparison
+            if (document.getElementById('checkEnableOverlay').checked && originImage.complete && originImage.naturalWidth > 0) {
+                drawComparisonOverlay(ctx, W, H);
+            }
+
+            // 12. Selection Highlight (when in Position tab)
+            if (currentTab === 'position') {
+                drawHighlight(ctx, selectedField);
+            }
+        }
+
+        // ===== SUB-RENDERERS =====
+        function drawStatusBar(ctx, W) {
+            ctx.save();
+            const timeText = gv('inputStatusTime') || '12:09';
+            const batteryPct = Math.min(100, Math.max(1, parseInt(gv('inputBattery')) || 69));
+
+            // Left Time
+            const cfgT = config.statusTime;
+            ctx.font = `${cfgT.weight} ${cfgT.size}px 'Inter'`;
+            ctx.fillStyle = cfgT.color || '#080604';
+            ctx.textAlign = cfgT.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(timeText, cfgT.x, cfgT.y);
+
+            // Right icons: Cellular, Wifi, Battery
+            const rY = cfgT.y;
+            const rightMargin = 60;
+
+            // 1. Battery Icon Pill (far right)
+            const batW = 54;
+            const batH = 26;
+            const batX = W - rightMargin - batW;
+            const batY = rY - batH / 2;
+
+            // Battery body outline
+            ctx.strokeStyle = '#080604';
+            ctx.lineWidth = 2.2;
+            roundRect(ctx, batX, batY, batW, batH, 7);
+            ctx.stroke();
+
+            // Terminal tip on right
+            ctx.fillStyle = '#080604';
+            roundRect(ctx, batX + batW + 2, rY - 5, 3.5, 10, 1.5);
+            ctx.fill();
+
+            // Battery fill (dynamic according to percentage)
+            const fillWidth = Math.max(4, Math.round((batW - 7) * (batteryPct / 100)));
+            roundRect(ctx, batX + 3.5, batY + 3.5, fillWidth, batH - 7, 3.5);
+            ctx.fill();
+
+            // Battery percentage text inside pill
+            const cfgB = config.batteryLevel;
+            ctx.font = `${cfgB.weight} ${cfgB.size}px 'Inter'`;
+            ctx.fillStyle = (batteryPct > 45) ? '#ffffff' : '#080604';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(String(batteryPct), batX + batW / 2, rY + 1);
+
+            // 2. Wifi Icon (Left of battery)
+            const wifiX = batX - 44;
+            const wifiY = rY;
+            drawWifiIcon(ctx, wifiX, wifiY, 28, '#080604');
+
+            // 3. Cellular Signal Bars (Left of Wifi)
+            const cellX = wifiX - 52;
+            const cellY = rY;
+            for (let i = 0; i < 4; i++) {
+                const bh = 8 + i * 5.5;
+                const bx = cellX + i * 8.5;
+                const by = cellY + 9 - bh;
+                ctx.fillStyle = (i === 3) ? '#c0bdb8' : '#080604'; // 4th bar faint like origin
+                roundRect(ctx, bx, by, 5, bh, 1.5);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function drawWifiIcon(ctx, cx, cy, size, color) {
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2.4;
+            ctx.lineCap = 'round';
+
+            // Center dot
+            ctx.beginPath();
+            ctx.arc(cx, cy + 8, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Arc 1
+            ctx.beginPath();
+            ctx.arc(cx, cy + 8, 10, -Math.PI * 0.75, -Math.PI * 0.25);
+            ctx.stroke();
+
+            // Arc 2
+            ctx.beginPath();
+            ctx.arc(cx, cy + 8, 18, -Math.PI * 0.75, -Math.PI * 0.25);
+            ctx.stroke();
+
+            // Arc 3
+            ctx.beginPath();
+            ctx.arc(cx, cy + 8, 26, -Math.PI * 0.75, -Math.PI * 0.25);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawCheckmarkBadge(ctx) {
+            ctx.save();
+            const cfg = config.checkIcon;
+            const cx = cfg.x;
+            const cy = cfg.y;
+            const r = cfg.size || 86;
+
+            // Green Circle Fill
+            ctx.fillStyle = cfg.color || '#34c85a';
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Crisp White Checkmark with rounded ends
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 14;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(cx - 40, cy);
+            ctx.lineTo(cx - 12, cy + 31);
+            ctx.lineTo(cx + 41, cy - 35);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawBrandHeader(ctx) {
+            ctx.save();
+            const cfg = config.brandHeader;
+            const x = cfg.x;
+            const y = cfg.y;
+
+            const brandRed = gv('inputBrandRed') || 'LOWTECH';
+            const brandBlack = gv('inputBrandBlack') || 'BANK';
+
+            // Text prefix in red
+            ctx.font = `800 ${cfg.size || 32}px 'Inter'`;
+            ctx.fillStyle = cfg.color || '#e41e28';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(brandRed, x, y);
+
+            const redW = ctx.measureText(brandRed).width;
+
+            // Text suffix in black
+            ctx.fillStyle = '#080604';
+            ctx.fillText(brandBlack, x + redW, y);
+
+            const fullTextW = redW + ctx.measureText(brandBlack).width;
+
+            // Dual-Rhombus Emblem next to brand name
+            const emblemX = x + fullTextW + 28;
+            const emblemY = y;
+            const emblemH = 44;
+            drawTechcombankEmblem(ctx, emblemX, emblemY, emblemH, cfg.color || '#e41e28');
+
+            ctx.restore();
+        }
+
+        function drawTechcombankEmblem(ctx, x, y, h, color) {
+            ctx.save();
+            // The emblem is composed of two symmetrical chevron shapes forming a tilted square with diamond cutout
+            const scale = h / 45;
+            ctx.translate(x, y - (h / 2));
+            ctx.fillStyle = color;
+
+            // Left Chevron (Contour 1)
+            ctx.beginPath();
+            ctx.moveTo(25 * scale, 2 * scale);
+            ctx.lineTo(4 * scale, 24 * scale);
+            ctx.lineTo(24 * scale, 46 * scale);
+            ctx.lineTo(36 * scale, 35 * scale);
+            ctx.lineTo(26 * scale, 23 * scale);
+            ctx.lineTo(36 * scale, 10 * scale);
+            ctx.closePath();
+            ctx.fill();
+
+            // Right Chevron (Contour 0)
+            ctx.beginPath();
+            ctx.moveTo(52 * scale, 2 * scale);
+            ctx.lineTo(41 * scale, 11 * scale);
+            ctx.lineTo(52 * scale, 23 * scale);
+            ctx.lineTo(41 * scale, 35 * scale);
+            ctx.lineTo(52 * scale, 46 * scale);
+            ctx.lineTo(75 * scale, 24 * scale);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawTitleAndAmount(ctx) {
+            ctx.save();
+
+            // Title: "Chuyển thành công"
+            const cfgT = config.statusTitle;
+            ctx.font = `${cfgT.weight} ${cfgT.size}px 'Inter'`;
+            ctx.fillStyle = cfgT.color || '#080604';
+            ctx.textAlign = cfgT.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(gv('inputStatusTitle') || 'Chuyển thành công', cfgT.x, cfgT.y);
+
+            // Amount: "VND 1,000,000"
+            const rawAmt = gv('inputAmount') || '1,000,000';
+            const displayAmt = rawAmt.startsWith('VND') ? rawAmt : `VND ${rawAmt}`;
+            const cfgA = config.amount;
+            ctx.font = `${cfgA.weight} ${cfgA.size}px 'Inter'`;
+            ctx.fillStyle = cfgA.color || '#080604';
+            ctx.textAlign = cfgA.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(displayAmt, cfgA.x, cfgA.y);
+
+            ctx.restore();
+        }
+
+        function drawDetailsList(ctx) {
+            ctx.save();
+
+            // 1. Người nhận
+            drawFieldPair(ctx, 'receiverLabel', 'Người nhận', 'receiverName', gv('inputName') || 'NGHIEM VAN HAI');
+            // Extra line: Account number under name
+            const cfgAcc = config.receiverAccount;
+            ctx.font = `${cfgAcc.weight} ${cfgAcc.size}px 'Inter'`;
+            ctx.fillStyle = cfgAcc.color || '#080604';
+            ctx.textAlign = cfgAcc.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(gv('inputAccount') || '0971090199', cfgAcc.x, cfgAcc.y);
+
+            // 2. Ngân hàng nhận
+            const bankText = getSelectedBankName();
+            drawFieldPair(ctx, 'bankLabel', 'Ngân hàng nhận', 'bankName', bankText);
+
+            // 3. Lời nhắn (Multi-line support with wrap)
+            const cfgLblC = config.contentLabel;
+            ctx.font = `${cfgLblC.weight} ${cfgLblC.size}px 'Inter'`;
+            ctx.fillStyle = cfgLblC.color || '#9b9893';
+            ctx.textAlign = cfgLblC.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Lời nhắn', cfgLblC.x, cfgLblC.y);
+
+            const cfgValC = config.content;
+            ctx.font = `${cfgValC.weight} ${cfgValC.size}px 'Inter'`;
+            ctx.fillStyle = cfgValC.color || '#080604';
+            ctx.textAlign = cfgValC.align || 'left';
+            ctx.textBaseline = 'top';
+
+            const rawContent = gv('inputContent') || 'NGUYEN HUY NGUYEN idc 3 freestyle 1 hiphop';
+            const contentLines = rawContent.split('\n');
+            const maxTextW = 820;
+            let currentLineY = cfgValC.y - 14;
+
+            contentLines.forEach(para => {
+                const words = para.split(' ');
+                let curLine = '';
+                words.forEach((word, idx) => {
+                    const testLine = curLine ? (curLine + ' ' + word) : word;
+                    if (ctx.measureText(testLine).width > maxTextW && curLine) {
+                        ctx.fillText(curLine, cfgValC.x, currentLineY);
+                        currentLineY += (cfgValC.lh || 46);
+                        curLine = word;
+                    } else {
+                        curLine = testLine;
+                    }
+                });
+                if (curLine) {
+                    ctx.fillText(curLine, cfgValC.x, currentLineY);
+                    currentLineY += (cfgValC.lh || 46);
+                }
+            });
+
+            // 4. Ngày chuyển
+            drawFieldPair(ctx, 'dateLabel', 'Ngày chuyển', 'datetime', gv('inputDatetime') || '29 thg 11, 2025 lúc 12:09');
+
+            // 5. Mã giao dịch
+            drawFieldPair(ctx, 'txIdLabel', 'Mã giao dịch', 'txId', gv('inputTxId') || 'FT25333970098330');
+
+            // 6. Mã tham chiếu
+            drawFieldPair(ctx, 'refCodeLabel', 'Mã tham chiếu', 'refCode', gv('inputRefCode') || '298134');
+
+            ctx.restore();
+        }
+
+        function drawFieldPair(ctx, lblKey, lblText, valKey, valText) {
+            const cfgL = config[lblKey];
+            ctx.font = `${cfgL.weight} ${cfgL.size}px 'Inter'`;
+            ctx.fillStyle = cfgL.color || '#9b9893';
+            ctx.textAlign = cfgL.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(lblText, cfgL.x, cfgL.y);
+
+            const cfgV = config[valKey];
+            ctx.font = `${cfgV.weight} ${cfgV.size}px 'Inter'`;
+            ctx.fillStyle = cfgV.color || '#080604';
+            ctx.textAlign = cfgV.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(valText, cfgV.x, cfgV.y);
+        }
+
+        function drawSpendingLink(ctx) {
+            ctx.save();
+            const cfg = config.linkSpending;
+            ctx.font = `${cfg.weight} ${cfg.size}px 'Inter'`;
+            ctx.fillStyle = cfg.color || '#2d7fcd';
+            ctx.textAlign = cfg.align || 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(gv('inputLinkSpending') || 'Đây là khoản chi tiêu gì?', cfg.x, cfg.y);
+            ctx.restore();
+        }
+
+        function drawActionIcons(ctx) {
+            ctx.save();
+            const y = config.actionIcons.y || 1740;
+            const labelY = 1800;
+
+            const actions = [
+                { x: 190, label: 'Chia sẻ', type: 'share' },
+                { x: 480, label: 'Lưu mẫu giao dịch', type: 'template' },
+                { x: 765, label: 'Giao dịch mới', type: 'transfer' }
+            ];
+
+            ctx.lineWidth = 3.2;
+            ctx.strokeStyle = '#080604';
+            ctx.fillStyle = '#080604';
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            actions.forEach(act => {
+                // Draw Icon
+                if (act.type === 'share') {
+                    // Box with arrow breaking out
+                    const bx = act.x - 22;
+                    const by = y - 18;
+                    ctx.beginPath();
+                    ctx.moveTo(bx + 26, by);
+                    ctx.lineTo(bx + 8, by);
+                    ctx.arcTo(bx, by, bx, by + 8, 7);
+                    ctx.lineTo(bx, by + 36);
+                    ctx.arcTo(bx, by + 44, bx + 8, by + 44, 7);
+                    ctx.lineTo(bx, by + 36);
+                    ctx.arcTo(bx + 44, by + 44, bx + 44, by + 36, 7);
+                    ctx.lineTo(bx + 44, by + 18);
+                    ctx.stroke();
+
+                    // Arrow
+                    ctx.beginPath();
+                    ctx.moveTo(bx + 20, by + 24);
+                    ctx.lineTo(bx + 44, by);
+                    ctx.lineTo(bx + 28, by);
+                    ctx.moveTo(bx + 44, by);
+                    ctx.lineTo(bx + 44, by + 16);
+                    ctx.stroke();
+                } else if (act.type === 'template') {
+                    // Document with folded corner and circle badge
+                    const dx = act.x - 18;
+                    const dy = y - 22;
+                    // Document body
+                    ctx.beginPath();
+                    ctx.moveTo(dx, dy);
+                    ctx.lineTo(dx + 26, dy);
+                    ctx.lineTo(dx + 36, dy + 10);
+                    ctx.lineTo(dx + 36, dy + 42);
+                    ctx.lineTo(dx, dy + 42);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    // 3 horizontal text lines on document
+                    ctx.beginPath();
+                    ctx.moveTo(dx + 8, dy + 16);
+                    ctx.lineTo(dx + 24, dy + 16);
+                    ctx.moveTo(dx + 8, dy + 24);
+                    ctx.lineTo(dx + 20, dy + 24);
+                    ctx.moveTo(dx + 8, dy + 32);
+                    ctx.lineTo(dx + 16, dy + 32);
+                    ctx.stroke();
+
+                    // Circle badge with down arrow at bottom right
+                    const cx = dx + 30;
+                    const cy = dy + 36;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(cx, cy - 7);
+                    ctx.lineTo(cx, cy + 6);
+                    ctx.lineTo(cx - 5, cy + 1);
+                    ctx.moveTo(cx, cy + 6);
+                    ctx.lineTo(cx + 5, cy + 1);
+                    ctx.stroke();
+                } else if (act.type === 'transfer') {
+                    // Two opposite horizontal arrows
+                    const ax = act.x;
+                    const ay = y;
+
+                    // Top arrow: pointing left
+                    ctx.beginPath();
+                    ctx.moveTo(ax + 24, ay - 8);
+                    ctx.lineTo(ax - 22, ay - 8);
+                    ctx.lineTo(ax - 13, ay - 17);
+                    ctx.stroke();
+
+                    // Bottom arrow: pointing right
+                    ctx.beginPath();
+                    ctx.moveTo(ax - 24, ay + 10);
+                    ctx.lineTo(ax + 22, ay + 10);
+                    ctx.lineTo(ax + 13, ay + 19);
+                    ctx.stroke();
+                }
+
+                // Label Text
+                ctx.font = `600 28px 'Inter'`;
+                ctx.fillStyle = '#080604';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(act.label, act.x, labelY);
+            });
+
+            ctx.restore();
+        }
+
+        function drawCompleteButton(ctx, W) {
+            ctx.save();
+            const bX = 39;
+            const bY = 1854;
+            const bW = 868;
+            const bH = 116;
+            const radius = 58; // full pill
+
+            // Solid black pill background
+            ctx.fillStyle = '#181818';
+            roundRect(ctx, bX, bY, bW, bH, radius);
+            ctx.fill();
+
+            // Text "Hoàn thành" in bold white
+            const cfg = config.btnComplete;
+            ctx.font = `${cfg.weight || '700'} ${cfg.size || 38}px 'Inter'`;
+            ctx.fillStyle = cfg.color || '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Hoàn thành', W / 2, bY + bH / 2);
+
+            ctx.restore();
+        }
+
+        function drawHomeIndicator(ctx, W) {
+            ctx.save();
+            const barW = 336;
+            const barH = 12;
+            const barX = 305;
+            const barY = 2016;
+
+            ctx.fillStyle = '#000000';
+            roundRect(ctx, barX, barY, barW, barH, 6);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawComparisonOverlay(ctx, W, H) {
+            ctx.save();
+            const op = parseInt(document.getElementById('rangeOverlayOpacity').value) / 100;
+            ctx.globalAlpha = op;
+            ctx.drawImage(originImage, 0, 0, W, H);
+            ctx.restore();
+        }
+
+        function drawHighlight(ctx, fieldKey) {
+            const cfg = config[fieldKey];
+            if (!cfg) return;
+
+            ctx.save();
+            ctx.strokeStyle = '#e41e28';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 6]);
+
+            const pad = 12;
+            let bx = cfg.x;
+            let by = cfg.y;
+            let bw = 240;
+            let bh = (cfg.size || 34) + pad * 2;
+
+            if (cfg.align === 'center') {
+                bx -= bw / 2;
+                by -= bh / 2;
+            } else if (cfg.align === 'right') {
+                bx -= bw;
+                by -= bh / 2;
+            } else {
+                by -= bh / 2;
+            }
+
+            roundRect(ctx, bx - pad, by, bw + pad * 2, bh, 8);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'rgba(228, 30, 40, 0.9)';
+            ctx.font = '700 24px Inter';
+            ctx.textAlign = cfg.align === 'right' ? 'right' : 'left';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(`📍 ${fieldKey}: (${cfg.x}, ${cfg.y})`, bx - pad, by - 6);
+
+            ctx.restore();
+        }
+
+        // ================================================================
+        // INTERACTIVE HANDLERS & LOGIC
+        // ================================================================
+        function switchTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            const tabMap = { 'data': 0, 'position': 1, 'theme': 2 };
+            const tabs = document.querySelectorAll('.tab');
+            if (tabs[tabMap[tabName]]) tabs[tabMap[tabName]].classList.add('active');
+
+            const contentEl = document.getElementById(`tab-${tabName}`);
+            if (contentEl) contentEl.classList.add('active');
+
+            render();
+        }
+
+        function onBankChange() {
+            const sel = document.getElementById('selectBank').value;
+            const customGroup = document.getElementById('customBankGroup');
+            if (sel === 'custom') {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+            render();
+        }
+
+        function getSelectedBankName() {
+            const sel = document.getElementById('selectBank').value;
+            if (sel === 'custom') {
+                return gv('inputCustomBank') || 'Ngân hàng TMCP Tiên Phong';
+            }
+            return sel;
+        }
+
+        function onOverlayOpacityChange() {
+            const val = document.getElementById('rangeOverlayOpacity').value;
+            document.getElementById('overlayOpacityLabel').textContent = `${val}%`;
+            render();
+        }
+
+        function onFieldSelect() {
+            selectedField = document.getElementById('selectField').value;
+            const cfg = config[selectedField] || {};
+
+            document.getElementById('posX').value = cfg.x || 0;
+            document.getElementById('posY').value = cfg.y || 0;
+            document.getElementById('posFontSize').value = cfg.size || 34;
+            document.getElementById('posFontColor').value = toHex(cfg.color || '#080604');
+            document.getElementById('posFontWeight').value = cfg.weight || '700';
+            document.getElementById('posTextAlign').value = cfg.align || 'left';
+            document.getElementById('posOpacity').value = Math.round((cfg.opacity !== undefined ? cfg.opacity : 1) * 100);
+
+            const selText = document.getElementById('selectField').options[document.getElementById('selectField').selectedIndex].text;
+            document.getElementById('currentFieldBadge').textContent = `Đang chỉnh: ${selText}`;
+
+            render();
+        }
+
+        function onPosInput() {
+            const cfg = config[selectedField];
+            if (!cfg) return;
+
+            cfg.x = parseInt(document.getElementById('posX').value) || 0;
+            cfg.y = parseInt(document.getElementById('posY').value) || 0;
+            cfg.size = parseInt(document.getElementById('posFontSize').value) || 34;
+            cfg.color = document.getElementById('posFontColor').value;
+            cfg.weight = document.getElementById('posFontWeight').value;
+            cfg.align = document.getElementById('posTextAlign').value;
+            cfg.opacity = parseInt(document.getElementById('posOpacity').value) / 100;
+
+            render();
+        }
+
+        function nudge(axis, delta) {
+            const cfg = config[selectedField];
+            if (!cfg) return;
+            cfg[axis] += delta;
+            document.getElementById('pos' + axis.toUpperCase()).value = cfg[axis];
+            render();
+        }
+
+        function handleKeydown(e) {
+            if (currentTab !== 'position') return;
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+            const step = e.shiftKey ? 5 : 1;
+            let handled = false;
+
+            if (e.key === 'ArrowLeft')  { nudge('x', -step); handled = true; }
+            if (e.key === 'ArrowRight') { nudge('x',  step); handled = true; }
+            if (e.key === 'ArrowUp')    { nudge('y', -step); handled = true; }
+            if (e.key === 'ArrowDown')  { nudge('y',  step); handled = true; }
+
+            if (handled) e.preventDefault();
+        }
+
+        function handleCanvasMouseMove(e) {
+            const canvas = document.getElementById('billCanvas');
+            if (currentTab === 'position') {
+                canvas.style.cursor = 'crosshair';
+                canvas.title = 'Bấm để đặt tọa độ cho trường đang chọn';
+                return;
+            }
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const cx = Math.round((e.clientX - rect.left) * scaleX);
+            const cy = Math.round((e.clientY - rect.top) * scaleY);
+
+            // Hover over "Hoàn thành" button (y: 1854..1970, x: 39..906)
+            if (cy >= 1854 && cy <= 1970 && cx >= 39 && cx <= 906) {
+                canvas.style.cursor = 'pointer';
+                canvas.title = 'Nhấp chuột để Hoàn thành / Sinh dữ liệu mới';
+                return;
+            }
+
+            // Hover over 3 action icons (y: 1709..1813)
+            if (cy >= 1709 && cy <= 1813) {
+                if (cx >= 120 && cx <= 260) {
+                    canvas.style.cursor = 'pointer';
+                    canvas.title = 'Chia sẻ hóa đơn';
+                    return;
+                } else if (cx >= 400 && cx <= 560) {
+                    canvas.style.cursor = 'pointer';
+                    canvas.title = 'Lưu mẫu giao dịch';
+                    return;
+                } else if (cx >= 680 && cx <= 840) {
+                    canvas.style.cursor = 'pointer';
+                    canvas.title = 'Giao dịch mới';
+                    return;
+                }
+            }
+
+            canvas.style.cursor = 'default';
+            canvas.title = '';
+        }
+
+        function handleCanvasClick(e) {
+            const canvas = document.getElementById('billCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const cx = Math.round((e.clientX - rect.left) * scaleX);
+            const cy = Math.round((e.clientY - rect.top) * scaleY);
+
+            if (currentTab === 'position') {
+                const cfg = config[selectedField];
+                if (cfg) {
+                    cfg.x = cx;
+                    cfg.y = cy;
+                    document.getElementById('posX').value = cx;
+                    document.getElementById('posY').value = cy;
+                    render();
+                    showToast(`📍 Đã đặt tọa độ ${selectedField}: (${cx}, ${cy})`);
+                }
+                return;
+            }
+
+            // Direct button actions:
+            // 1. Click "Hoàn thành" button or "Giao dịch mới"
+            if ((cy >= 1854 && cy <= 1970 && cx >= 39 && cx <= 906) || (cy >= 1709 && cy <= 1813 && cx >= 680 && cx <= 840)) {
+                randomizeAll();
+                showToast('✨ Đã sinh dữ liệu giao dịch mới!');
+                return;
+            }
+
+            // 2. Click "Chia sẻ"
+            if (cy >= 1709 && cy <= 1813 && cx >= 120 && cx <= 260) {
+                downloadPNG();
+                return;
+            }
+
+            // 3. Click "Lưu mẫu giao dịch"
+            if (cy >= 1709 && cy <= 1813 && cx >= 400 && cx <= 560) {
+                saveCurrentRecipient();
+                return;
+            }
+        }
+
+        // ================================================================
+        // DATA RANDOMIZERS & STORAGE
+        // ================================================================
+        function randomizeAll() {
+            // Amount
+            const amt = (Math.floor(Math.random() * 50 + 1) * 100000);
+            document.getElementById('inputAmount').value = amt.toLocaleString('en-US');
+
+            // Name
+            const name = VIETNAMESE_NAMES[Math.floor(Math.random() * VIETNAMESE_NAMES.length)];
+            document.getElementById('inputName').value = name;
+
+            // Account / Phone
+            genRandomAccount();
+
+            // Bank
+            const bIndex = Math.floor(Math.random() * VIETNAMESE_BANKS.length);
+            const selBank = document.getElementById('selectBank');
+            selBank.selectedIndex = bIndex;
+            document.getElementById('customBankGroup').style.display = 'none';
+
+            // Message
+            const msg = VIETNAMESE_MESSAGES[Math.floor(Math.random() * VIETNAMESE_MESSAGES.length)];
+            document.getElementById('inputContent').value = msg;
+
+            // DateTime
+            setCurrentTime();
+
+            // FT & Ref Code
+            genRandomTxId();
+            genRandomRefCode();
+
+            render();
+            showToast('🎲 Đã sinh dữ liệu mẫu ngẫu nhiên!');
+        }
+
+        function setCurrentTime() {
+            const now = new Date();
+            const d = String(now.getDate()).padStart(2, '0');
+            const mo = now.getMonth() + 1;
+            const y = now.getFullYear();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+
+            const fullStr = `${d} thg ${mo}, ${y} lúc ${h}:${m}`;
+            const timeStr = `${h}:${m}`;
+
+            document.getElementById('inputDatetime').value = fullStr;
+            document.getElementById('inputStatusTime').value = timeStr;
+            render();
+            showToast('🕐 Đã cập nhật ngày giờ hiện tại');
+        }
+
+        function genRandomTxId() {
+            let id = 'FT' + String(new Date().getFullYear()).slice(-2);
+            for (let i = 0; i < 12; i++) id += Math.floor(Math.random() * 10);
+            document.getElementById('inputTxId').value = id;
+            render();
+        }
+
+        function genRandomRefCode() {
+            let code = '';
+            for (let i = 0; i < 6; i++) code += Math.floor(Math.random() * 10);
+            document.getElementById('inputRefCode').value = code;
+            render();
+        }
+
+        function genRandomAccount() {
+            const prefixes = ['09', '03', '08', '07', '05', '19', '88'];
+            let acc = prefixes[Math.floor(Math.random() * prefixes.length)];
+            for (let i = 0; i < 8; i++) acc += Math.floor(Math.random() * 10);
+            document.getElementById('inputAccount').value = acc;
+            render();
+        }
+
+        function toUpper(id) {
+            const el = document.getElementById(id);
+            el.value = el.value.toUpperCase();
+            render();
+        }
+
+        function formatAmountInput() {
+            const el = document.getElementById('inputAmount');
+            let val = el.value.replace(/[^\d]/g, '');
+            if (val) {
+                const num = parseInt(val);
+                el.value = num.toLocaleString('en-US');
+            }
+            render();
+        }
+
+        function saveCurrentRecipient() {
+            const name = gv('inputName');
+            const acc = gv('inputAccount');
+            const bank = getSelectedBankName();
+
+            if (!name || !acc) {
+                showToast('⚠️ Vui lòng nhập tên và STK người nhận');
+                return;
+            }
+
+            const key = 'tech_recipient_' + Date.now();
+            const rec = { name, acc, bank };
+            localStorage.setItem(key, JSON.stringify(rec));
+            loadSavedPresets();
+            showToast(`💾 Đã lưu "${name}" vào danh bạ!`);
+        }
+
+        function loadSavedRecipient() {
+            const key = document.getElementById('selectSavedRecipient').value;
+            if (!key) return;
+            try {
+                const rec = JSON.parse(localStorage.getItem(key));
+                if (rec) {
+                    document.getElementById('inputName').value = rec.name;
+                    document.getElementById('inputAccount').value = rec.acc;
+                    render();
+                    showToast(`✅ Đã nạp: ${rec.name}`);
+                }
+            } catch (e) { }
+        }
+
+        function loadSavedPresets() {
+            const selRec = document.getElementById('selectSavedRecipient');
+            selRec.innerHTML = '<option value="">-- Chọn người nhận đã lưu --</option>';
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k.startsWith('tech_recipient_')) {
+                    try {
+                        const rec = JSON.parse(localStorage.getItem(k));
+                        const opt = document.createElement('option');
+                        opt.value = k;
+                        opt.textContent = `${rec.name} - ${rec.acc}`;
+                        selRec.appendChild(opt);
+                    } catch (e) { }
+                }
+            }
+        }
+
+        // ================================================================
+        // EXPORT & CONFIGURATION
+        // ================================================================
+        function downloadPNG() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = `lowtechbank-bill-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('📥 Đã tải xuống ảnh bill PNG chất lượng cao!');
+        }
+
+        function downloadJPG() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = `lowtechbank-bill-${Date.now()}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('🖼️ Đã tải xuống ảnh bill JPG!');
+        }
+
+        function saveConfig() {
+            localStorage.setItem('tech_bill_studio_config_v1', JSON.stringify(config));
+            showToast('💾 Đã lưu cấu hình vị trí');
+        }
+
+        function loadConfig() {
+            const saved = localStorage.getItem('tech_bill_studio_config_v1');
+            if (saved) {
+                try {
+                    config = { ...config, ...JSON.parse(saved) };
+                } catch (e) { }
+            }
+        }
+
+        function resetConfig() {
+            localStorage.removeItem('tech_bill_studio_config_v1');
+            config = deepClone(DEFAULT_CONFIG);
+            onFieldSelect();
+            render();
+            showToast('🔄 Đã khôi phục vị trí mặc định chuẩn Lowtechbank');
+        }
+
+        // ================================================================
+        // HELPERS
+        // ================================================================
+        function gv(id) {
+            const el = document.getElementById(id);
+            return el ? el.value : '';
+        }
+
+        function roundRect(ctx, x, y, w, h, r) {
+            if (typeof ctx.roundRect === 'function') {
+                ctx.beginPath();
+                ctx.roundRect(x, y, w, h, r);
+                return;
+            }
+            if (w < 2 * r) r = w / 2;
+            if (h < 2 * r) r = h / 2;
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+        }
+
+        function toHex(colorStr) {
+            if (colorStr.startsWith('#')) return colorStr;
+            return '#080604';
+        }
+
+        function deepClone(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+    </script>
+</body>
+
+</html>

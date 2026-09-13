@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLB Digibank Bill Studio - Chuẩn Layout VLB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #06090e;
+            color: #e2e8f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ===== APP CONTAINER ===== */
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 410px;
+            min-width: 410px;
+            background: #0f1420;
+            border-right: 1px solid #1e2638;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid #1e2638;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header .title-group h1 {
+            font-size: 17px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a3e635, #10b981, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .header-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(163, 230, 53, 0.15);
+            color: #a3e635;
+            border: 1px solid rgba(163, 230, 53, 0.3);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            padding: 8px 14px 0;
+            gap: 4px;
+            flex-shrink: 0;
+            background: #0a0e18;
+            border-bottom: 1px solid #1e2638;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 9px 0;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            background: transparent;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center;
+        }
+
+        .tab:hover {
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab.active {
+            color: #06090e;
+            background: #a3e635;
+            font-weight: 700;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 14px 18px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #252e42;
+            border-radius: 3px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #a3e635;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin: 14px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #8fa0ba;
+            margin-bottom: 4px;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="number"],
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 8px 11px;
+            background: #151b2a;
+            border: 1px solid #232c42;
+            border-radius: 7px;
+            color: #f1f5f9;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: all .2s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: #a3e635;
+            box-shadow: 0 0 0 2px rgba(163, 230, 53, 0.2);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 52px;
+            line-height: 1.4;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .input-row input[type="text"],
+        .input-row input[type="number"] {
+            flex: 1;
+        }
+
+        .input-row input[type="color"] {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #232c42;
+            border-radius: 7px;
+            background: #151b2a;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .icon-btn,
+        .btn-sm {
+            padding: 7px 11px;
+            background: #1a2234;
+            border: 1px solid #28344e;
+            border-radius: 7px;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            flex-shrink: 0;
+            font-family: inherit;
+        }
+
+        .icon-btn:hover,
+        .btn-sm:hover {
+            background: #222d46;
+            border-color: #a3e635;
+            color: #a3e635;
+        }
+
+        /* Toggle Box component */
+        .toggle-box {
+            background: #151b2a;
+            border: 1px solid #232c42;
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #334155;
+            transition: .25s;
+            border-radius: 22px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #a3e635;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(18px);
+        }
+
+        .toggle-body {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #232c42;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .btn-toggle-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 6px;
+            border: 1px solid #2a3449;
+            background: #161d2d;
+            color: #f1f5f9;
+            font-family: inherit;
+        }
+
+        .btn-toggle-action:hover {
+            border-color: #a3e635;
+            background: #1c2438;
+            color: #a3e635;
+            transform: translateY(-1px);
+        }
+
+        .toggle-status-badge {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .toggle-status-badge.on {
+            background: rgba(163, 230, 53, 0.2);
+            color: #a3e635;
+            border: 1px solid rgba(163, 230, 53, 0.4);
+        }
+
+        .toggle-status-badge.off {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .sep {
+            height: 1px;
+            background: #1e2638;
+            margin: 12px 0;
+        }
+
+        /* Position controls */
+        .pos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .pos-grid .input-group {
+            margin-bottom: 6px;
+        }
+
+        .pos-grid input[type="number"] {
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .nudge-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .nudge-btn {
+            flex: 1;
+            padding: 5px 0;
+            background: #151b2a;
+            border: 1px solid #232c42;
+            border-radius: 5px;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .nudge-btn:hover {
+            background: #20283c;
+            color: #a3e635;
+            border-color: #a3e635;
+        }
+
+        .nudge-btn:active {
+            transform: scale(0.95);
+        }
+
+        .preset-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        /* Actions Bar */
+        .actions {
+            padding: 12px 18px 14px;
+            border-top: 1px solid #1e2638;
+            background: #0a0e18;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            padding: 11px;
+            background: linear-gradient(135deg, #a3e635, #84cc16);
+            border: none;
+            border-radius: 8px;
+            color: #0b1a10;
+            font-size: 13.5px;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 14px rgba(163, 230, 53, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 8px;
+            background: #151b2a;
+            border: 1px solid #232c42;
+            border-radius: 7px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-secondary:hover {
+            border-color: #a3e635;
+            color: #a3e635;
+            background: #1a2234;
+        }
+
+        .btn-row-2 {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-row-2 button {
+            flex: 1;
+        }
+
+        /* ===== PREVIEW AREA ===== */
+        .preview {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #05070c;
+            position: relative;
+            overflow: auto;
+            padding: 24px;
+        }
+
+        .preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 45% 35%, rgba(163, 230, 53, 0.04) 0%, transparent 60%),
+                radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .phone-frame {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 36px;
+            padding: 8px;
+            background: #141824;
+            border: 2px solid #22293b;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 25px 70px rgba(0, 0, 0, 0.85),
+                0 0 80px rgba(163, 230, 53, 0.08);
+            transition: all .3s;
+        }
+
+        #billCanvas {
+            max-height: calc(100vh - 55px);
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            border-radius: 28px;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 11px 18px;
+            background: #151b2a;
+            border: 1px solid #a3e635;
+            border-radius: 8px;
+            color: #a3e635;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all .3s;
+            pointer-events: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .field-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(163, 230, 53, 0.12);
+            border: 1px solid rgba(163, 230, 53, 0.3);
+            border-radius: 4px;
+            font-size: 11px;
+            color: #a3e635;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .hint kbd {
+            padding: 1px 5px;
+            background: #151b2a;
+            border: 1px solid #232c42;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="title-group">
+                    <h1>VLB Digibank Studio</h1>
+                    <div class="subtitle">Layout VLB Chuẩn Từng Pixel · WYSIWYG</div>
+                </div>
+                <span class="header-badge">VLB App</span>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('data')">📝 Dữ liệu</button>
+                <button class="tab" onclick="switchTab('position')">📐 Căn chỉnh</button>
+                <button class="tab" onclick="switchTab('theme')">🎨 Giao diện</button>
+            </div>
+
+            <!-- ===== TAB 1: DỮ LIỆU ===== -->
+            <div class="tab-content active" id="tab-data">
+                <div class="section-title">💰 Thông Tin Giao Dịch</div>
+
+                <div class="input-group">
+                    <label>Thương hiệu ngân hàng (Header)</label>
+                    <input type="text" id="inputBrandName" value="VLB Digibank" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Số tiền (VND)</label>
+                    <input type="text" id="inputAmount" value="70,000" oninput="render()" onblur="formatAmountInput()">
+                </div>
+
+                <div class="input-group">
+                    <label>Tiêu đề trạng thái</label>
+                    <input type="text" id="inputStatusTitle" value="Giao dịch thành công!" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Ngày giờ giao dịch</label>
+                    <div class="input-row">
+                        <input type="text" id="inputDatetime" value="11:31 Thứ Tư 26/08/2026" oninput="render()">
+                        <button class="icon-btn" onclick="setCurrentTime()" title="Lấy giờ hiện tại">🕐 Giờ</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Giờ thanh trạng thái (Status bar)</label>
+                    <input type="text" id="inputStatusTime" value="11:31" oninput="render()">
+                </div>
+
+                <div class="section-title">👤 Thông Tin Người Nhận</div>
+
+                <div class="input-group">
+                    <label>Tài khoản nhận</label>
+                    <div class="input-row">
+                        <input type="text" id="inputAccount" value="0967850076" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomAccount()" title="Sinh số tài khoản">🎲</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Tên người nhận</label>
+                    <div class="input-row">
+                        <input type="text" id="inputName" value="HOANG VIET DUC" oninput="render()">
+                        <button class="icon-btn" onclick="toUpper('inputName')" title="Chuyển thành chữ IN HOA">Aa</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Ngân hàng nhận</label>
+                    <select id="selectBank" onchange="onBankChange()">
+                        <option value="MB|Ngân hàng Quân Đội" selected>MB - Ngân hàng Quân Đội</option>
+                        <option value="VLB|Ngân hàng Ngoại Thương VN">VLB - Ngân hàng Ngoại Thương</option>
+                        <option value="BIDV|Ngân hàng Đầu tư & Phát triển">BIDV</option>
+                        <option value="VietinBank|Ngân hàng Công Thương">VietinBank</option>
+                        <option value="Techcombank|Ngân hàng Kỹ Thương">Techcombank</option>
+                        <option value="ACB|Ngân hàng Á Châu">ACB</option>
+                        <option value="TPBank|Ngân hàng Tiên Phong">TPBank</option>
+                        <option value="VPBank|Ngân hàng Việt Nam Thịnh Vượng">VPBank</option>
+                        <option value="Sacombank|Ngân hàng Sài Gòn Thương Tín">Sacombank</option>
+                        <option value="Agribank|Ngân hàng Nông nghiệp">Agribank</option>
+                        <option value="MoMo|Ví MoMo">MoMo</option>
+                        <option value="custom">✏️ Tự nhập ngân hàng...</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="customBankGroup" style="display:none">
+                    <div class="input-row">
+                        <input type="text" id="inputBankShort" placeholder="Tên viết tắt (VD: MB)" oninput="render()">
+                        <input type="text" id="inputBankFull" placeholder="Tên đầy đủ (VD: Ngân hàng Quân Đội)" oninput="render()">
+                    </div>
+                </div>
+
+                <div class="section-title">📝 Chi Tiết Chuyển Khoản</div>
+
+                <div class="input-group">
+                    <label>Nội dung chuyển tiền (Hỗ trợ 2 dòng)</label>
+                    <textarea id="inputContent" rows="2" oninput="render()">NGUYEN DINH GIANG
+chuyen tien</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Phí chuyển tiền</label>
+                    <input type="text" id="inputFee" value="Miễn phí" oninput="render()">
+                </div>
+
+                <div class="input-group">
+                    <label>Hình thức chuyển</label>
+                    <textarea id="inputMethod" rows="2" oninput="render()">Chuyển tiền nhanh
+24/7</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Mã giao dịch</label>
+                    <div class="input-row">
+                        <input type="text" id="inputTxId" value="15753979010" oninput="render()">
+                        <button class="icon-btn" onclick="genRandomTxId()" title="Tạo mã ngẫu nhiên">🎲</button>
+                    </div>
+                </div>
+
+                <!-- ===== NÚT TOGGLE LƯU MẪU CHUYỂN TIỀN & LƯU NGƯỜI NHẬN ===== -->
+                <div class="section-title">⭐ Tuỳ Chọn Lưu Mẫu & Danh Bạ</div>
+
+                <!-- Toggle 1: Lưu mẫu chuyển tiền (Chuẩn VCB/VLB) -->
+                <div class="toggle-box" id="toggleBoxTemplate">
+                    <div class="toggle-header">
+                        <span class="toggle-label">
+                            <span>📑</span> Hiển thị "Lưu mẫu chuyển tiền"
+                        </span>
+                        <label class="switch">
+                            <input type="checkbox" id="checkShowSaveTemplate" checked onchange="render()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-body">
+                        <!-- Nút bấm gạt nhanh trạng thái -->
+                        <button type="button" class="btn-toggle-action" id="btnToggleStateTemplate" onclick="toggleSaveTemplate()">
+                            <span>🔘 Bấm để Gạt Bật / Tắt:</span>
+                            <span id="stateTemplateBadge" class="toggle-status-badge off">⚪ ĐANG TẮT</span>
+                        </button>
+                        
+                        <div class="input-row" style="justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:#94a3b8;">Hoặc gạt trực tiếp tại đây:</span>
+                            <label class="switch" style="width:34px; height:18px;">
+                                <input type="checkbox" id="checkStateSaveTemplate" onchange="onStateSaveTemplateChange()">
+                                <span class="slider" style="border-radius:18px;"></span>
+                            </label>
+                        </div>
+                        <div class="hint" style="margin-top:2px; margin-bottom:6px; font-size:10.5px; color:#94a3b8;">
+                            💡 <i>Mẹo:</i> Bạn cũng có thể <b>nhấp chuột trực tiếp</b> vào nút gạt trên ảnh bill để Bật/Tắt!
+                        </div>
+                        <input type="text" id="inputTemplateName" placeholder="Tên gợi nhớ (VD: Tiền nhà)"
+                            style="padding:6px 9px; font-size:11px; margin-top:2px;">
+                        <div class="preset-row">
+                            <button class="btn-sm" style="flex:1;" onclick="saveCurrentBillTemplate()">💾 Lưu mẫu này</button>
+                            <select id="selectSavedTemplate" style="flex:1; padding:6px; font-size:11px;" onchange="loadSavedBillTemplate()">
+                                <option value="">-- Mẫu đã lưu --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toggle 2: Lưu người thụ hưởng -->
+                <div class="toggle-box" id="toggleBoxRecipient">
+                    <div class="toggle-header">
+                        <span class="toggle-label">
+                            <span>👤</span> Danh bạ người nhận
+                        </span>
+                        <button class="btn-sm" style="padding:3px 8px; font-size:10px;" onclick="saveCurrentRecipient()">💾 Lưu vào danh bạ</button>
+                    </div>
+                    <div class="toggle-body" style="border-top:none; padding-top:2px;">
+                        <select id="selectSavedRecipient" style="width:100%; padding:6px; font-size:11px;" onchange="loadSavedRecipient()">
+                            <option value="">-- Chọn người nhận đã lưu --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sep"></div>
+
+                <button class="btn-secondary" style="width:100%; font-weight:700;" onclick="randomizeAll()">
+                    🎲 Sinh toàn bộ dữ liệu mẫu ngẫu nhiên
+                </button>
+            </div>
+
+            <!-- ===== TAB 2: CĂN CHỈNH & KIỂU DÁNG ===== -->
+            <div class="tab-content" id="tab-position">
+                <div class="input-group">
+                    <label>Chọn trường cần căn chỉnh</label>
+                    <select id="selectField" onchange="onFieldSelect()">
+                        <option value="amount" selected>💰 Số tiền</option>
+                        <option value="currency">💱 Ký hiệu VND</option>
+                        <option value="statusTitle">✅ Tiêu đề trạng thái</option>
+                        <option value="datetime">📅 Ngày giờ giao dịch</option>
+                        <option value="statusTime">⏰ Giờ status bar</option>
+                        <option value="account">🔢 Tài khoản nhận</option>
+                        <option value="name">👤 Tên người nhận</option>
+                        <option value="bankShort">🏦 Tên NH viết tắt</option>
+                        <option value="bankFull">📋 Tên NH đầy đủ</option>
+                        <option value="content">📝 Nội dung chuyển tiền</option>
+                        <option value="fee">💸 Phí chuyển tiền</option>
+                        <option value="method">🔄 Hình thức chuyển</option>
+                        <option value="txId">🆔 Mã giao dịch</option>
+                    </select>
+                </div>
+
+                <div class="field-badge" id="fieldBadge">amount</div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Tọa độ X (px)</label>
+                        <input type="number" id="posX" value="0" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                    <div class="input-group">
+                        <label>Tọa độ Y (px)</label>
+                        <input type="number" id="posY" value="0" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                </div>
+
+                <div class="nudge-row">
+                    <button class="nudge-btn" onclick="nudge('x',-10)">◀◀ 10</button>
+                    <button class="nudge-btn" onclick="nudge('x',-1)">◀ 1</button>
+                    <button class="nudge-btn" onclick="nudge('x',1)">1 ▶</button>
+                    <button class="nudge-btn" onclick="nudge('x',10)">10 ▶▶</button>
+                </div>
+                <div class="nudge-row" style="margin-bottom:12px;">
+                    <button class="nudge-btn" onclick="nudge('y',-10)">▲▲ 10</button>
+                    <button class="nudge-btn" onclick="nudge('y',-1)">▲ 1</button>
+                    <button class="nudge-btn" onclick="nudge('y',1)">1 ▼</button>
+                    <button class="nudge-btn" onclick="nudge('y',10)">10 ▼▼</button>
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Cỡ chữ (Font Size)</label>
+                        <input type="number" id="posFontSize" value="28" min="8" max="140" onchange="onPosInput()" oninput="onPosInput()">
+                    </div>
+                    <div class="input-group">
+                        <label>Màu chữ</label>
+                        <input type="color" id="posFontColor" value="#a2e838" onchange="onPosInput()">
+                    </div>
+                </div>
+
+                <div class="pos-grid">
+                    <div class="input-group">
+                        <label>Độ đậm (Weight)</label>
+                        <select id="posFontWeight" onchange="onPosInput()">
+                            <option value="400">Regular (400)</option>
+                            <option value="500">Medium (500)</option>
+                            <option value="600">SemiBold (600)</option>
+                            <option value="700">Bold (700)</option>
+                            <option value="800">ExtraBold (800)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Căn lề (Align)</label>
+                        <select id="posTextAlign" onchange="onPosInput()">
+                            <option value="left">Left</option>
+                            <option value="center">Center</option>
+                            <option value="right">Right</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Độ trong suốt (Opacity %)</label>
+                    <input type="range" id="posOpacity" min="10" max="100" value="100" oninput="onPosInput()" style="width:100%;">
+                </div>
+
+                <div class="sep"></div>
+
+                <div class="btn-row-2">
+                    <button class="btn-secondary" onclick="resetConfig()">🔄 Mặc định</button>
+                    <button class="btn-secondary" onclick="saveConfig()">💾 Lưu vị trí</button>
+                </div>
+
+                <div class="hint">
+                    💡 <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> dịch 1px ·
+                    <kbd>Shift</kbd>+mũi tên dịch 10px<br>
+                    Click trực tiếp vào canvas để đặt nhanh vị trí trường đang chọn.
+                </div>
+            </div>
+
+            <!-- ===== TAB 3: GIAO DIỆN & THEME ===== -->
+            <div class="tab-content" id="tab-theme">
+                <div class="section-title">🎨 Chủ Đề Màu Sắc</div>
+
+                <div class="input-group">
+                    <label>Chế độ hiển thị</label>
+                    <select id="selectTheme" onchange="onThemeChange()">
+                        <option value="dark" selected>🌙 Dark Mode (Chuẩn VCB Digibank xanh lục bảo)</option>
+                        <option value="light">☀️ Light Mode (Nền sáng hiện đại)</option>
+                    </select>
+                </div>
+
+                <div class="section-title">📱 Tuỳ Chọn Thành Phần</div>
+
+                <div class="input-group">
+                    <label>Hiển thị thanh trạng thái (Status bar)</label>
+                    <select id="selectShowStatusBar" onchange="render()">
+                        <option value="true" selected>Bật thanh trạng thái</option>
+                        <option value="false">Tắt thanh trạng thái</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Hoa văn Trống Đồng nền</label>
+                    <select id="selectShowWatermark" onchange="render()">
+                        <option value="true" selected>Bật hoa văn vòng tròn mờ</option>
+                        <option value="false">Tắt hoa văn</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Nút hành động phía dưới ("Thực hiện giao dịch mới")</label>
+                    <select id="selectShowButtons" onchange="render()">
+                        <option value="true" selected>Bật nút hành động</option>
+                        <option value="false">Tắt nút</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ===== ACTIONS ===== -->
+            <div class="actions">
+                <button class="btn-primary" onclick="downloadPNG()">
+                    <span>📥</span> Tải ảnh bill PNG (1080×2400)
+                </button>
+                <div class="btn-row-2">
+                    <button class="btn-secondary" onclick="copyToClipboard()">
+                        <span>📋</span> Copy Clipboard
+                    </button>
+                    <button class="btn-secondary" onclick="downloadJPG()">
+                        <span>🖼️</span> Tải JPG
+                    </button>
+                </div>
+                <button class="btn-secondary" style="font-size:11px;" onclick="exportBBoxesJSON()">
+                    <span>📄</span> Xuất BBox Metadata (JSON)
+                </button>
+            </div>
+        </aside>
+
+        <!-- ===== PREVIEW ===== -->
+        <main class="preview">
+            <div class="phone-frame">
+                <canvas id="billCanvas" width="1080" height="2400"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✅</span>
+        <span id="toastMsg">Thông báo</span>
+    </div>
+
+    <script>
+        // ================================================================
+        // EXACT VCB DIGIBANK HIGH-DPI CONFIGURATION (1080 x 2400)
+        // ================================================================
+        const DEFAULT_CONFIG = {
+            statusTime:  { x: 88,  y: 96,   size: 40, weight: '700', color: '#ffffff', align: 'left',   opacity: 1 },
+            statusTitle: { x: 540, y: 520,  size: 48, weight: '700', color: '#ffffff', align: 'center', opacity: 1 },
+            amount:      { x: 540, y: 630,  size: 86, weight: '800', color: '#a2e838', align: 'center', opacity: 1 },
+            currency:    { x: 0,   y: 0,    size: 38, weight: '600', color: '#88af9f', align: 'left',   opacity: 0.95 },
+            datetime:    { x: 540, y: 730,  size: 36, weight: '400', color: '#8ea4a0', align: 'center', opacity: 1 },
+            account:     { x: 994, y: 895,  size: 44, weight: '700', color: '#ffffff', align: 'right',  opacity: 1 },
+            name:        { x: 994, y: 1030, size: 44, weight: '700', color: '#ffffff', align: 'right',  opacity: 1 },
+            bankShort:   { x: 994, y: 1165, size: 44, weight: '700', color: '#ffffff', align: 'right',  opacity: 1 },
+            bankFull:    { x: 994, y: 1225, size: 32, weight: '400', color: '#8ea4a0', align: 'right',  opacity: 1 },
+            content:     { x: 994, y: 1345, size: 42, weight: '700', color: '#ffffff', align: 'right',  opacity: 1, lh: 56 },
+            fee:         { x: 994, y: 1540, size: 42, weight: '500', color: '#ffffff', align: 'right',  opacity: 1 },
+            method:      { x: 994, y: 1670, size: 42, weight: '700', color: '#ffffff', align: 'right',  opacity: 1, lh: 56 },
+            txId:        { x: 994, y: 1855, size: 44, weight: '700', color: '#ffffff', align: 'right',  opacity: 1 },
+        };
+
+        let currentTheme = 'dark';
+        let currentTab = 'data';
+        let selectedField = 'amount';
+        let config = deepClone(DEFAULT_CONFIG);
+
+        const VIETNAMESE_NAMES = [
+            "HOANG VIET DUC", "NGUYEN VAN AN", "TRAN THI THAO", "LE HOANG DUONG", 
+            "PHAM MINH DUC", "VU THI LINH", "NGUYEN DINH GIANG", "DO QUANG HUY"
+        ];
+        const VIETNAMESE_MESSAGES = [
+            "NGUYEN DINH GIANG\nchuyen tien",
+            "Chuyen tien hoc phi hoc ky 1\nnam hoc 2026-2027",
+            "Thanh toan tien thue nha\nthang 9 nam 2026",
+            "Chuc mung sinh nhat\nvui ve hanh phuc",
+            "Tien an trua va sinh hoat\ncuoi tuan"
+        ];
+
+        // ================================================================
+        // INITIALIZATION
+        // ================================================================
+        function init() {
+            loadSavedConfig();
+            loadSavedPresets();
+
+            document.addEventListener('keydown', handleKeydown);
+            const canvas = document.getElementById('billCanvas');
+            canvas.addEventListener('click', handleCanvasClick);
+            canvas.addEventListener('mousemove', handleCanvasMouseMove);
+
+            document.fonts.ready.then(() => render());
+
+            onFieldSelect();
+            if (typeof onStateSaveTemplateChange === 'function') {
+                onStateSaveTemplateChange(true);
+            }
+            render();
+        }
+
+        // ================================================================
+        // MAIN CANVAS RENDERER (EXACT VCB DIGIBANK)
+        // ================================================================
+        function render() {
+            const canvas = document.getElementById('billCanvas');
+            const ctx = canvas.getContext('2d');
+            const W = 1080;
+            const H = 2400;
+
+            const isDark = (currentTheme === 'dark');
+
+            // 1. Background Gradient
+            if (isDark) {
+                // Base vertical gradient
+                const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+                bgGrad.addColorStop(0, '#03241d');
+                bgGrad.addColorStop(0.22, '#021c18');
+                bgGrad.addColorStop(0.55, '#011216');
+                bgGrad.addColorStop(1, '#010a0e');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, W, H);
+
+                // Top emerald ambient halo behind checkmark
+                const topGlow = ctx.createRadialGradient(W / 2, 340, 30, W / 2, 340, 580);
+                topGlow.addColorStop(0, 'rgba(12, 75, 55, 0.65)');
+                topGlow.addColorStop(0.55, 'rgba(6, 42, 32, 0.28)');
+                topGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = topGlow;
+                ctx.fillRect(0, 0, W, 900);
+
+                // Signature bottom-right purple/violet ambient glow
+                const purpleGlow = ctx.createRadialGradient(W - 80, 1860, 30, W - 80, 1860, 540);
+                purpleGlow.addColorStop(0, 'rgba(135, 25, 175, 0.40)');
+                purpleGlow.addColorStop(0.5, 'rgba(80, 15, 115, 0.18)');
+                purpleGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = purpleGlow;
+                ctx.fillRect(0, 1250, W, 1150);
+            } else {
+                const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+                bgGrad.addColorStop(0, '#e6f7ef');
+                bgGrad.addColorStop(0.3, '#f0faf4');
+                bgGrad.addColorStop(0.7, '#f8fafc');
+                bgGrad.addColorStop(1, '#ffffff');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, W, H);
+            }
+
+            // 2. Faint Concentric Watermark (Dong Son Drum Motif)
+            if (document.getElementById('selectShowWatermark').value === 'true') {
+                drawWatermarkPattern(ctx, W, isDark);
+            }
+
+            // 3. Top Status Bar
+            if (document.getElementById('selectShowStatusBar').value === 'true') {
+                drawStatusBar(ctx, W, isDark);
+            }
+
+            // 4. App Header (VCB Digibank + Home Icon)
+            drawAppHeader(ctx, W, isDark);
+
+            // 5. Hero Status Section (Checkmark, Title, Amount, Datetime)
+            drawHeroSection(ctx, W, isDark);
+
+            // 6. Details Card Container (7 Rows)
+            drawDetailsCard(ctx, W, isDark);
+
+            // 7. Toggle Row ("Lưu mẫu chuyển tiền")
+            if (document.getElementById('checkShowSaveTemplate').checked) {
+                drawToggleRow(ctx, W, isDark);
+            }
+
+            // 8. Bottom Action Button ("Thực hiện giao dịch mới")
+            if (document.getElementById('selectShowButtons').value === 'true') {
+                drawBottomButton(ctx, W, isDark);
+            }
+
+            // 9. Home Indicator Bar
+            drawHomeIndicator(ctx, W, isDark);
+
+            // 10. Highlight Overlay (when in Position Tab)
+            if (currentTab === 'position') {
+                drawHighlight(ctx, selectedField);
+            }
+        }
+
+        // ===== SUB-RENDERERS =====
+        function drawWatermarkPattern(ctx, W, isDark) {
+            ctx.save();
+            const cx = W / 2;
+            const cy = -60;
+            const color = isDark ? 'rgba(255, 255, 255, 0.038)' : 'rgba(16, 185, 129, 0.04)';
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+
+            // Concentric rings
+            const rings = [
+                { r: 220, dash: [] },
+                { r: 320, dash: [8, 8] },
+                { r: 440, dash: [] },
+                { r: 580, dash: [12, 8] },
+                { r: 720, dash: [] },
+                { r: 880, dash: [10, 10] },
+                { r: 1060, dash: [] }
+            ];
+
+            rings.forEach(ring => {
+                ctx.beginPath();
+                ctx.setLineDash(ring.dash);
+                ctx.arc(cx, cy, ring.r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Radial Sun Rays in innermost circle
+            ctx.setLineDash([]);
+            const rays = 16;
+            for (let i = 0; i < rays; i++) {
+                const angle = (i * Math.PI * 2) / rays;
+                ctx.beginPath();
+                ctx.moveTo(cx + Math.cos(angle) * 70, cy + Math.sin(angle) * 70);
+                ctx.lineTo(cx + Math.cos(angle) * 210, cy + Math.sin(angle) * 210);
+                ctx.stroke();
+            }
+
+            // Fine perimeter ticks on ring r=580
+            const ticks = 72;
+            for (let i = 0; i < ticks; i++) {
+                const angle = (i * Math.PI * 2) / ticks;
+                ctx.beginPath();
+                ctx.moveTo(cx + Math.cos(angle) * 568, cy + Math.sin(angle) * 568);
+                ctx.lineTo(cx + Math.cos(angle) * 580, cy + Math.sin(angle) * 580);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function drawStatusBar(ctx, W, isDark) {
+            ctx.save();
+            const timeText = gv('inputStatusTime') || '11:31';
+            const color = isDark ? '#ffffff' : '#0f172a';
+
+            // Left Time
+            const cfgT = config.statusTime;
+            ctx.font = `${cfgT.weight} ${cfgT.size}px 'Inter'`;
+            ctx.fillStyle = cfgT.color || color;
+            ctx.textAlign = cfgT.align;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(timeText, cfgT.x, cfgT.y);
+
+            // Right: Cellular Signal Bars (4 bars) + 4G + Battery
+            const rX = W - 225;
+            const rY = cfgT.y;
+
+            // Signal Bars
+            ctx.fillStyle = color;
+            for (let i = 0; i < 4; i++) {
+                const bh = 9 + i * 6;
+                const bx = rX + i * 11;
+                const by = rY + 11 - bh;
+                roundRect(ctx, bx, by, 6, bh, 1.5);
+                ctx.fill();
+            }
+
+            // 4G Text
+            ctx.font = `600 32px 'Inter'`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('4G', rX + 54, rY);
+
+            // Battery Icon (Horizontal pill with terminal)
+            const batX = rX + 115;
+            const batY = rY - 14;
+            const batW = 56;
+            const batH = 28;
+
+            // Battery Border
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.5;
+            roundRect(ctx, batX, batY, batW, batH, 7);
+            ctx.stroke();
+
+            // Battery Yellow Fill (~80%)
+            ctx.fillStyle = '#facc15';
+            roundRect(ctx, batX + 3.5, batY + 3.5, 36, batH - 7, 3.5);
+            ctx.fill();
+
+            // Terminal nipple
+            ctx.fillStyle = color;
+            roundRect(ctx, batX + batW + 2, batY + 8, 3.5, 12, 1.5);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawAppHeader(ctx, W, isDark) {
+            ctx.save();
+            const hY = 205;
+
+            // Brand Text: "VLB Digibank"
+            const brandText = gv('inputBrandName') || 'VLB Digibank';
+            ctx.font = `700 50px 'Inter'`;
+            ctx.fillStyle = isDark ? '#ffffff' : '#0f172a';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(brandText, 88, hY);
+
+            // Circular Action Button on Right (Home / Receipt)
+            const hBtnX = W - 134;
+            const hBtnY = hY;
+            const radius = 44;
+
+            ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(16, 185, 129, 0.1)';
+            ctx.beginPath();
+            ctx.arc(hBtnX, hBtnY, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = isDark ? 'rgba(16, 185, 129, 0.5)' : '#059669';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // House icon inside
+            ctx.strokeStyle = isDark ? '#10b981' : '#059669';
+            ctx.lineWidth = 3.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            const icX = hBtnX;
+            const icY = hBtnY;
+
+            // Roof
+            ctx.beginPath();
+            ctx.moveTo(icX - 16, icY + 3);
+            ctx.lineTo(icX, icY - 13);
+            ctx.lineTo(icX + 16, icY + 3);
+            ctx.stroke();
+
+            // Walls
+            ctx.beginPath();
+            ctx.moveTo(icX - 12, icY + 2);
+            ctx.lineTo(icX - 12, icY + 14);
+            ctx.lineTo(icX + 12, icY + 14);
+            ctx.lineTo(icX + 12, icY + 2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawHeroSection(ctx, W, isDark) {
+            ctx.save();
+            const cy = 380;
+
+            // 1. Lime Green Circle Badge
+            const circleR = 64;
+
+            // Glow behind checkmark circle
+            if (isDark) {
+                ctx.shadowColor = 'rgba(159, 232, 48, 0.45)';
+                ctx.shadowBlur = 35;
+            }
+
+            ctx.fillStyle = '#9fe830';
+            ctx.beginPath();
+            ctx.arc(W / 2, cy, circleR, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Dark Forest Green Checkmark
+            ctx.shadowBlur = 0; // reset shadow
+            ctx.strokeStyle = '#061d14';
+            ctx.lineWidth = 12;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(W / 2 - 25, cy + 2);
+            ctx.lineTo(W / 2 - 6, cy + 21);
+            ctx.lineTo(W / 2 + 28, cy - 18);
+            ctx.stroke();
+
+            // 2. Status Title: "Giao dịch thành công!"
+            const cfgT = config.statusTitle;
+            ctx.font = `${cfgT.weight} ${cfgT.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgT.color || '#ffffff') : '#0f172a';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(gv('inputStatusTitle') || 'Giao dịch thành công!', W / 2, cfgT.y);
+
+            // 3. Amount + Superscript "VND"
+            const amountStr = gv('inputAmount') || '70,000';
+            const currencyStr = 'VND';
+            const cfgA = config.amount;
+            const cfgC = config.currency;
+
+            ctx.font = `${cfgA.weight} ${cfgA.size}px 'Inter'`;
+            const aWidth = ctx.measureText(amountStr).width;
+
+            ctx.font = `${cfgC.weight} ${cfgC.size}px 'Inter'`;
+            const cWidth = ctx.measureText(currencyStr).width;
+
+            const gap = 12;
+            const totalW = aWidth + gap + cWidth;
+            const startX = (W - totalW) / 2;
+
+            // Draw Amount Number
+            ctx.font = `${cfgA.weight} ${cfgA.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgA.color || '#a2e838') : '#15803d';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(amountStr, startX, cfgA.y);
+
+            // Draw Superscript VND
+            ctx.font = `${cfgC.weight} ${cfgC.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgC.color || '#88af9f') : '#059669';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            const vndY = cfgA.y - (cfgA.size * 0.40);
+            ctx.fillText(currencyStr, startX + aWidth + gap, vndY);
+
+            // 4. Datetime below Amount
+            const cfgD = config.datetime;
+            ctx.font = `${cfgD.weight} ${cfgD.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgD.color || '#8ea4a0') : '#475569';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(gv('inputDatetime'), W / 2, cfgD.y);
+
+            ctx.restore();
+        }
+
+        function drawDetailsCard(ctx, W, isDark) {
+            ctx.save();
+            const cX = 44;
+            const cY = 815;
+            const cW = 992;
+            const cH = 1080;
+            const radius = 46;
+
+            // Card Background Glassmorphism
+            if (isDark) {
+                const cardGrad = ctx.createLinearGradient(cX, cY, cX + cW, cY + cH);
+                cardGrad.addColorStop(0, 'rgba(8, 36, 42, 0.72)');
+                cardGrad.addColorStop(0.65, 'rgba(10, 24, 38, 0.74)');
+                cardGrad.addColorStop(1, 'rgba(32, 14, 52, 0.78)');
+                ctx.fillStyle = cardGrad;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            } else {
+                ctx.fillStyle = '#ffffff';
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.04)';
+                ctx.shadowBlur = 30;
+                ctx.shadowOffsetY = 10;
+            }
+
+            ctx.lineWidth = 1.5;
+            roundRect(ctx, cX, cY, cW, cH, radius);
+            ctx.fill();
+            ctx.stroke();
+
+            const labelX = cX + 42;
+            const valX = cX + cW - 42;
+            const labelCol = isDark ? '#8ea4a0' : '#64748b';
+            const valCol = isDark ? '#ffffff' : '#0f172a';
+            const dividerCol = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+
+            // Helper to draw a single-line row
+            function drawRow(label, valKey, valText, y, isBold = true) {
+                ctx.font = `400 38px 'Inter'`;
+                ctx.fillStyle = labelCol;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, labelX, y);
+
+                const cfg = config[valKey] || {};
+                ctx.font = `${isBold ? (cfg.weight || '700') : '500'} ${cfg.size || 44}px 'Inter'`;
+                ctx.fillStyle = isDark ? (cfg.color || valCol) : valCol;
+                ctx.textAlign = 'right';
+                ctx.fillText(valText, valX, y);
+            }
+
+            function drawDivider(y) {
+                ctx.strokeStyle = dividerCol;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(labelX, y);
+                ctx.lineTo(valX, y);
+                ctx.stroke();
+            }
+
+            // Row 1: Tài khoản nhận (y: 895)
+            drawRow('Tài khoản nhận', 'account', gv('inputAccount') || '0967850076', 895);
+            drawDivider(960);
+
+            // Row 2: Tên người nhận (y: 1030)
+            drawRow('Tên người nhận', 'name', gv('inputName') || 'HOANG VIET DUC', 1030);
+            drawDivider(1100);
+
+            // Row 3: Ngân hàng nhận (y: 1165, subtext at y: 1225)
+            const bankShort = getBankShort();
+            const bankFull = getBankFull();
+            const cfgBankS = config.bankShort;
+            const cfgBankF = config.bankFull;
+
+            ctx.font = `400 38px 'Inter'`;
+            ctx.fillStyle = labelCol;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Ngân hàng nhận', labelX, 1165);
+
+            // Bank Short Name
+            ctx.font = `${cfgBankS.weight} ${cfgBankS.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgBankS.color || valCol) : valCol;
+            ctx.textAlign = 'right';
+            ctx.fillText(bankShort, valX, 1165);
+            const bWidth = ctx.measureText(bankShort).width;
+
+            // Bank Logo Badge (Left of short name)
+            const logoR = 24;
+            const logoX = valX - bWidth - 18 - logoR;
+            const logoY = 1165;
+            drawBankLogo(ctx, bankShort, logoX, logoY, logoR);
+
+            // Bank Full Name Subtext
+            if (bankFull) {
+                ctx.font = `${cfgBankF.weight} ${cfgBankF.size}px 'Inter'`;
+                ctx.fillStyle = isDark ? (cfgBankF.color || '#8ea4a0') : '#64748b';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(bankFull, valX, 1225);
+            }
+            drawDivider(1285);
+
+            // Row 4: Nội dung (Multi-line, y: 1345)
+            ctx.font = `400 38px 'Inter'`;
+            ctx.fillStyle = labelCol;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText('Nội dung', labelX, 1345);
+
+            const contentLines = (gv('inputContent') || '').split('\n');
+            const cfgCont = config.content;
+            ctx.font = `${cfgCont.weight} ${cfgCont.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgCont.color || valCol) : valCol;
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+
+            contentLines.slice(0, 3).forEach((line, i) => {
+                ctx.fillText(line.trim(), valX, 1345 + i * (cfgCont.lh || 56));
+            });
+            drawDivider(1475);
+
+            // Row 5: Phí chuyển tiền (y: 1540)
+            drawRow('Phí chuyển tiền', 'fee', gv('inputFee') || 'Miễn phí', 1540, false);
+            drawDivider(1610);
+
+            // Row 6: Hình thức chuyển (Multi-line, y: 1670)
+            ctx.font = `400 38px 'Inter'`;
+            ctx.fillStyle = labelCol;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText('Hình thức chuyển', labelX, 1670);
+
+            const methodLines = (gv('inputMethod') || 'Chuyển tiền nhanh\n24/7').split('\n');
+            const cfgMeth = config.method;
+            ctx.font = `${cfgMeth.weight} ${cfgMeth.size}px 'Inter'`;
+            ctx.fillStyle = isDark ? (cfgMeth.color || valCol) : valCol;
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+
+            methodLines.forEach((line, i) => {
+                ctx.fillText(line.trim(), valX, 1670 + i * (cfgMeth.lh || 56));
+            });
+            drawDivider(1795);
+
+            // Row 7: Mã giao dịch (y: 1855)
+            drawRow('Mã giao dịch', 'txId', gv('inputTxId') || '15753979010', 1855);
+
+            ctx.restore();
+        }
+
+        function drawBankLogo(ctx, bankShort, x, y, r) {
+            ctx.save();
+            if (bankShort === 'MB') {
+                // White circle badge with red border
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Red 5-pointed star
+                drawStar(ctx, x - r * 0.38, y, 5, r * 0.38, r * 0.17, '#ef4444');
+
+                // Red 'MB' text
+                ctx.fillStyle = '#ef4444';
+                ctx.font = `800 ${Math.round(r * 0.76)}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('MB', x + r * 0.32, y + 1);
+            } else if (bankShort === 'VLB' || bankShort === 'VCB') {
+                ctx.fillStyle = '#005930';
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `800 ${Math.round(r * 0.65)}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('VLB', x, y + 1);
+            } else if (bankShort === 'Techcombank' || bankShort === 'TCB') {
+                ctx.fillStyle = '#ee0033';
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `800 ${Math.round(r * 0.65)}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('TCB', x, y + 1);
+            } else if (bankShort === 'BIDV') {
+                ctx.fillStyle = '#006885';
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `800 ${Math.round(r * 0.58)}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('BIDV', x, y + 1);
+            } else {
+                ctx.fillStyle = '#10b981';
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `800 ${Math.round(r * 0.62)}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(bankShort.slice(0, 3), x, y + 1);
+            }
+            ctx.restore();
+        }
+
+        function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius, color) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx;
+            let y = cy;
+            const step = Math.PI / spikes;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawToggleRow(ctx, W, isDark) {
+            ctx.save();
+            const y = 2015;
+
+            // Left Label: "Lưu mẫu chuyển tiền"
+            ctx.font = `500 42px 'Inter'`;
+            ctx.fillStyle = isDark ? '#ffffff' : '#0f172a';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Lưu mẫu chuyển tiền', 86, y);
+
+            // Right: Toggle Switch
+            const isChecked = document.getElementById('checkStateSaveTemplate').checked;
+            const swW = 104;
+            const swH = 58;
+            const swX = 994 - swW;
+            const swY = y - swH / 2;
+
+            // Switch Track
+            if (isChecked) {
+                ctx.fillStyle = '#9fe830';
+                roundRect(ctx, swX, swY, swW, swH, swH / 2);
+                ctx.fill();
+            } else {
+                ctx.fillStyle = isDark ? '#182522' : '#cbd5e1';
+                roundRect(ctx, swX, swY, swW, swH, swH / 2);
+                ctx.fill();
+                if (isDark) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            }
+
+            // Knob Circle
+            const knobR = 24;
+            const knobX = isChecked ? (swX + swW - knobR - 5) : (swX + knobR + 5);
+
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+            ctx.shadowBlur = 8;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(knobX, y, knobR, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawBottomButton(ctx, W, isDark) {
+            ctx.save();
+            const bX = 44;
+            const bY = 2130;
+            const bW = 992;
+            const bH = 128;
+            const radius = 64; // full pill
+
+            // Button Fill: Lime-to-chartreuse gradient
+            const btnGrad = ctx.createLinearGradient(bX, bY, bX + bW, bY);
+            btnGrad.addColorStop(0, '#9ee634');
+            btnGrad.addColorStop(1, '#bcf750');
+            ctx.fillStyle = btnGrad;
+
+            // Glow shadow
+            ctx.shadowColor = 'rgba(158, 230, 52, 0.35)';
+            ctx.shadowBlur = 30;
+            ctx.shadowOffsetY = 8;
+
+            roundRect(ctx, bX, bY, bW, bH, radius);
+            ctx.fill();
+
+            ctx.shadowBlur = 0; // reset
+            // Text: "Thực hiện giao dịch mới"
+            ctx.font = `700 46px 'Inter'`;
+            ctx.fillStyle = '#0a2205';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Thực hiện giao dịch mới', W / 2, bY + bH / 2);
+
+            ctx.restore();
+        }
+
+        function drawHomeIndicator(ctx, W, isDark) {
+            ctx.save();
+            const barW = 360;
+            const barH = 10;
+            const barX = (W - barW) / 2;
+            const barY = 2360;
+
+            ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.3)';
+            roundRect(ctx, barX, barY, barW, barH, 5);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Selection Highlight
+        function drawHighlight(ctx, fieldKey) {
+            const cfg = config[fieldKey];
+            if (!cfg) return;
+
+            ctx.save();
+            ctx.strokeStyle = '#a2e838';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([12, 8]);
+
+            const px = cfg.x;
+            const py = cfg.y;
+
+            ctx.beginPath();
+            ctx.moveTo(px - 30, py);
+            ctx.lineTo(px + 30, py);
+            ctx.moveTo(px, py - 30);
+            ctx.lineTo(px + 30, py);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'rgba(162, 232, 56, 0.9)';
+            ctx.font = '700 28px Inter';
+            ctx.textAlign = cfg.align === 'right' ? 'right' : 'left';
+            ctx.textBaseline = 'bottom';
+            const tx = cfg.align === 'right' ? px - 35 : px + 35;
+            ctx.fillText(`◆ ${fieldKey}`, tx, py - 10);
+            ctx.restore();
+        }
+
+        // ================================================================
+        // UI & EVENT HANDLERS
+        // ================================================================
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach((t, i) => {
+                t.classList.toggle('active', (i === 0 && tab === 'data') || (i === 1 && tab === 'position') || (i === 2 && tab === 'theme'));
+            });
+            document.getElementById('tab-data').classList.toggle('active', tab === 'data');
+            document.getElementById('tab-position').classList.toggle('active', tab === 'position');
+            document.getElementById('tab-theme').classList.toggle('active', tab === 'theme');
+            render();
+        }
+
+        function onThemeChange() {
+            currentTheme = document.getElementById('selectTheme').value;
+            render();
+            showToast('🎨 Chuyển sang chế độ ' + (currentTheme === 'dark' ? 'Tối (Dark)' : 'Sáng (Light)'));
+        }
+
+        function onFieldSelect() {
+            selectedField = document.getElementById('selectField').value;
+            const cfg = config[selectedField] || {};
+            document.getElementById('fieldBadge').textContent = selectedField;
+
+            document.getElementById('posX').value = cfg.x || 0;
+            document.getElementById('posY').value = cfg.y || 0;
+            document.getElementById('posFontSize').value = cfg.size || 40;
+            document.getElementById('posFontColor').value = toHex(cfg.color || '#ffffff');
+            document.getElementById('posFontWeight').value = cfg.weight || '700';
+            document.getElementById('posTextAlign').value = cfg.align || 'right';
+            document.getElementById('posOpacity').value = Math.round((cfg.opacity || 1) * 100);
+
+            render();
+        }
+
+        function onPosInput() {
+            const cfg = config[selectedField];
+            if (!cfg) return;
+
+            cfg.x = parseInt(document.getElementById('posX').value) || 0;
+            cfg.y = parseInt(document.getElementById('posY').value) || 0;
+            cfg.size = parseInt(document.getElementById('posFontSize').value) || 40;
+            cfg.color = document.getElementById('posFontColor').value;
+            cfg.weight = document.getElementById('posFontWeight').value;
+            cfg.align = document.getElementById('posTextAlign').value;
+            cfg.opacity = (parseInt(document.getElementById('posOpacity').value) || 100) / 100;
+
+            render();
+        }
+
+        function nudge(axis, delta) {
+            const cfg = config[selectedField];
+            if (!cfg) return;
+            if (axis === 'x') cfg.x += delta;
+            else cfg.y += delta;
+
+            document.getElementById('posX').value = cfg.x;
+            document.getElementById('posY').value = cfg.y;
+            render();
+        }
+
+        function handleKeydown(e) {
+            if (currentTab !== 'position') return;
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+            const step = e.shiftKey ? 10 : 1;
+            let handled = false;
+
+            switch (e.key) {
+                case 'ArrowLeft':  nudge('x', -step); handled = true; break;
+                case 'ArrowRight': nudge('x', step);  handled = true; break;
+                case 'ArrowUp':    nudge('y', -step); handled = true; break;
+                case 'ArrowDown':  nudge('y', step);  handled = true; break;
+            }
+            if (handled) e.preventDefault();
+        }
+
+        function handleCanvasMouseMove(e) {
+            const canvas = document.getElementById('billCanvas');
+            if (currentTab === 'position') {
+                canvas.style.cursor = 'crosshair';
+                canvas.title = 'Bấm để đặt tọa độ cho trường đang chọn';
+                return;
+            }
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const cx = Math.round((e.clientX - rect.left) * scaleX);
+            const cy = Math.round((e.clientY - rect.top) * scaleY);
+
+            // Hover over "Lưu mẫu chuyển tiền" row (y: 1960 to 2065, x: 70 to 1010)
+            const showToggle = document.getElementById('checkShowSaveTemplate').checked;
+            if (showToggle && cy >= 1960 && cy <= 2065 && cx >= 70 && cx <= 1010) {
+                canvas.style.cursor = 'pointer';
+                const isCurrentlyOn = document.getElementById('checkStateSaveTemplate').checked;
+                canvas.title = isCurrentlyOn ? 'Nhấp chuột để TẮT Lưu mẫu chuyển tiền' : 'Nhấp chuột để BẬT Lưu mẫu chuyển tiền';
+                return;
+            }
+
+            // Hover over "Thực hiện giao dịch mới" button (y: 2120 to 2270, x: 44 to 1036)
+            const showBtn = document.getElementById('selectShowButtons').value === 'true';
+            if (showBtn && cy >= 2120 && cy <= 2270 && cx >= 44 && cx <= 1036) {
+                canvas.style.cursor = 'pointer';
+                canvas.title = 'Nhấp chuột để tạo giao dịch mới (random dữ liệu)';
+                return;
+            }
+
+            canvas.style.cursor = 'default';
+            canvas.title = '';
+        }
+
+        function handleCanvasClick(e) {
+            const canvas = document.getElementById('billCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const cx = Math.round((e.clientX - rect.left) * scaleX);
+            const cy = Math.round((e.clientY - rect.top) * scaleY);
+
+            if (currentTab === 'position') {
+                const cfg = config[selectedField];
+                if (cfg) {
+                    cfg.x = cx;
+                    cfg.y = cy;
+                    document.getElementById('posX').value = cx;
+                    document.getElementById('posY').value = cy;
+                    render();
+                    showToast(`📍 Đã đặt tọa độ ${selectedField}: (${cx}, ${cy})`);
+                }
+                return;
+            }
+
+            // Direct interaction on bill canvas:
+            // 1. Click on "Lưu mẫu chuyển tiền" row or switch
+            const showToggle = document.getElementById('checkShowSaveTemplate').checked;
+            if (showToggle && cy >= 1960 && cy <= 2065 && cx >= 70 && cx <= 1010) {
+                toggleSaveTemplate();
+                return;
+            }
+
+            // 2. Click on "Thực hiện giao dịch mới" button
+            const showBtn = document.getElementById('selectShowButtons').value === 'true';
+            if (showBtn && cy >= 2120 && cy <= 2270 && cx >= 44 && cx <= 1036) {
+                randomizeAll();
+                showToast('✨ Đã nhấn "Thực hiện giao dịch mới": Đã sinh dữ liệu mới!');
+                return;
+            }
+        }
+
+        function toggleSaveTemplate(forcedState) {
+            const chk = document.getElementById('checkStateSaveTemplate');
+            if (typeof forcedState === 'boolean') {
+                chk.checked = forcedState;
+            } else {
+                chk.checked = !chk.checked;
+            }
+            onStateSaveTemplateChange(false);
+        }
+
+        function onStateSaveTemplateChange(silent = false) {
+            const chk = document.getElementById('checkStateSaveTemplate');
+            const badge = document.getElementById('stateTemplateBadge');
+            if (badge) {
+                badge.className = chk.checked ? 'toggle-status-badge on' : 'toggle-status-badge off';
+                badge.textContent = chk.checked ? '🟢 ĐANG BẬT' : '⚪ ĐANG TẮT';
+            }
+            render();
+            if (!silent) {
+                showToast(chk.checked ? '🟢 Đã BẬT công tắc: Lưu mẫu chuyển tiền' : '⚪ Đã TẮT công tắc: Lưu mẫu chuyển tiền');
+            }
+        }
+
+        function onBankChange() {
+            const val = document.getElementById('selectBank').value;
+            document.getElementById('customBankGroup').style.display = (val === 'custom') ? 'block' : 'none';
+            render();
+        }
+
+        // ================================================================
+        // TOGGLE RECIPIENT & TEMPLATE MANAGEMENT
+        // ================================================================
+        function saveCurrentRecipient() {
+            const name = gv('inputName');
+            const acc = gv('inputAccount');
+            const bank = getBankShort();
+
+            if (!name || !acc) {
+                showToast('⚠️ Vui lòng nhập tên và STK người nhận');
+                return;
+            }
+
+            const key = `rec_${acc}_${Date.now()}`;
+            const rec = { name, acc, bank };
+            localStorage.setItem(key, JSON.stringify(rec));
+            loadSavedPresets();
+            showToast(`💾 Đã lưu "${name}" vào danh bạ!`);
+        }
+
+        function loadSavedRecipient() {
+            const key = document.getElementById('selectSavedRecipient').value;
+            if (!key) return;
+            try {
+                const rec = JSON.parse(localStorage.getItem(key));
+                if (rec) {
+                    document.getElementById('inputName').value = rec.name;
+                    document.getElementById('inputAccount').value = rec.acc;
+                    render();
+                    showToast(`✅ Đã nạp: ${rec.name}`);
+                }
+            } catch (e) { }
+        }
+
+        function saveCurrentBillTemplate() {
+            const name = gv('inputTemplateName') || ('Mẫu ' + new Date().toLocaleDateString('vi-VN'));
+            const data = {
+                name: name,
+                amount: gv('inputAmount'),
+                statusTitle: gv('inputStatusTitle'),
+                recipient: gv('inputName'),
+                account: gv('inputAccount'),
+                content: gv('inputContent'),
+                bank: document.getElementById('selectBank').value
+            };
+
+            const key = `tpl_${Date.now()}`;
+            localStorage.setItem(key, JSON.stringify(data));
+            loadSavedPresets();
+            showToast(`💾 Đã lưu mẫu giao dịch "${name}"!`);
+        }
+
+        function loadSavedBillTemplate() {
+            const key = document.getElementById('selectSavedTemplate').value;
+            if (!key) return;
+            try {
+                const tpl = JSON.parse(localStorage.getItem(key));
+                if (tpl) {
+                    document.getElementById('inputAmount').value = tpl.amount;
+                    document.getElementById('inputStatusTitle').value = tpl.statusTitle;
+                    document.getElementById('inputName').value = tpl.recipient;
+                    document.getElementById('inputAccount').value = tpl.account;
+                    document.getElementById('inputContent').value = tpl.content;
+                    if (tpl.bank) document.getElementById('selectBank').value = tpl.bank;
+                    render();
+                    showToast(`✅ Đã nạp mẫu: ${tpl.name}`);
+                }
+            } catch (e) { }
+        }
+
+        function loadSavedPresets() {
+            const selRec = document.getElementById('selectSavedRecipient');
+            selRec.innerHTML = '<option value="">-- Chọn người nhận đã lưu --</option>';
+            const selTpl = document.getElementById('selectSavedTemplate');
+            selTpl.innerHTML = '<option value="">-- Mẫu đã lưu --</option>';
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k.startsWith('rec_')) {
+                    try {
+                        const obj = JSON.parse(localStorage.getItem(k));
+                        const opt = document.createElement('option');
+                        opt.value = k;
+                        opt.textContent = `${obj.name} (${obj.acc})`;
+                        selRec.appendChild(opt);
+                    } catch (e) { }
+                } else if (k.startsWith('tpl_')) {
+                    try {
+                        const obj = JSON.parse(localStorage.getItem(k));
+                        const opt = document.createElement('option');
+                        opt.value = k;
+                        opt.textContent = obj.name;
+                        selTpl.appendChild(opt);
+                    } catch (e) { }
+                }
+            }
+        }
+
+        // ================================================================
+        // HELPERS & EXPORT
+        // ================================================================
+        function randomizeAll() {
+            // Amount
+            const amt = (Math.floor(Math.random() * 40 + 1) * 50000);
+            document.getElementById('inputAmount').value = amt.toLocaleString('en-US');
+
+            // Name
+            const name = VIETNAMESE_NAMES[Math.floor(Math.random() * VIETNAMESE_NAMES.length)];
+            document.getElementById('inputName').value = name;
+
+            // Account
+            genRandomAccount();
+
+            // TxId
+            genRandomTxId();
+
+            // Message
+            const msg = VIETNAMESE_MESSAGES[Math.floor(Math.random() * VIETNAMESE_MESSAGES.length)];
+            document.getElementById('inputContent').value = msg;
+
+            // Datetime
+            setCurrentTime();
+
+            render();
+            showToast('🎲 Đã sinh ngẫu nhiên toàn bộ dữ liệu bill!');
+        }
+
+        function setCurrentTime() {
+            const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const mo = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            const wd = weekdays[now.getDay()];
+
+            const timeStr = `${h}:${m}`;
+            const fullStr = `${timeStr} ${wd} ${d}/${mo}/${y}`;
+
+            document.getElementById('inputDatetime').value = fullStr;
+            document.getElementById('inputStatusTime').value = timeStr;
+            render();
+            showToast('🕐 Đã cập nhật ngày giờ hiện tại');
+        }
+
+        function genRandomTxId() {
+            let id = '';
+            for (let i = 0; i < 11; i++) id += Math.floor(Math.random() * 10);
+            document.getElementById('inputTxId').value = id;
+            render();
+        }
+
+        function genRandomAccount() {
+            let acc = '';
+            for (let i = 0; i < 10; i++) acc += Math.floor(Math.random() * 10);
+            document.getElementById('inputAccount').value = acc;
+            render();
+        }
+
+        function toUpper(id) {
+            const el = document.getElementById(id);
+            el.value = el.value.toUpperCase();
+            render();
+        }
+
+        function formatAmountInput() {
+            const el = document.getElementById('inputAmount');
+            let val = el.value.replace(/[^\d]/g, '');
+            if (val) {
+                const num = parseInt(val);
+                el.value = num.toLocaleString('en-US');
+            }
+            render();
+        }
+
+        function getBankShort() {
+            const sel = document.getElementById('selectBank').value;
+            if (sel === 'custom') return gv('inputBankShort') || 'MB';
+            return sel.split('|')[0] || 'MB';
+        }
+
+        function getBankFull() {
+            const sel = document.getElementById('selectBank').value;
+            if (sel === 'custom') return gv('inputBankFull') || 'Ngân hàng Quân Đội';
+            return sel.split('|')[1] || 'Ngân hàng Quân Đội';
+        }
+
+        function gv(id) {
+            const el = document.getElementById(id);
+            return el ? el.value : '';
+        }
+
+        function deepClone(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        function toHex(col) {
+            if (col.startsWith('#') && col.length <= 7) return col;
+            return '#ffffff';
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function downloadPNG() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = `vlb-bill-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('📥 Đã tải ảnh bill PNG độ nét cao (1080×2400)!');
+        }
+
+        function downloadJPG() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            const link = document.createElement('a');
+            link.download = `vlb-bill-${Date.now()}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+
+            currentTab = prevTab;
+            render();
+            showToast('🖼️ Đã tải ảnh JPG!');
+        }
+
+        async function copyToClipboard() {
+            const prevTab = currentTab;
+            currentTab = 'data';
+            render();
+
+            const canvas = document.getElementById('billCanvas');
+            try {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                showToast('📋 Đã sao chép ảnh vào clipboard!');
+            } catch (err) {
+                showToast('❌ Lỗi: ' + err.message);
+            }
+
+            currentTab = prevTab;
+            render();
+        }
+
+        function exportBBoxesJSON() {
+            const bboxes = {};
+            for (const [key, cfg] of Object.entries(config)) {
+                bboxes[key] = {
+                    x: cfg.x,
+                    y: cfg.y,
+                    size: cfg.size,
+                    align: cfg.align
+                };
+            }
+            const blob = new Blob([JSON.stringify(bboxes, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.download = `bboxes-${Date.now()}.json`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            showToast('📄 Đã xuất metadata Bounding Box JSON');
+        }
+
+        function saveConfig() {
+            localStorage.setItem('vcb_bill_studio_config_vcb_v3', JSON.stringify(config));
+            showToast('💾 Đã lưu cấu hình vị trí');
+        }
+
+        function loadSavedConfig() {
+            const saved = localStorage.getItem('vcb_bill_studio_config_vcb_v3');
+            if (saved) {
+                try {
+                    config = { ...config, ...JSON.parse(saved) };
+                } catch (e) { }
+            }
+        }
+
+        function resetConfig() {
+            localStorage.removeItem('vcb_bill_studio_config_vcb_v3');
+            config = deepClone(DEFAULT_CONFIG);
+            onFieldSelect();
+            render();
+            showToast('🔄 Đã khôi phục vị trí mặc định');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        // ================================================================
+        // RUN
+        // ================================================================
+        init();
+    </script>
+</body>
+
+</html>

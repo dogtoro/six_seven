@@ -1,0 +1,34 @@
+/* theme_light.css - Light Theme for VCB Digibank Receipt */
+:root {
+  --bg-app: #f4fbf7;
+  --bg-gradient: linear-gradient(180deg, #e4f5ed 0%, #edf8f2 25%, #f8fafc 60%, #ffffff 100%);
+  --bg-card: #ffffff;
+  --border-card: rgba(0, 0, 0, 0.06);
+  --text-muted: #64748b;
+  --text-main: #0f172a;
+  --text-heading: #15803d;
+  --accent-green: #16a34a;
+  --accent-green-dark: #ffffff;
+  --amount-color: #16a34a;
+  --currency-color: #059669;
+  --datetime-color: #475569;
+  --divider: rgba(0, 0, 0, 0.05);
+  --btn-primary-bg: #16a34a;
+  --btn-primary-text: #ffffff;
+  --status-bar-color: #0f172a;
+  --toggle-bg: #cbd5e1;
+  --toggle-knob: #ffffff;
+  --home-btn-bg: rgba(22, 163, 74, 0.1);
+  --home-btn-icon: #16a34a;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-main);
+}
+
+.receipt-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
