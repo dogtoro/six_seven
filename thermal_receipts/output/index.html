@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thermal Receipt Forgery Templates Showcase</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 24px; }
+  h1 { text-align: center; color: #38bdf8; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+  .showcase-grid { display: flex; flex-direction: column; gap: 40px; max-width: 1400px; margin: 0 auto; }
+  .card { background: #1e293b; border-radius: 12px; padding: 24px; border: 1px solid #334155; }
+  .card-title { font-size: 20px; font-weight: bold; color: #a3e635; margin-bottom: 16px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
+  .comparison-row { display: flex; gap: 20px; justify-content: space-around; flex-wrap: wrap; }
+  .img-col { flex: 1; min-width: 300px; max-width: 420px; text-align: center; }
+  .img-col h3 { font-size: 15px; margin-bottom: 10px; color: #cbd5e1; }
+  .img-col img { width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #475569; }
+  .badge-orig { background: #059669; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+  .badge-fake { background: #dc2626; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+  .badge-mask { background: #2563eb; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+  .meta-box { margin-top: 16px; background: #0f172a; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; color: #38bdf8; text-align: left; }
+</style>
+</head>
+<body>
+  <h1>🧾 BỘ MẪU HÓA ĐƠN IN NHIỆT (THERMAL POS RECEIPTS)</h1>
+  <div class="subtitle">Đặc thù in nhiệt: Nền giấy ngà xám, vệt xước kim đầu in nhiệt, font ma trận monospace, mép xé răng cưa, kèm Ground-Truth Mask chuẩn pixel</div>
+  
+  <div style="text-align: center; margin-bottom: 25px;">
+    <a href="../tool_thermal_receipt.html" style="display: inline-block; background: #0284c7; color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(2,132,199,0.4);">
+      🛠️ Mở Trình Studio Chỉnh Sửa Hóa Đơn Trực Tiếp (Thermal Receipt Studio)
+    </a>
+  </div>
+  
+  <div class="showcase-grid">
+    <!-- MẪU 1: CAFE -->
+    <div class="card">
+      <div class="card-title">☕ Mẫu 1: Quán Cafe & Trà Sữa (Phúc Long / Highlands style)</div>
+      <div class="comparison-row">
+        <div class="img-col">
+          <h3><span class="badge-orig">AUTHENTIC</span> Hóa đơn gốc</h3>
+          <img src="cafe_receipt_authentic.png" alt="Cafe Authentic">
+        </div>
+        <div class="img-col">
+          <h3><span class="badge-fake">TAMPERED</span> Đã can thiệp (SL 1->5, Tổng tiền)</h3>
+          <img src="cafe_receipt_tampered.png" alt="Cafe Tampered">
+        </div>
+        <div class="img-col">
+          <h3><span class="badge-mask">GROUND-TRUTH</span> Binary Pixel Mask</h3>
+          <img src="cafe_receipt_mask.png" alt="Cafe Mask">
+        </div>
+      </div>
+      <div class="meta-box">
+        <b>Can thiệp:</b> Sửa số lượng món 'Cà Phê Sữa Đá' từ 2 lên 5; thành tiền món từ 90,000 lên 225,000; sửa Subtotal, Thuế VAT và Grand Total từ 194,400 đ lên 340,200 đ.
+      </div>
+    </div>
+
+    <!-- MẪU 2: SIÊU THỊ -->
+    <div class="card">
+      <div class="card-title">🛒 Mẫu 2: Siêu thị / Cửa hàng Bán lẻ (WinMart+ style)</div>
+      <div class="comparison-row">
+        <div class="img-col">
+          <h3><span class="badge-orig">AUTHENTIC</span> Hóa đơn gốc</h3>
+          <img src="supermarket_receipt_authentic.png" alt="WinMart Authentic">
+        </div>
+        <div class="img-col">
+          <h3><span class="badge-fake">TAMPERED</span> Đã can thiệp (SL Sữa Vinamilk, Grand Total)</h3>
+          <img src="supermarket_receipt_tampered.png" alt="WinMart Tampered">
+        </div>
+        <div class="img-col">
+          <h3><span class="badge-mask">GROUND-TRUTH</span> Binary Pixel Mask</h3>
+          <img src="supermarket_receipt_mask.png" alt="WinMart Mask">
+        </div>
+      </div>
+      <div class="meta-box">
+        <b>Can thiệp:</b> Sửa số lượng Sữa Tươi Vinamilk từ 2 lên 6; thành tiền từ 72,000 lên 216,000; nâng tổng thanh toán lên 321,575 đ.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

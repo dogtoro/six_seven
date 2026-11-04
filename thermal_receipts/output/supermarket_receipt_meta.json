@@ -1,0 +1,52 @@
+{
+  "template": "supermarket_winmart_receipt",
+  "is_tampered": true,
+  "width": 660,
+  "height": 1040,
+  "tampered_fields": [
+    {
+      "field": "item_qty",
+      "original": "2",
+      "forged": "6",
+      "bbox": [
+        320,
+        269,
+        355,
+        293
+      ]
+    },
+    {
+      "field": "item_total",
+      "original": "72,000",
+      "forged": "216,000",
+      "bbox": [
+        510,
+        269,
+        615,
+        293
+      ]
+    },
+    {
+      "field": "subtotal",
+      "original": "194,500",
+      "forged": "338,500",
+      "bbox": [
+        480,
+        397,
+        615,
+        421
+      ]
+    },
+    {
+      "field": "grand_total",
+      "original": "184,775 đ",
+      "forged": "321,575 đ",
+      "bbox": [
+        380,
+        448,
+        615,
+        482
+      ]
+    }
+  ]
+}

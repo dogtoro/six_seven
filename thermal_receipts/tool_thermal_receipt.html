@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thermal Receipt Studio - Công Cụ Tạo & Can Thiệp Hóa Đơn In Nhiệt</title>
+<style>
+  :root {
+    --bg-main: #0b0f19;
+    --bg-panel: #151d30;
+    --bg-card: #1e2942;
+    --border: #2d3b59;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-green: #22c55e;
+    --accent-red: #ef4444;
+    --accent-yellow: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR FORM */
+  .sidebar {
+    width: 460px;
+    min-width: 460px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .sidebar-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 11px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .form-row {
+    display: flex;
+    gap: 8px;
+  }
+  .form-row .form-group { flex: 1; }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 7px 10px;
+    background: #0d1424;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+  }
+
+  /* ITEM TABLE EDITOR */
+  .item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  .item-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 4px 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .item-table td {
+    padding: 4px 6px;
+  }
+  .item-table input {
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+  .btn-del {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-add {
+    margin-top: 8px;
+    background: #1e3a5f;
+    color: #38bdf8;
+    border: 1px solid #2d5a88;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn-primary:hover { background: #0369a1; }
+  .btn-danger {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-danger:hover { background: #b91c1c; }
+  .btn-secondary {
+    background: #334155;
+    color: #e2e8f0;
+    border: 1px solid #475569;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { background: #475569; }
+
+  /* TOGGLE SWITCH */
+  .switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    margin-top: 6px;
+  }
+  .switch-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fca5a5;
+  }
+
+  /* ACTION FOOTER */
+  .sidebar-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-row { display: flex; gap: 8px; }
+  .footer-row button { flex: 1; }
+
+  /* PREVIEW MAIN AREA */
+  .preview-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #090d16;
+    overflow: hidden;
+  }
+  .toolbar {
+    height: 48px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0f172a;
+  }
+  .view-tabs {
+    display: flex;
+    gap: 4px;
+    background: #1e2942;
+    padding: 3px;
+    border-radius: 6px;
+  }
+  .view-tab {
+    padding: 5px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .view-tab.active {
+    background: #0284c7;
+    color: white;
+  }
+  .canvas-wrapper {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: radial-gradient(circle at center, #172136 0%, #090d16 100%);
+  }
+  #receiptCanvas, #maskCanvas {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+  #maskCanvas { display: none; }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0284c7;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .25s ease;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+  <!-- LEFT PANEL: CONTROLS & FORM -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>🧾 <span>Thermal Receipt Studio</span></h1>
+      <span class="badge">In Nhiệt POS</span>
+    </div>
+
+    <div class="sidebar-content">
+      <!-- MẪU HÓA ĐƠN -->
+      <div class="section">
+        <div class="section-title">
+          <span>Chọn Mẫu Template</span>
+          <button class="btn-secondary" style="font-size: 11px; padding: 2px 8px;" onclick="loadPreset()">Đổi Mẫu</button>
+        </div>
+        <select id="selTemplate" onchange="loadPreset()">
+          <option value="cafe">☕ Quán Cafe & Trà Sữa (Phúc Long / Highlands style)</option>
+          <option value="mart">🛒 Siêu thị Bán lẻ (WinMart+ style)</option>
+          <option value="circlek">🏪 Cửa hàng tiện lợi (Circle K style)</option>
+        </select>
+      </div>
+
+      <!-- THÔNG TIN CỬA HÀNG -->
+      <div class="section">
+        <div class="section-title">1. Thông tin Cửa hàng</div>
+        <div class="form-group">
+          <label>Tên Thương hiệu</label>
+          <input type="text" id="storeName" value="PHÚC LONG COFFEE & TEA" oninput="render()">
+        </div>
+        <div class="form-group">
+          <label>Địa chỉ Chi nhánh</label>
+          <input type="text" id="storeAddress" value="CN Vincom Center, 72 Lê Thánh Tôn, Q.1, TP.HCM" oninput="render()">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Hotline</label>
+            <input type="text" id="storeHotline" value="1900 2345" oninput="render()">
+          </div>
+          <div class="form-group">
+            <label>Wifi / Pass</label>
+            <input type="text" id="storeWifi" value="Pass: 18006779" oninput="render()">
+          </div>
+        </div>
+      </div>
+
+      <!-- THÔNG TIN HÓA ĐƠN -->
+      <div class="section">
+        <div class="section-title">2. Chi tiết Giao dịch</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Số Hóa đơn</label>
+            <input type="text" id="receiptCode" value="PL-20261104-0892" oninput="render()">
+          </div>
+          <div class="form-group">
+            <label>Quầy / Bàn</label>
+            <input type="text" id="tableNum" value="Bàn: T04 (Mang về)" oninput="render()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ngày Giờ</label>
+            <input type="text" id="receiptDate" value="04/11/2026 09:42" oninput="render()">
+          </div>
+          <div class="form-group">
+            <label>Thu ngân</label>
+            <input type="text" id="cashier" value="Nguyễn Văn A" oninput="render()">
+          </div>
+        </div>
+      </div>
+
+      <!-- BẢNG MẶT HÀNG -->
+      <div class="section">
+        <div class="section-title">
+          <span>3. Danh sách Mặt hàng</span>
+          <button class="btn-secondary" style="font-size: 11px; padding: 2px 6px;" onclick="addItemRow()">+ Thêm món</button>
+        </div>
+        <table class="item-table" id="itemsTable">
+          <thead>
+            <tr>
+              <th style="width: 45%;">Tên món</th>
+              <th style="width: 15%;">SL</th>
+              <th style="width: 25%;">Đơn giá</th>
+              <th style="width: 15%;">Xóa</th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TỔNG KẾT & CAN THIỆP -->
+      <div class="section">
+        <div class="section-title">4. Tổng Kết & Can Thiệp Tài Chính</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Giảm giá / Voucher (đ)</label>
+            <input type="text" id="discountVal" value="-20,000" oninput="onFinancialChange()">
+          </div>
+          <div class="form-group">
+            <label>Thuế VAT (%)</label>
+            <input type="number" id="vatPercent" value="8" oninput="onFinancialChange()">
+          </div>
+        </div>
+        
+        <div class="form-group" style="margin-top: 8px;">
+          <label style="color: #38bdf8; font-weight: 700;">TỔNG THANH TOÁN HIỂN THỊ (GRAND TOTAL)</label>
+          <input type="text" id="grandTotal" value="194,400 đ" style="font-weight: bold; font-size: 14px; color: #a3e635;" oninput="render()">
+        </div>
+
+        <!-- SWITCH BẬT CAN THIỆP / TẠO GIẢ MẠO -->
+        <div class="switch-container">
+          <span class="switch-label">🔴 Đánh dấu Chế độ Giả mạo (Tampered Mode)</span>
+          <input type="checkbox" id="chkTampered" style="width: 18px; height: 18px; cursor: pointer;" onchange="render()">
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+          * Khi bật: Tool sẽ tự động trích xuất vùng bị sửa để tạo <b>Binary Mask chuẩn pixel</b> cho dataset.
+        </p>
+      </div>
+
+      <!-- HIỆU ỨNG GIẤY IN NHIỆT -->
+      <div class="section">
+        <div class="section-title">5. Giả lập Đặc tính In Nhiệt</div>
+        <div class="form-row">
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;">
+            <input type="checkbox" id="chkStreaks" checked onchange="render()" style="width: auto;"> Vệt xước nhiệt
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;">
+            <input type="checkbox" id="chkJagged" checked onchange="render()" style="width: auto;"> Răng cưa mép xé
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;">
+            <input type="checkbox" id="chkBarcode" checked onchange="render()" style="width: auto;"> Mã vạch Barcode
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION FOOTER -->
+    <div class="sidebar-footer">
+      <div class="footer-row">
+        <button class="btn-primary" onclick="downloadReceipt()">📥 Tải Ảnh Hóa Đơn</button>
+        <button class="btn-secondary" onclick="downloadMask()">🎭 Tải Mask Nhãn</button>
+      </div>
+      <div class="footer-row">
+        <button class="btn-secondary" style="font-size: 11px;" onclick="randomizeData()">🎲 Random dữ liệu</button>
+        <button class="btn-secondary" style="font-size: 11px;" onclick="exportDatasetSample()">📦 Xuất Bộ Mẫu (Auth+Fake+Mask+JSON)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PREVIEW AREA -->
+  <div class="preview-area">
+    <div class="toolbar">
+      <div class="view-tabs">
+        <button class="view-tab active" id="tabReceipt" onclick="switchView('receipt')">📄 Hóa Đơn Render</button>
+        <button class="view-tab" id="tabMask" onclick="switchView('mask')">🎭 Ground-Truth Mask</button>
+      </div>
+      <div style="font-size: 12px; color: var(--text-muted);">
+        Độ phân giải: <span id="resLabel" style="color: #38bdf8; font-weight: 600;">620 × 980 px</span>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="receiptCanvas" width="620" height="980"></canvas>
+      <canvas id="maskCanvas" width="620" height="980"></canvas>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Đã tải ảnh thành công!</div>
+
+  <script>
+    // State
+    let items = [
+      { name: "Trà Đào Cam Sả (L)", qty: 1, price: 65000, tampered: false },
+      { name: "  + Thạch đào", qty: 1, price: 10000, tampered: false },
+      { name: "Cà Phê Sữa Đá (M)", qty: 2, price: 45000, tampered: false },
+      { name: "Bánh Mì Chà Bông", qty: 1, price: 35000, tampered: false }
+    ];
+
+    let pristineSnapshot = null;
+
+    // PRESET TEMPLATES
+    const PRESETS = {
+      cafe: {
+        store: "PHÚC LONG COFFEE & TEA",
+        addr: "CN Vincom Center, 72 Lê Thánh Tôn, Q.1, TP.HCM",
+        hotline: "1900 2345",
+        wifi: "Pass: 18006779",
+        code: "PL-20261104-0892",
+        table: "Bàn: T04 (Mang về)",
+        cashier: "Nguyễn Văn A",
+        discount: "-20,000",
+        vat: 8,
+        items: [
+          { name: "Trà Đào Cam Sả (L)", qty: 1, price: 65000 },
+          { name: "  + Thạch đào", qty: 1, price: 10000 },
+          { name: "Cà Phê Sữa Đá (M)", qty: 2, price: 45000 },
+          { name: "Bánh Mì Chà Bông", qty: 1, price: 35000 }
+        ]
+      },
+      mart: {
+        store: "WINMART+ CỬA HÀNG TIỆN ÍCH",
+        addr: "Số 128 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+        hotline: "1800 6868",
+        wifi: "Pass: winmart2026",
+        code: "WM-8829104",
+        table: "Quầy: POS-02",
+        cashier: "Trần Thị B",
+        discount: "-9,725",
+        vat: 8,
+        items: [
+          { name: "Mì Hảo Hảo Tôm Cay", qty: 5, price: 4500 },
+          { name: "Sữa Tươi Vinamilk 1L", qty: 2, price: 36000 },
+          { name: "Trứng Gà Ba Huân (10)", qty: 1, price: 32000 },
+          { name: "Nước Tương Chinsu", qty: 1, price: 18000 },
+          { name: "Khăn Ướt Mamamy 80t", qty: 2, price: 25000 }
+        ]
+      },
+      circlek: {
+        store: "CIRCLE K VIỆT NAM",
+        addr: "Chi nhánh 45 Hồ Tùng Mậu, Cầu Giấy, Hà Nội",
+        hotline: "1900 6368",
+        wifi: "Pass: circlek123",
+        code: "CK-2611-9912",
+        table: "Quầy: 01 (Take-away)",
+        cashier: "Lê Văn C",
+        discount: "0",
+        vat: 8,
+        items: [
+          { name: "Bánh Mì Que Cay", qty: 2, price: 15000 },
+          { name: "Mì Trộn Trứng Xúc Xích", qty: 1, price: 32000 },
+          { name: "Trà Sữa Thái Xanh", qty: 1, price: 22000 },
+          { name: "Snack Khoai Tây OStar", qty: 1, price: 18000 }
+        ]
+      }
+    };
+
+    function init() {
+      renderTable();
+      calcTotal();
+      render();
+    }
+
+    function loadPreset() {
+      const type = document.getElementById('selTemplate').value;
+      const p = PRESETS[type];
+      if (!p) return;
+
+      document.getElementById('storeName').value = p.store;
+      document.getElementById('storeAddress').value = p.addr;
+      document.getElementById('storeHotline').value = p.hotline;
+      document.getElementById('storeWifi').value = p.wifi;
+      document.getElementById('receiptCode').value = p.code;
+      document.getElementById('tableNum').value = p.table;
+      document.getElementById('cashier').value = p.cashier;
+      document.getElementById('discountVal').value = p.discount;
+      document.getElementById('vatPercent').value = p.vat;
+
+      items = p.items.map(it => ({ ...it, tampered: false }));
+      renderTable();
+      calcTotal();
+      render();
+      showToast('Đã tải mẫu ' + p.store);
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('itemsBody');
+      tbody.innerHTML = '';
+      items.forEach((it, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" value="${it.name}" oninput="updateItem(${idx}, 'name', this.value)"></td>
+          <td><input type="number" style="width:100%; text-align:center;" value="${it.qty}" oninput="updateItem(${idx}, 'qty', this.value)"></td>
+          <td><input type="number" style="width:100%;" value="${it.price}" oninput="updateItem(${idx}, 'price', this.value)"></td>
+          <td style="text-align:center;"><button class="btn-del" onclick="deleteItem(${idx})">✕</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addItemRow() {
+      items.push({ name: "Món mới thêm", qty: 1, price: 30000, tampered: false });
+      renderTable();
+      calcTotal();
+      render();
+    }
+
+    function deleteItem(idx) {
+      if (items.length <= 1) return;
+      items.splice(idx, 1);
+      renderTable();
+      calcTotal();
+      render();
+    }
+
+    function updateItem(idx, field, val) {
+      if (field === 'qty' || field === 'price') {
+        items[idx][field] = Number(val) || 0;
+        calcTotal();
+      } else {
+        items[idx][field] = val;
+      }
+      render();
+    }
+
+    function onFinancialChange() {
+      calcTotal();
+      render();
+    }
+
+    function calcTotal() {
+      let sub = items.reduce((acc, it) => acc + (it.qty * it.price), 0);
+      let discStr = document.getElementById('discountVal').value.replace(/[^0-9-]/g, '');
+      let disc = Number(discStr) || 0;
+      let vatRate = (Number(document.getElementById('vatPercent').value) || 0) / 100;
+
+      let taxable = Math.max(0, sub + disc);
+      let vat = Math.round(taxable * vatRate);
+      let grand = taxable + vat;
+
+      document.getElementById('grandTotal').value = grand.toLocaleString('vi-VN') + ' đ';
+    }
+
+    function render() {
+      const canvas = document.getElementById('receiptCanvas');
+      const maskCanvas = document.getElementById('maskCanvas');
+      const ctx = canvas.getContext('2d');
+      const mctx = maskCanvas.getContext('2d');
+
+      const W = canvas.width;
+      const H = canvas.height;
+
+      // 1. VẼ NỀN GIẤY NHIỆT
+      ctx.fillStyle = '#f8f8f6';
+      ctx.fillRect(0, 0, W, H);
+
+      // Reset mask sang màu đen (0)
+      mctx.fillStyle = '#000000';
+      mctx.fillRect(0, 0, W, H);
+
+      // Viền cắt răng cưa
+      if (document.getElementById('chkJagged').checked) {
+        drawZigzag(ctx, W, H);
+      }
+
+      // Vệt xước đầu in nhiệt
+      if (document.getElementById('chkStreaks').checked) {
+        drawThermalStreaks(ctx, W, H);
+      }
+
+      // 2. VẼ NỘI DUNG CHỮ
+      const isTampered = document.getElementById('chkTampered').checked;
+      const inkColor = '#191919';
+      let y = 40;
+
+      // Header Store
+      ctx.fillStyle = inkColor;
+      ctx.font = 'bold 24px -apple-system, "Segoe UI", Arial, sans-serif';
+      ctx.textAlign = 'center';
+      const sName = document.getElementById('storeName').value;
+      ctx.fillText(sName, W / 2, y);
+      y += 30;
+
+      ctx.font = '14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText(document.getElementById('storeAddress').value, W / 2, y);
+      y += 22;
+
+      ctx.fillText(`Hotline: ${document.getElementById('storeHotline').value} - Wifi: ${document.getElementById('storeWifi').value}`, W / 2, y);
+      y += 28;
+
+      ctx.font = 'bold 16px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('=== HÓA ĐƠN BÁN HÀNG ===', W / 2, y);
+      y += 28;
+
+      // Meta row
+      ctx.font = '14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`Số: ${document.getElementById('receiptCode').value}`, 40, y);
+      ctx.textAlign = 'right';
+      ctx.fillText(document.getElementById('tableNum').value, W - 40, y);
+      y += 22;
+
+      ctx.textAlign = 'left';
+      ctx.fillText(`Ngày: ${document.getElementById('receiptDate').value}`, 40, y);
+      ctx.textAlign = 'right';
+      ctx.fillText(`TN: ${document.getElementById('cashier').value}`, W - 40, y);
+      y += 26;
+
+      // Divider
+      ctx.textAlign = 'left';
+      ctx.fillText('----------------------------------------------------', 40, y);
+      y += 20;
+
+      // BẢNG MẶT HÀNG
+      ctx.font = 'bold 14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('Tên hàng', 40, y);
+      ctx.textAlign = 'center';
+      ctx.fillText('SL', 320, y);
+      ctx.textAlign = 'right';
+      ctx.fillText('Đ.Giá', 460, y);
+      ctx.fillText('T.Tiền', W - 40, y);
+      y += 20;
+
+      ctx.textAlign = 'left';
+      ctx.font = '14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('----------------------------------------------------', 40, y);
+      y += 22;
+
+      // Danh sách món
+      items.forEach((it, idx) => {
+        ctx.textAlign = 'left';
+        ctx.fillText(it.name.substring(0, 22), 40, y);
+
+        // SL
+        ctx.textAlign = 'center';
+        ctx.fillText(it.qty.toString(), 320, y);
+
+        // Đơn giá
+        ctx.textAlign = 'right';
+        ctx.fillText(it.price.toLocaleString('vi-VN'), 460, y);
+
+        // Thành tiền
+        const rowTot = it.qty * it.price;
+        ctx.fillText(rowTot.toLocaleString('vi-VN'), W - 40, y);
+
+        // NẾU BẬT CHẾ ĐỘ GIẢ MẠO: Giả sử can thiệp món thứ 2
+        if (isTampered && idx === 1) {
+          // Tô trắng vùng can thiệp trên maskCanvas
+          mctx.fillStyle = '#ffffff';
+          mctx.fillRect(300, y - 16, 40, 22);       // BBox SL
+          mctx.fillRect(480, y - 16, W - 480 - 35, 22); // BBox Thành tiền
+        }
+
+        y += 24;
+      });
+
+      y += 8;
+      ctx.fillText('====================================================', 40, y);
+      y += 24;
+
+      // TỔNG KẾT
+      let sub = items.reduce((acc, it) => acc + (it.qty * it.price), 0);
+      ctx.textAlign = 'left';
+      ctx.fillText('Tổng tiền hàng:', 40, y);
+      ctx.textAlign = 'right';
+      ctx.fillText(sub.toLocaleString('vi-VN') + ' đ', W - 40, y);
+      y += 24;
+
+      ctx.textAlign = 'left';
+      ctx.fillText('Giảm giá / Chiết khấu:', 40, y);
+      ctx.textAlign = 'right';
+      ctx.fillText(document.getElementById('discountVal').value + ' đ', W - 40, y);
+      y += 24;
+
+      ctx.textAlign = 'left';
+      ctx.fillText(`Thuế VAT (${document.getElementById('vatPercent').value}%):`, 40, y);
+      ctx.textAlign = 'right';
+      let discStr = document.getElementById('discountVal').value.replace(/[^0-9-]/g, '');
+      let disc = Number(discStr) || 0;
+      let vat = Math.round(Math.max(0, sub + disc) * ((Number(document.getElementById('vatPercent').value) || 0) / 100));
+      ctx.fillText(vat.toLocaleString('vi-VN') + ' đ', W - 40, y);
+      y += 28;
+
+      // GRAND TOTAL (TO ĐẬM)
+      ctx.font = 'bold 20px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('TỔNG THANH TOÁN:', 40, y);
+      ctx.textAlign = 'right';
+      const gtText = document.getElementById('grandTotal').value;
+      ctx.fillText(gtText, W - 40, y);
+
+      if (isTampered) {
+        // Mask cho Grand Total
+        mctx.fillStyle = '#ffffff';
+        mctx.fillRect(W - 280, y - 20, 245, 28);
+      }
+      y += 34;
+
+      ctx.font = '14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('----------------------------------------------------', 40, y);
+      y += 24;
+
+      // FOOTER & BARCODE
+      ctx.font = '13px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('Hình thức: Thanh toán Thẻ Napas / QR Code', 40, y);
+      y += 20;
+      ctx.fillText('Tra cứu HĐ điện tử: https://tracuu.einvoice.vn', 40, y);
+      y += 28;
+
+      if (document.getElementById('chkBarcode').checked) {
+        drawBarcode(ctx, (W - 320) / 2, y, 320, 40);
+        y += 54;
+      }
+
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 14px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('CẢM ƠN QUÝ KHÁCH VÀ HẸN GẶP LẠI!', W / 2, y);
+      y += 20;
+      ctx.font = '12px "DejaVu Sans Mono", "Courier New", monospace';
+      ctx.fillText('(Vui lòng kiểm tra lại hóa đơn trước khi rời quầy)', W / 2, y);
+    }
+
+    function drawZigzag(ctx, W, H) {
+      ctx.fillStyle = '#e5e5e0';
+      const step = 8;
+      // Top
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      for (let x = 0; x <= W; x += step) {
+        let y = ((x / step) % 2 === 1) ? 5 : 0;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      // Bottom
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      for (let x = 0; x <= W; x += step) {
+        let y = H - (((x / step) % 2 === 1) ? 5 : 0);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawThermalStreaks(ctx, W, H) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.fillRect(120, 0, 1.5, H);
+      ctx.fillRect(340, 0, 1, H);
+      ctx.fillRect(490, 0, 2, H);
+    }
+
+    function drawBarcode(ctx, x, y, width, height) {
+      ctx.fillStyle = '#222222';
+      let cur = x;
+      let seed = 42;
+      while (cur < x + width - 10) {
+        seed = (seed * 9301 + 49297) % 233280;
+        let bw = (seed % 3) + 1;
+        seed = (seed * 9301 + 49297) % 233280;
+        let sw = (seed % 3) + 2;
+        ctx.fillRect(cur, y, bw, height);
+        cur += bw + sw;
+      }
+    }
+
+    function switchView(mode) {
+      const rCanvas = document.getElementById('receiptCanvas');
+      const mCanvas = document.getElementById('maskCanvas');
+      const tabR = document.getElementById('tabReceipt');
+      const tabM = document.getElementById('tabMask');
+
+      if (mode === 'receipt') {
+        rCanvas.style.display = 'block';
+        mCanvas.style.display = 'none';
+        tabR.classList.add('active');
+        tabM.classList.remove('active');
+      } else {
+        rCanvas.style.display = 'none';
+        mCanvas.style.display = 'block';
+        tabM.classList.add('active');
+        tabR.classList.remove('active');
+      }
+    }
+
+    function downloadReceipt() {
+      const canvas = document.getElementById('receiptCanvas');
+      const isTampered = document.getElementById('chkTampered').checked;
+      const link = document.createElement('a');
+      link.download = `receipt_${isTampered ? 'tampered' : 'authentic'}_${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('Đã tải ảnh hóa đơn PNG');
+    }
+
+    function downloadMask() {
+      const canvas = document.getElementById('maskCanvas');
+      const link = document.createElement('a');
+      link.download = `receipt_mask_${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('Đã tải Ground-Truth Mask nhãn 0 & 255');
+    }
+
+    function randomizeData() {
+      const rId = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('receiptCode').value = 'HD-2026-' + rId;
+      items.forEach(it => {
+        it.qty = Math.floor(1 + Math.random() * 4);
+      });
+      renderTable();
+      calcTotal();
+      render();
+      showToast('Đã sinh dữ liệu ngẫu nhiên');
+    }
+
+    function exportDatasetSample() {
+      // 1. Tải bản Authentic
+      document.getElementById('chkTampered').checked = false;
+      render();
+      const canvas = document.getElementById('receiptCanvas');
+      const authLink = document.createElement('a');
+      authLink.download = `sample_authentic.png`;
+      authLink.href = canvas.toDataURL('image/png');
+      authLink.click();
+
+      // 2. Tải bản Tampered & Mask
+      setTimeout(() => {
+        document.getElementById('chkTampered').checked = true;
+        render();
+        const fakeLink = document.createElement('a');
+        fakeLink.download = `sample_tampered.png`;
+        fakeLink.href = canvas.toDataURL('image/png');
+        fakeLink.click();
+
+        const maskCanvas = document.getElementById('maskCanvas');
+        const maskLink = document.createElement('a');
+        maskLink.download = `sample_mask.png`;
+        maskLink.href = maskCanvas.toDataURL('image/png');
+        maskLink.click();
+
+        showToast('📦 Đã xuất trọn bộ Pilot Dataset!');
+      }, 400);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // Run
+    init();
+  </script>
+</body>
+</html>
+

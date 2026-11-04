@@ -1,0 +1,63 @@
+{
+  "template": "cafe_tea_thermal_receipt",
+  "is_tampered": true,
+  "width": 620,
+  "height": 980,
+  "tampered_fields": [
+    {
+      "field": "item_qty",
+      "original": "2",
+      "forged": "5",
+      "bbox": [
+        285,
+        324,
+        315,
+        348
+      ]
+    },
+    {
+      "field": "item_total",
+      "original": "90,000",
+      "forged": "225,000",
+      "bbox": [
+        470,
+        324,
+        575,
+        348
+      ]
+    },
+    {
+      "field": "subtotal",
+      "original": "200,000",
+      "forged": "335,000",
+      "bbox": [
+        460,
+        404,
+        575,
+        428
+      ]
+    },
+    {
+      "field": "vat",
+      "original": "14,400",
+      "forged": "25,200",
+      "bbox": [
+        460,
+        454,
+        575,
+        478
+      ]
+    },
+    {
+      "field": "grand_total",
+      "original": "194,400 đ",
+      "forged": "340,200 đ",
+      "bbox": [
+        370,
+        480,
+        575,
+        514
+      ]
+    }
+  ]
+}
