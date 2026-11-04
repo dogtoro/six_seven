@@ -8,5 +8,4 @@ __pycache__/
 dataset/
 thermal_receipts/output/*.png
 *.md
-!README.md
 
