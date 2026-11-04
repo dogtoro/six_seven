@@ -82,7 +82,7 @@ def draw_barcode(draw, x, y, width, height, code_seed=123):
         cur_x += bar_w + space_w
 
 
-def render_cafe_receipt(tampered=False, seed=100):
+def render_cafe_receipt(tampered=False, seed=100, template_name="PhucLong_Cafe_K80", store_title="PHÚC LONG COFFEE & TEA"):
     """
     Sinh hóa đơn in nhiệt kiểu Quán Cafe / Trà Sữa (Highlands / Phúc Long).
     Khổ 58mm/80mm (chiều rộng 600px).
@@ -110,7 +110,7 @@ def render_cafe_receipt(tampered=False, seed=100):
     ink_tamper = (28, 28, 28) # Màu hơi khác vi mô nếu bị can thiệp
     
     metadata = {
-        "template": "cafe_tea_thermal_receipt",
+        "template": template_name,
         "is_tampered": tampered,
         "width": width,
         "height": height,
@@ -120,7 +120,7 @@ def render_cafe_receipt(tampered=False, seed=100):
     # 1. HEADER
     y = 35
     # Tiêu đề quán
-    title = "PHÚC LONG COFFEE & TEA"
+    title = store_title
     tb = font_title.getbbox(title)
     draw.text(((width - (tb[2] - tb[0])) // 2, y), title, fill=ink_color, font=font_title)
     y += 35
@@ -305,7 +305,7 @@ def render_cafe_receipt(tampered=False, seed=100):
     return bg, mask, metadata
 
 
-def render_supermarket_receipt(tampered=False, seed=200):
+def render_supermarket_receipt(tampered=False, seed=200, template_name="WinMart_Supermarket_K80", store_title="WINMART+ CỬA HÀNG TIỆN ÍCH"):
     """
     Sinh hóa đơn in nhiệt kiểu Siêu thị / WinMart+ (khổ rộng 80mm).
     """
@@ -328,7 +328,7 @@ def render_supermarket_receipt(tampered=False, seed=200):
     ink_tamper = (24, 24, 24)
     
     metadata = {
-        "template": "supermarket_winmart_receipt",
+        "template": template_name,
         "is_tampered": tampered,
         "width": width,
         "height": height,
@@ -336,7 +336,7 @@ def render_supermarket_receipt(tampered=False, seed=200):
     }
     
     y = 35
-    t1 = "WINMART+ CỬA HÀNG TIỆN ÍCH"
+    t1 = store_title
     draw.text(((width - font_title.getbbox(t1)[2]) // 2, y), t1, fill=ink_color, font=font_title)
     y += 36
     t2 = "Đ/C: Số 128 Nguyễn Trãi, Q. Thanh Xuân, Hà Nội"

@@ -313,17 +313,25 @@
     </div>
 
     <div class="sidebar-content">
-      <!-- MẪU HÓA ĐƠN -->
+      <!-- MẪU HÓA ĐƠN & TÙY BIẾN TÊN GỌI -->
       <div class="section">
         <div class="section-title">
-          <span>Chọn Mẫu Template</span>
-          <button class="btn-secondary" style="font-size: 11px; padding: 2px 8px;" onclick="loadPreset()">Đổi Mẫu</button>
+          <span>Mẫu Template & Tên Gọi</span>
+          <button class="btn-secondary" style="font-size: 11px; padding: 2px 8px;" onclick="loadPreset()">Nạp Lại</button>
         </div>
-        <select id="selTemplate" onchange="loadPreset()">
-          <option value="cafe">☕ Quán Cafe & Trà Sữa (Phúc Long / Highlands style)</option>
-          <option value="mart">🛒 Siêu thị Bán lẻ (WinMart+ style)</option>
-          <option value="circlek">🏪 Cửa hàng tiện lợi (Circle K style)</option>
-        </select>
+        <div class="form-group">
+          <label>Mẫu thiết kế cơ sở</label>
+          <select id="selTemplate" onchange="loadPreset()">
+            <option value="cafe">☕ Quán Cafe & Trà Sữa (Phúc Long / Highlands style)</option>
+            <option value="mart">🛒 Siêu thị Bán lẻ (WinMart+ style)</option>
+            <option value="circlek">🏪 Cửa hàng tiện lợi (Circle K style)</option>
+            <option value="custom">✨ Mẫu tùy chỉnh tự do (Custom Template)</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-top: 8px;">
+          <label style="color: #38bdf8; font-weight: 600;">🏷️ Tên Template (Đổi tên tự do để xuất file & dataset):</label>
+          <input type="text" id="templateName" value="PhucLong_Cafe_K80" placeholder="Ví dụ: Highlands_K80, BachHoaXanh, TraSuaMixue..." oninput="onTemplateNameInput()">
+        </div>
       </div>
 
       <!-- THÔNG TIN CỬA HÀNG -->
@@ -488,6 +496,7 @@
     // PRESET TEMPLATES
     const PRESETS = {
       cafe: {
+        name: "PhucLong_Cafe_K80",
         store: "PHÚC LONG COFFEE & TEA",
         addr: "CN Vincom Center, 72 Lê Thánh Tôn, Q.1, TP.HCM",
         hotline: "1900 2345",
@@ -505,6 +514,7 @@
         ]
       },
       mart: {
+        name: "WinMart_Supermarket_K80",
         store: "WINMART+ CỬA HÀNG TIỆN ÍCH",
         addr: "Số 128 Nguyễn Trãi, Thanh Xuân, Hà Nội",
         hotline: "1800 6868",
@@ -523,6 +533,7 @@
         ]
       },
       circlek: {
+        name: "CircleK_Convenience_K58",
         store: "CIRCLE K VIỆT NAM",
         addr: "Chi nhánh 45 Hồ Tùng Mậu, Cầu Giấy, Hà Nội",
         hotline: "1900 6368",
@@ -538,8 +549,46 @@
           { name: "Trà Sữa Thái Xanh", qty: 1, price: 22000 },
           { name: "Snack Khoai Tây OStar", qty: 1, price: 18000 }
         ]
+      },
+      custom: {
+        name: "Custom_Thermal_Receipt",
+        store: "TÊN CỬA HÀNG / DOANH NGHIỆP",
+        addr: "Địa chỉ số ..., Quận/Huyện, Tỉnh/TP",
+        hotline: "1900 xxxx",
+        wifi: "Pass: 12345678",
+        code: "HD-CUSTOM-001",
+        table: "Quầy 01",
+        cashier: "Thu Ngân Viên",
+        discount: "0",
+        vat: 8,
+        items: [
+          { name: "Sản phẩm A", qty: 1, price: 50000 },
+          { name: "Sản phẩm B", qty: 2, price: 30000 }
+        ]
       }
     };
+
+    function getSafeTemplateName() {
+      const el = document.getElementById('templateName');
+      const raw = el ? el.value.trim() : 'Thermal_Receipt';
+      return raw.replace(/[^a-zA-Z0-9_\-]/g, '_') || 'Thermal_Receipt';
+    }
+
+    function onTemplateNameInput() {
+      const cur = document.getElementById('templateName').value.trim();
+      const sel = document.getElementById('selTemplate');
+      let matched = false;
+      for (let k in PRESETS) {
+        if (PRESETS[k].name === cur) {
+          sel.value = k;
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        sel.value = 'custom';
+      }
+    }
 
     function init() {
       renderTable();
@@ -552,6 +601,7 @@
       const p = PRESETS[type];
       if (!p) return;
 
+      document.getElementById('templateName').value = p.name;
       document.getElementById('storeName').value = p.store;
       document.getElementById('storeAddress').value = p.addr;
       document.getElementById('storeHotline').value = p.hotline;
@@ -566,7 +616,7 @@
       renderTable();
       calcTotal();
       render();
-      showToast('Đã tải mẫu ' + p.store);
+      showToast('Đã nạp template: ' + p.name);
     }
 
     function renderTable() {
@@ -876,20 +926,22 @@
     function downloadReceipt() {
       const canvas = document.getElementById('receiptCanvas');
       const isTampered = document.getElementById('chkTampered').checked;
+      const safe = getSafeTemplateName();
       const link = document.createElement('a');
-      link.download = `receipt_${isTampered ? 'tampered' : 'authentic'}_${Date.now()}.png`;
+      link.download = `${safe}_${isTampered ? 'tampered' : 'authentic'}_${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('Đã tải ảnh hóa đơn PNG');
+      showToast(`Đã tải ảnh hóa đơn (${safe})`);
     }
 
     function downloadMask() {
       const canvas = document.getElementById('maskCanvas');
+      const safe = getSafeTemplateName();
       const link = document.createElement('a');
-      link.download = `receipt_mask_${Date.now()}.png`;
+      link.download = `${safe}_mask_${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('Đã tải Ground-Truth Mask nhãn 0 & 255');
+      showToast(`Đã tải Ground-Truth Mask (${safe})`);
     }
 
     function randomizeData() {
@@ -905,31 +957,51 @@
     }
 
     function exportDatasetSample() {
+      const safe = getSafeTemplateName();
+      const tName = document.getElementById('templateName').value.trim();
+
       // 1. Tải bản Authentic
       document.getElementById('chkTampered').checked = false;
       render();
       const canvas = document.getElementById('receiptCanvas');
       const authLink = document.createElement('a');
-      authLink.download = `sample_authentic.png`;
+      authLink.download = `${safe}_authentic.png`;
       authLink.href = canvas.toDataURL('image/png');
       authLink.click();
 
-      // 2. Tải bản Tampered & Mask
+      // 2. Tải bản Tampered, Mask & Metadata JSON
       setTimeout(() => {
         document.getElementById('chkTampered').checked = true;
         render();
         const fakeLink = document.createElement('a');
-        fakeLink.download = `sample_tampered.png`;
+        fakeLink.download = `${safe}_tampered.png`;
         fakeLink.href = canvas.toDataURL('image/png');
         fakeLink.click();
 
         const maskCanvas = document.getElementById('maskCanvas');
         const maskLink = document.createElement('a');
-        maskLink.download = `sample_mask.png`;
+        maskLink.download = `${safe}_mask.png`;
         maskLink.href = maskCanvas.toDataURL('image/png');
         maskLink.click();
 
-        showToast('📦 Đã xuất trọn bộ Pilot Dataset!');
+        // 3. Tải Metadata JSON
+        const metaObj = {
+          template: tName,
+          template_id: safe,
+          store_name: document.getElementById('storeName').value,
+          receipt_code: document.getElementById('receiptCode').value,
+          date: document.getElementById('receiptDate').value,
+          grand_total: document.getElementById('grandTotal').value,
+          is_tampered: true,
+          exported_at: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(metaObj, null, 2)], { type: 'application/json' });
+        const jsonLink = document.createElement('a');
+        jsonLink.download = `${safe}_metadata.json`;
+        jsonLink.href = URL.createObjectURL(blob);
+        jsonLink.click();
+
+        showToast(`📦 Đã xuất trọn bộ Pilot Dataset: ${safe}!`);
       }, 400);
     }
 
