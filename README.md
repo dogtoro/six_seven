@@ -123,3 +123,4 @@ Mỗi mẫu trong dataset được ghi nhận chi tiết:
 - **Python:** $\ge 3.8$
 - **Thư viện:** `Pillow` (PIL) $\ge 9.0$
 - **Hệ thống Font:** Hỗ trợ font Monospace có tiếng Việt (ví dụ: `DejaVuSansMono.ttf`, `DejaVuSans.ttf` trên Linux hoặc `Consolas`, `Courier New` trên Windows).
+
