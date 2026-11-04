@@ -83,10 +83,7 @@ def draw_barcode(draw, x, y, width, height, code_seed=123):
 
 
 def render_cafe_receipt(tampered=False, seed=100, template_name="PhucLong_Cafe_K80", store_title="PHÚC LONG COFFEE & TEA"):
-    """
-    Sinh hóa đơn in nhiệt kiểu Quán Cafe / Trà Sữa (Highlands / Phúc Long).
-    Khổ 58mm/80mm (chiều rộng 600px).
-    """
+    # Mẫu Quán Cafe / Trà Sữa (Highlands / Phúc Long) - Khổ 58mm/80mm
     width = 620
     height = 980
     bg = create_thermal_background(width, height, add_streaks=True, seed=seed)
@@ -306,9 +303,7 @@ def render_cafe_receipt(tampered=False, seed=100, template_name="PhucLong_Cafe_K
 
 
 def render_supermarket_receipt(tampered=False, seed=200, template_name="WinMart_Supermarket_K80", store_title="WINMART+ CỬA HÀNG TIỆN ÍCH"):
-    """
-    Sinh hóa đơn in nhiệt kiểu Siêu thị / WinMart+ (khổ rộng 80mm).
-    """
+    # Mẫu Siêu thị / WinMart+ (khổ rộng 80mm)
     width = 660
     height = 1040
     bg = create_thermal_background(width, height, add_streaks=True, seed=seed)
