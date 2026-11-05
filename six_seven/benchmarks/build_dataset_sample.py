@@ -1,9 +1,9 @@
-"""Turn Zang's raw folders (authentic/ tampered/ masks/, PNG, no metadata) into dataset_sample/ with compression variants + metadata.json.
+"""Turn Zang's raw folders (authentic/ tampered/ masks/, PNG, optional metadata) into dataset_sample/ with compression variants + metadata.json.
   python build_dataset_sample.py --raw /path/dataset_grpprj_himladro_2026 --out ../dataset_sample [--limit N]
 Variants (deterministic): png (lossless original), jpeg95, jpeg85, jpeg75, social_sim (resize x0.75 bicubic -> JPEG q70; a SIMULATION, not real Zalo/Messenger).
 Two ground truths per tampered image:
   mask       = Zang's official mask (edited fields only)
-  mask_diff  = every pixel that really differs between authentic and tampered (dilated 2px), includes recomputed lookup code / barcode, which Zang's mask does NOT cover.
+  mask_diff  = every pixel that really differs between authentic and tampered (dilated 2px), may differ from the official bounding-box mask even when that mask covers every changed pixel.
 """
 import argparse, io, json, os
 import numpy as np, scipy.ndimage as ndi
@@ -29,6 +29,11 @@ def main():
     a = ap.parse_args()
     for d in ("images", "masks", "masks_diff"): os.makedirs(f"{a.out}/{d}", exist_ok=True)
     ids = sorted(f.split("_")[1] for f in os.listdir(f"{a.raw}/authentic")); ids = ids[:a.limit] if a.limit else ids
+    meta_path = os.path.join(a.raw, "metadata.json")
+    meta_map = {}
+    if os.path.exists(meta_path):
+        with open(meta_path, encoding="utf-8-sig") as f:
+            meta_map = {m["sample_id"]: m for m in json.load(f)}
     recs = []
     for k in ids:
         A = Image.open(f"{a.raw}/authentic/receipt_{k}_authentic.png").convert("RGB")
@@ -38,7 +43,9 @@ def main():
         m = np.array(M) > 0; d = (np.abs(np.array(A).astype(int) - np.array(T).astype(int)).sum(-1) > 0)
         MD = Image.fromarray((ndi.binary_dilation(d, iterations=2) * 255).astype(np.uint8))
         lab, n = ndi.label(m); boxes = [[int(s[1].start), int(s[0].start), int(s[1].stop), int(s[0].stop)] for s in ndi.find_objects(lab)]
-        layout = f"w{A.size[0]}"
+        sample_meta = meta_map.get(f"receipt_{k}", {})
+        layout = sample_meta.get("template", "unknown")
+        tamper_type = sample_meta.get("tamper_type", "unknown")
         for v in VARIANTS:
             ra, _ = save_variant(A, None, v, f"receipt_{k}_authentic", a.out)
             rt, m2 = save_variant(T, M, v, f"receipt_{k}_tampered", a.out)
@@ -46,7 +53,8 @@ def main():
             mr = f"masks/receipt_{k}_{v}.png"; m2.save(f"{a.out}/{mr}"); mdr = f"masks_diff/receipt_{k}_{v}.png"; md2.save(f"{a.out}/{mdr}")
             common = dict(pair=f"receipt_{k}", template=layout, compression=v, size=list(A.size if v != "social_sim" else (int(A.size[0] * .75), int(A.size[1] * .75))))
             recs.append(dict(id=f"receipt_{k}_authentic__{v}", image=ra, mask=None, mask_diff=None, label=0, tamper_type="none", n_regions=0, **common))
-            recs.append(dict(id=f"receipt_{k}_tampered__{v}", image=rt, mask=mr, mask_diff=mdr, label=1, tamper_type=f"{n}_regions", n_regions=n,
+            recs.append(dict(id=f"receipt_{k}_tampered__{v}", image=rt, mask=mr, mask_diff=mdr, label=1, tamper_type=tamper_type, n_regions=n,
+                             tampered_fields=sample_meta.get("tampered_fields", []),
                              bbox=boxes, mask_px=int(m.sum()), diff_px=int(d.sum()), mask_covers_diff=round(float((d & m).sum() / d.sum()), 4), **common))
     json.dump(recs, open(f"{a.out}/metadata.json", "w"), indent=1)
     print("pairs", len(ids), "records", len(recs))
