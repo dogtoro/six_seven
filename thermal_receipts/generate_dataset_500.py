@@ -2,7 +2,7 @@ import os
 import json
 import random
 import time
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATASET_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "dataset")
@@ -111,7 +111,7 @@ def create_thermal_background(width, height, add_streaks=True, seed=42):
             val = rng.randint(0, 14)
             noise_pixels[x, y] = val
             if x + 1 < width: noise_pixels[x + 1, y] = val
-            if y + 1 < height: noise_pixels[x, y] = val
+            if y + 1 < height: noise_pixels[x, y + 1] = val
             if x + 1 < width and y + 1 < height: noise_pixels[x + 1, y + 1] = val
     noise = noise.filter(ImageFilter.GaussianBlur(radius=0.5))
     
@@ -148,7 +148,8 @@ def create_thermal_background(width, height, add_streaks=True, seed=42):
     return im.convert("RGB")
 
 
-def draw_barcode(draw, x, y, width, height, rng):
+def draw_barcode(draw, x, y, width, height, barcode_seed):
+    rng = random.Random(barcode_seed)
     cur_x = x
     while cur_x < x + width - 15:
         bar_w = rng.choice([1, 2, 3, 4])
@@ -157,8 +158,9 @@ def draw_barcode(draw, x, y, width, height, rng):
         cur_x += bar_w + space_w
 
 
-def generate_single_receipt(template_type, sample_index, seed=1000):
-    rng = random.Random(seed)
+def generate_single_receipt_v2(template_type, sample_index, seed=1000):
+    rng_content = random.Random(seed)
+    rng_tamper = random.Random(seed + 7777777)
     
     # Font loaders
     font_title = ImageFont.truetype(FONT_SANS_BOLD, 25)
@@ -172,40 +174,40 @@ def generate_single_receipt(template_type, sample_index, seed=1000):
     # Select brand & items according to template_type
     if template_type == "cafe":
         template_id = "cafe_fnb"
-        brand_name = rng.choice(CAFE_BRANDS)
+        brand_name = rng_content.choice(CAFE_BRANDS)
         item_pool = CAFE_ITEMS
-        num_items = rng.randint(3, 5)
+        num_items = rng_content.randint(3, 5)
         width, height = 620, 960
-        table_label = f"Bàn: T{rng.randint(1, 15):02d} ({rng.choice(['Mang đi', 'Tại quán'])})"
+        table_label = f"Bàn: T{rng_content.randint(1, 15):02d} ({rng_content.choice(['Mang đi', 'Tại quán'])})"
     elif template_type == "supermarket":
         template_id = "supermarket_retail"
-        brand_name = rng.choice(MART_BRANDS)
+        brand_name = rng_content.choice(MART_BRANDS)
         item_pool = MART_ITEMS
-        num_items = rng.randint(4, 7)
+        num_items = rng_content.randint(4, 7)
         width, height = 660, 1020 + (num_items - 4) * 24
-        table_label = f"Quầy: POS-{rng.randint(1, 8):02d}"
+        table_label = f"Quầy: POS-{rng_content.randint(1, 8):02d}"
     elif template_type == "convenience":
         template_id = "convenience_store"
-        brand_name = rng.choice(CONVENIENCE_BRANDS)
+        brand_name = rng_content.choice(CONVENIENCE_BRANDS)
         item_pool = CONVENIENCE_ITEMS
-        num_items = rng.randint(3, 5)
+        num_items = rng_content.randint(3, 5)
         width, height = 600, 940
-        table_label = f"Quầy: 01 ({rng.choice(['Take-away', 'Tại quầy'])})"
-    else: # custom
-        custom_choice = rng.choice(CUSTOM_BRANDS)
+        table_label = f"Quầy: 01 ({rng_content.choice(['Take-away', 'Tại quầy'])})"
+    else:  # custom
+        custom_choice = rng_content.choice(CUSTOM_BRANDS)
         brand_name = custom_choice[0]
         template_id = f"custom_{custom_choice[1]}"
         item_pool = custom_choice[2]
-        num_items = rng.randint(3, 5)
+        num_items = rng_content.randint(3, 5)
         width, height = 630, 960
-        table_label = f"Số phiếu: P-{rng.randint(10, 99)}"
+        table_label = f"Số phiếu: P-{rng_content.randint(10, 99)}"
 
     # Generate item rows
-    selected_raw = rng.sample(item_pool, num_items)
+    selected_raw = rng_content.sample(item_pool, num_items)
     items_data = []
     for raw in selected_raw:
-        qty = rng.randint(1, 4)
-        price = rng.choice([raw[1], raw[2]])
+        qty = rng_content.randint(1, 4)
+        price = rng_content.choice([raw[1], raw[2]])
         items_data.append({
             "name": raw[0],
             "qty": qty,
@@ -213,308 +215,308 @@ def generate_single_receipt(template_type, sample_index, seed=1000):
             "total": qty * price
         })
         
-    address = f"Số {rng.randint(10, 250)} {rng.choice(STREETS)}"
-    hotline = f"1900 {rng.randint(1000, 9999)}"
-    wifi = f"Pass: {rng.randint(10000000, 99999999)}"
-    receipt_code = f"HD-2026{rng.randint(1, 12):02d}{rng.randint(1, 28):02d}-{sample_index:04d}"
+    address = f"Số {rng_content.randint(10, 250)} {rng_content.choice(STREETS)}"
+    hotline = f"1900 {rng_content.randint(1000, 9999)}"
+    wifi = f"Pass: {rng_content.randint(10000000, 99999999)}"
+    receipt_code = f"HD-2026{rng_content.randint(1, 12):02d}{rng_content.randint(1, 28):02d}-{sample_index:04d}"
     
-    hour = rng.randint(7, 22)
-    minute = rng.randint(0, 59)
-    date_str = f"{rng.randint(1, 28):02d}/{rng.randint(1, 12):02d}/2026 {hour:02d}:{minute:02d}"
-    cashier_name = gen_person_name(rng)
+    hour = rng_content.randint(7, 22)
+    minute = rng_content.randint(0, 59)
+    date_str = f"{rng_content.randint(1, 28):02d}/{rng_content.randint(1, 12):02d}/2026 {hour:02d}:{minute:02d}"
+    cashier_name = gen_person_name(rng_content)
     
     subtotal = sum(it["total"] for it in items_data)
-    has_discount = rng.random() < 0.6
-    discount_val = rng.choice([10000, 15000, 20000, 30000]) if has_discount else 0
-    vat_percent = rng.choice([8, 10])
+    has_discount = rng_content.random() < 0.6
+    discount_val = rng_content.choice([10000, 15000, 20000, 30000]) if has_discount else 0
+    vat_percent = rng_content.choice([8, 10])
     taxable = max(0, subtotal - discount_val)
     vat_val = int(taxable * (vat_percent / 100))
     grand_total = taxable + vat_val
 
+    # Footer data (deterministic for both authentic & tampered)
+    lookup_code_str = f"Mã tra cứu: HD{rng_content.randint(10000000, 99999999)}"
+    barcode_seed = rng_content.randint(100000, 999999)
+
+    # Tampering Plan
+    tamper_type = rng_tamper.choice(["qty_and_total", "grand_total_only", "full_financial"])
+    tamper_item_idx = rng_tamper.randint(0, len(items_data) - 1)
+    
+    if tamper_type in ["qty_and_total", "full_financial"]:
+        orig_item = items_data[tamper_item_idx]
+        forged_qty = orig_item["qty"] + rng_tamper.choice([2, 3, 4])
+        forged_item_tot = forged_qty * orig_item["price"]
+        item_delta = forged_item_tot - orig_item["total"]
+    else:
+        forged_qty = None
+        forged_item_tot = None
+        item_delta = 0
+        
+    if tamper_type == "full_financial":
+        f_subtotal = subtotal + item_delta
+        f_taxable = max(0, f_subtotal - discount_val)
+        f_vat = int(f_taxable * (vat_percent / 100))
+        f_grand = f_taxable + f_vat
+    elif tamper_type == "grand_total_only":
+        f_subtotal = subtotal
+        f_vat = vat_val
+        f_grand = grand_total + rng_tamper.choice([100000, 200000, 300000])
+    else:  # qty_and_total
+        f_subtotal = subtotal
+        f_vat = vat_val
+        f_grand = grand_total
+
     # ==========================================================================
-    # 1. RENDER AUTHENTIC IMAGE
+    # SYNCHRONIZED RENDERING (Authentic + Tampered + Mask)
     # ==========================================================================
     bg_auth = create_thermal_background(width, height, add_streaks=True, seed=seed)
-    draw_a = ImageDraw.Draw(bg_auth)
-    ink_color = (22, 22, 22)
+    bg_tamper = bg_auth.copy()
+    mask = Image.new("L", (width, height), 0)
     
+    draw_a = ImageDraw.Draw(bg_auth)
+    draw_t = ImageDraw.Draw(bg_tamper)
+    draw_m = ImageDraw.Draw(mask)
+    
+    ink_color = (22, 22, 22)
+    tamper_ink_text = (26, 26, 26)
+    tamper_ink_total = (28, 28, 28)
+    pad = 2
+    
+    tampered_fields = []
+    
+    def record_tamper(box_auth, box_tamp, field_name, orig_val, forged_val):
+        union_box = [
+            min(box_auth[0], box_tamp[0]) - pad,
+            min(box_auth[1], box_tamp[1]) - pad,
+            max(box_auth[2], box_tamp[2]) + pad,
+            max(box_auth[3], box_tamp[3]) + pad
+        ]
+        draw_m.rectangle(union_box, fill=255)
+        tampered_fields.append({
+            "field": field_name,
+            "original": str(orig_val),
+            "forged": str(forged_val),
+            "bbox": union_box
+        })
+
     # Header
     y = 35
     tb = font_title.getbbox(brand_name)
-    draw_a.text(((width - (tb[2] - tb[0])) // 2, y), brand_name, fill=ink_color, font=font_title)
+    title_x = (width - (tb[2] - tb[0])) // 2
+    draw_a.text((title_x, y), brand_name, fill=ink_color, font=font_title)
+    draw_t.text((title_x, y), brand_name, fill=ink_color, font=font_title)
     y += 34
     
-    draw_a.text(((width - font_sub.getbbox(address)[2]) // 2, y), address, fill=ink_color, font=font_sub)
+    addr_x = (width - font_sub.getbbox(address)[2]) // 2
+    draw_a.text((addr_x, y), address, fill=ink_color, font=font_sub)
+    draw_t.text((addr_x, y), address, fill=ink_color, font=font_sub)
     y += 22
+    
     info_str = f"Hotline: {hotline} - Wifi: {wifi}"
-    draw_a.text(((width - font_sub.getbbox(info_str)[2]) // 2, y), info_str, fill=ink_color, font=font_sub)
+    info_x = (width - font_sub.getbbox(info_str)[2]) // 2
+    draw_a.text((info_x, y), info_str, fill=ink_color, font=font_sub)
+    draw_t.text((info_x, y), info_str, fill=ink_color, font=font_sub)
     y += 28
     
     hdr_line = "=== HÓA ĐƠN BÁN HÀNG ==="
-    draw_a.text(((width - font_bold.getbbox(hdr_line)[2]) // 2, y), hdr_line, fill=ink_color, font=font_bold)
+    hdr_x = (width - font_bold.getbbox(hdr_line)[2]) // 2
+    draw_a.text((hdr_x, y), hdr_line, fill=ink_color, font=font_bold)
+    draw_t.text((hdr_x, y), hdr_line, fill=ink_color, font=font_bold)
     y += 28
     
     draw_a.text((40, y), f"Số: {receipt_code}", fill=ink_color, font=font_text)
-    draw_a.text((width - 40 - font_text.getbbox(table_label)[2], y), table_label, fill=ink_color, font=font_text)
+    draw_t.text((40, y), f"Số: {receipt_code}", fill=ink_color, font=font_text)
+    tbl_x = width - 40 - font_text.getbbox(table_label)[2]
+    draw_a.text((tbl_x, y), table_label, fill=ink_color, font=font_text)
+    draw_t.text((tbl_x, y), table_label, fill=ink_color, font=font_text)
     y += 22
+    
     draw_a.text((40, y), f"Ngày: {date_str}", fill=ink_color, font=font_text)
+    draw_t.text((40, y), f"Ngày: {date_str}", fill=ink_color, font=font_text)
     c_str = f"TN: {cashier_name}"
-    draw_a.text((width - 40 - font_text.getbbox(c_str)[2], y), c_str, fill=ink_color, font=font_text)
+    c_x = width - 40 - font_text.getbbox(c_str)[2]
+    draw_a.text((c_x, y), c_str, fill=ink_color, font=font_text)
+    draw_t.text((c_x, y), c_str, fill=ink_color, font=font_text)
     y += 26
     
     div = "-" * int((width - 80) / 10.5)
     draw_a.text((40, y), div, fill=ink_color, font=font_text)
+    draw_t.text((40, y), div, fill=ink_color, font=font_text)
     y += 20
     
     # Table header
     draw_a.text((40, y), "Tên hàng", fill=ink_color, font=font_bold)
+    draw_t.text((40, y), "Tên hàng", fill=ink_color, font=font_bold)
     draw_a.text((width // 2, y), "SL", fill=ink_color, font=font_bold)
+    draw_t.text((width // 2, y), "SL", fill=ink_color, font=font_bold)
     draw_a.text((width - 170, y), "Đ.Giá", fill=ink_color, font=font_bold)
+    draw_t.text((width - 170, y), "Đ.Giá", fill=ink_color, font=font_bold)
     draw_a.text((width - 80, y), "T.Tiền", fill=ink_color, font=font_bold)
+    draw_t.text((width - 80, y), "T.Tiền", fill=ink_color, font=font_bold)
     y += 22
     draw_a.text((40, y), div, fill=ink_color, font=font_text)
+    draw_t.text((40, y), div, fill=ink_color, font=font_text)
     y += 22
     
-    # Rows
-    for it in items_data:
-        draw_a.text((40, y), it["name"][:20], fill=ink_color, font=font_item)
-        draw_a.text((width // 2 + 5, y), str(it["qty"]), fill=ink_color, font=font_item)
-        p_str = f"{it['price']:,}"
-        draw_a.text((width - 130 - font_item.getbbox(p_str)[2], y), p_str, fill=ink_color, font=font_item)
-        tot_str = f"{it['total']:,}"
-        draw_a.text((width - 40 - font_item.getbbox(tot_str)[2], y), tot_str, fill=ink_color, font=font_item)
-        y += 24
+    # Item rows
+    for i, it in enumerate(items_data):
+        item_name = it["name"][:20]
+        draw_a.text((40, y), item_name, fill=ink_color, font=font_item)
+        draw_t.text((40, y), item_name, fill=ink_color, font=font_item)
         
+        # Quantity
+        qty_x = width // 2 + 5
+        orig_q_str = str(it["qty"])
+        if (tamper_type in ["qty_and_total", "full_financial"]) and i == tamper_item_idx:
+            forged_q_str = str(forged_qty)
+            b_qa = draw_a.textbbox((qty_x, y), orig_q_str, font=font_item)
+            b_qt = draw_t.textbbox((qty_x, y), forged_q_str, font=font_item)
+            draw_a.text((qty_x, y), orig_q_str, fill=ink_color, font=font_item)
+            draw_t.text((qty_x, y), forged_q_str, fill=tamper_ink_text, font=font_item)
+            record_tamper(b_qa, b_qt, f"item_{i}_qty", orig_q_str, forged_q_str)
+        else:
+            draw_a.text((qty_x, y), orig_q_str, fill=ink_color, font=font_item)
+            draw_t.text((qty_x, y), orig_q_str, fill=ink_color, font=font_item)
+            
+        # Price (always identical)
+        p_str = f"{it['price']:,}"
+        p_x = width - 130 - font_item.getbbox(p_str)[2]
+        draw_a.text((p_x, y), p_str, fill=ink_color, font=font_item)
+        draw_t.text((p_x, y), p_str, fill=ink_color, font=font_item)
+        
+        # Total
+        orig_tot_str = f"{it['total']:,}"
+        orig_tot_x = width - 40 - font_item.getbbox(orig_tot_str)[2]
+        if (tamper_type in ["qty_and_total", "full_financial"]) and i == tamper_item_idx:
+            f_tot_str = f"{forged_item_tot:,}"
+            f_tot_x = width - 40 - font_item.getbbox(f_tot_str)[2]
+            b_ta = draw_a.textbbox((orig_tot_x, y), orig_tot_str, font=font_item)
+            b_tt = draw_t.textbbox((f_tot_x, y), f_tot_str, font=font_item)
+            draw_a.text((orig_tot_x, y), orig_tot_str, fill=ink_color, font=font_item)
+            draw_t.text((f_tot_x, y), f_tot_str, fill=tamper_ink_text, font=font_item)
+            record_tamper(b_ta, b_tt, f"item_{i}_total", orig_tot_str, f_tot_str)
+        else:
+            draw_a.text((orig_tot_x, y), orig_tot_str, fill=ink_color, font=font_item)
+            draw_t.text((orig_tot_x, y), orig_tot_str, fill=ink_color, font=font_item)
+            
+        y += 24
+
     y += 6
     eq_div = "=" * int((width - 80) / 10.5)
     draw_a.text((40, y), eq_div, fill=ink_color, font=font_text)
+    draw_t.text((40, y), eq_div, fill=ink_color, font=font_text)
     y += 24
     
-    # Summary
+    # Subtotal
     draw_a.text((40, y), "Tổng tiền hàng:", fill=ink_color, font=font_text)
-    st_str = f"{subtotal:,} đ"
-    draw_a.text((width - 40 - font_text.getbbox(st_str)[2], y), st_str, fill=ink_color, font=font_text)
+    draw_t.text((40, y), "Tổng tiền hàng:", fill=ink_color, font=font_text)
+    orig_st_str = f"{subtotal:,} đ"
+    st_orig_x = width - 40 - font_text.getbbox(orig_st_str)[2]
+    if tamper_type == "full_financial":
+        f_st_str = f"{f_subtotal:,} đ"
+        st_f_x = width - 40 - font_text.getbbox(f_st_str)[2]
+        b_sta = draw_a.textbbox((st_orig_x, y), orig_st_str, font=font_text)
+        b_stt = draw_t.textbbox((st_f_x, y), f_st_str, font=font_text)
+        draw_a.text((st_orig_x, y), orig_st_str, fill=ink_color, font=font_text)
+        draw_t.text((st_f_x, y), f_st_str, fill=tamper_ink_text, font=font_text)
+        record_tamper(b_sta, b_stt, "subtotal", orig_st_str, f_st_str)
+    else:
+        draw_a.text((st_orig_x, y), orig_st_str, fill=ink_color, font=font_text)
+        draw_t.text((st_orig_x, y), orig_st_str, fill=ink_color, font=font_text)
     y += 24
     
+    # Discount (if any, always authentic)
     if has_discount:
         draw_a.text((40, y), "Chiết khấu / Giảm giá:", fill=ink_color, font=font_text)
+        draw_t.text((40, y), "Chiết khấu / Giảm giá:", fill=ink_color, font=font_text)
         dc_str = f"-{discount_val:,} đ"
-        draw_a.text((width - 40 - font_text.getbbox(dc_str)[2], y), dc_str, fill=ink_color, font=font_text)
+        dc_x = width - 40 - font_text.getbbox(dc_str)[2]
+        draw_a.text((dc_x, y), dc_str, fill=ink_color, font=font_text)
+        draw_t.text((dc_x, y), dc_str, fill=ink_color, font=font_text)
         y += 24
         
-    draw_a.text((40, y), f"Thuế VAT ({vat_percent}%):", fill=ink_color, font=font_text)
-    vat_str = f"{vat_val:,} đ"
-    draw_a.text((width - 40 - font_text.getbbox(vat_str)[2], y), vat_str, fill=ink_color, font=font_text)
+    # VAT
+    vat_label = f"Thuế VAT ({vat_percent}%):"
+    draw_a.text((40, y), vat_label, fill=ink_color, font=font_text)
+    draw_t.text((40, y), vat_label, fill=ink_color, font=font_text)
+    orig_vat_str = f"{vat_val:,} đ"
+    vat_orig_x = width - 40 - font_text.getbbox(orig_vat_str)[2]
+    if tamper_type == "full_financial":
+        f_vat_str = f"{f_vat:,} đ"
+        vat_f_x = width - 40 - font_text.getbbox(f_vat_str)[2]
+        b_vata = draw_a.textbbox((vat_orig_x, y), orig_vat_str, font=font_text)
+        b_vatt = draw_t.textbbox((vat_f_x, y), f_vat_str, font=font_text)
+        draw_a.text((vat_orig_x, y), orig_vat_str, fill=ink_color, font=font_text)
+        draw_t.text((vat_f_x, y), f_vat_str, fill=tamper_ink_text, font=font_text)
+        record_tamper(b_vata, b_vatt, "vat", orig_vat_str, f_vat_str)
+    else:
+        draw_a.text((vat_orig_x, y), orig_vat_str, fill=ink_color, font=font_text)
+        draw_t.text((vat_orig_x, y), orig_vat_str, fill=ink_color, font=font_text)
     y += 28
     
     # Grand Total
     draw_a.text((40, y), "TỔNG CỘNG:", fill=ink_color, font=font_total)
-    gt_str = f"{grand_total:,} đ"
-    draw_a.text((width - 40 - font_total.getbbox(gt_str)[2], y), gt_str, fill=ink_color, font=font_total)
+    draw_t.text((40, y), "TỔNG CỘNG:", fill=ink_color, font=font_total)
+    orig_gt_str = f"{grand_total:,} đ"
+    gt_orig_x = width - 40 - font_total.getbbox(orig_gt_str)[2]
+    if tamper_type in ["full_financial", "grand_total_only"]:
+        f_gt_str = f"{f_grand:,} đ"
+        gt_f_x = width - 40 - font_total.getbbox(f_gt_str)[2]
+        b_gta = draw_a.textbbox((gt_orig_x, y), orig_gt_str, font=font_total)
+        b_gtt = draw_t.textbbox((gt_f_x, y), f_gt_str, font=font_total)
+        draw_a.text((gt_orig_x, y), orig_gt_str, fill=ink_color, font=font_total)
+        draw_t.text((gt_f_x, y), f_gt_str, fill=tamper_ink_total, font=font_total)
+        record_tamper(b_gta, b_gtt, "grand_total", orig_gt_str, f_gt_str)
+    else:
+        draw_a.text((gt_orig_x, y), orig_gt_str, fill=ink_color, font=font_total)
+        draw_t.text((gt_orig_x, y), orig_gt_str, fill=ink_color, font=font_total)
     y += 34
     
     draw_a.text((40, y), div, fill=ink_color, font=font_text)
+    draw_t.text((40, y), div, fill=ink_color, font=font_text)
     y += 22
     
-    draw_a.text((40, y), "Phương thức: Tiền mặt / Thẻ ngân hàng / QR", fill=ink_color, font=font_footer)
+    method_str = "Phương thức: Tiền mặt / Thẻ ngân hàng / QR"
+    draw_a.text((40, y), method_str, fill=ink_color, font=font_footer)
+    draw_t.text((40, y), method_str, fill=ink_color, font=font_footer)
     y += 20
-    draw_a.text((40, y), f"Mã tra cứu: HD{rng.randint(10000000, 99999999)}", fill=ink_color, font=font_footer)
+    
+    # Lookup code (IDENTICAL on both)
+    draw_a.text((40, y), lookup_code_str, fill=ink_color, font=font_footer)
+    draw_t.text((40, y), lookup_code_str, fill=ink_color, font=font_footer)
     y += 28
     
-    draw_barcode(draw_a, (width - 340) // 2, y, 340, 42, rng)
+    # Barcode (IDENTICAL on both)
+    draw_barcode(draw_a, (width - 340) // 2, y, 340, 42, barcode_seed)
+    draw_barcode(draw_t, (width - 340) // 2, y, 340, 42, barcode_seed)
     y += 52
     
     f1 = "CẢM ƠN QUÝ KHÁCH - HẸN GẶP LẠI!"
-    draw_a.text(((width - font_bold.getbbox(f1)[2]) // 2, y), f1, fill=ink_color, font=font_bold)
+    f1_x = (width - font_bold.getbbox(f1)[2]) // 2
+    draw_a.text((f1_x, y), f1, fill=ink_color, font=font_bold)
+    draw_t.text((f1_x, y), f1, fill=ink_color, font=font_bold)
     y += 20
+    
     f2 = "(Vui lòng kiểm tra lại hóa đơn trước khi rời quầy)"
-    draw_a.text(((width - font_footer.getbbox(f2)[2]) // 2, y), f2, fill=ink_color, font=font_footer)
+    f2_x = (width - font_footer.getbbox(f2)[2]) // 2
+    draw_a.text((f2_x, y), f2, fill=ink_color, font=font_footer)
+    draw_t.text((f2_x, y), f2, fill=ink_color, font=font_footer)
 
     # ==========================================================================
-    # 2. RENDER TAMPERED IMAGE & PIXEL-PERFECT MASK
+    # RIGOROUS VERIFICATION (diff ⊆ mask)
     # ==========================================================================
-    bg_tamper = create_thermal_background(width, height, add_streaks=True, seed=seed)
-    mask = Image.new("L", (width, height), 0)
-    draw_t = ImageDraw.Draw(bg_tamper)
-    mask_draw = ImageDraw.Draw(mask)
+    diff = ImageChops.difference(bg_auth, bg_tamper).convert("L").point(lambda p: 255 if p > 0 else 0)
+    outside = ImageChops.subtract(diff, mask)
+    outside_px = outside.histogram()[255]
+    diff_px = diff.histogram()[255]
+    mask_px = mask.histogram()[255]
     
-    # Choose tampering modality
-    # 0: quantity & item total
-    # 1: grand total only
-    # 2: quantity, item total & grand total
-    tamper_type = rng.choice(["qty_and_total", "grand_total_only", "full_financial"])
-    
-    tampered_fields = []
-    
-    # Redo header on tampered
-    y = 35
-    draw_t.text(((width - (tb[2] - tb[0])) // 2, y), brand_name, fill=ink_color, font=font_title)
-    y += 34
-    draw_t.text(((width - font_sub.getbbox(address)[2]) // 2, y), address, fill=ink_color, font=font_sub)
-    y += 22
-    draw_t.text(((width - font_sub.getbbox(info_str)[2]) // 2, y), info_str, fill=ink_color, font=font_sub)
-    y += 28
-    draw_t.text(((width - font_bold.getbbox(hdr_line)[2]) // 2, y), hdr_line, fill=ink_color, font=font_bold)
-    y += 28
-    draw_t.text((40, y), f"Số: {receipt_code}", fill=ink_color, font=font_text)
-    draw_t.text((width - 40 - font_text.getbbox(table_label)[2], y), table_label, fill=ink_color, font=font_text)
-    y += 22
-    draw_t.text((40, y), f"Ngày: {date_str}", fill=ink_color, font=font_text)
-    draw_t.text((width - 40 - font_text.getbbox(c_str)[2], y), c_str, fill=ink_color, font=font_text)
-    y += 26
-    draw_t.text((40, y), div, fill=ink_color, font=font_text)
-    y += 20
-    
-    draw_t.text((40, y), "Tên hàng", fill=ink_color, font=font_bold)
-    draw_t.text((width // 2, y), "SL", fill=ink_color, font=font_bold)
-    draw_t.text((width - 170, y), "Đ.Giá", fill=ink_color, font=font_bold)
-    draw_t.text((width - 80, y), "T.Tiền", fill=ink_color, font=font_bold)
-    y += 22
-    draw_t.text((40, y), div, fill=ink_color, font=font_text)
-    y += 22
-    
-    # Rows with tampering on chosen item
-    tamper_item_idx = rng.randint(0, len(items_data) - 1)
-    new_subtotal = subtotal
-    
-    for i, it in enumerate(items_data):
-        draw_t.text((40, y), it["name"][:20], fill=ink_color, font=font_item)
-        
-        if (tamper_type in ["qty_and_total", "full_financial"]) and i == tamper_item_idx:
-            orig_qty = it["qty"]
-            forged_qty = orig_qty + rng.choice([2, 3, 4])
-            forged_tot = forged_qty * it["price"]
-            new_subtotal += (forged_tot - it["total"])
-            
-            # Draw forged QTY
-            draw_t.text((width // 2 + 5, y), str(forged_qty), fill=(26, 26, 26), font=font_item)
-            q_box = [width // 2 - 2, y - 2, width // 2 + 25, y + 20]
-            mask_draw.rectangle(q_box, fill=255)
-            tampered_fields.append({
-                "field": f"item_{i}_qty",
-                "original": str(orig_qty),
-                "forged": str(forged_qty),
-                "bbox": q_box
-            })
-            
-            # Price normal
-            p_str = f"{it['price']:,}"
-            draw_t.text((width - 130 - font_item.getbbox(p_str)[2], y), p_str, fill=ink_color, font=font_item)
-            
-            # Draw forged ITEM TOTAL
-            f_tot_str = f"{forged_tot:,}"
-            tot_x = width - 40 - font_item.getbbox(f_tot_str)[2]
-            draw_t.text((tot_x, y), f_tot_str, fill=(26, 26, 26), font=font_item)
-            t_box = [tot_x - 3, y - 2, width - 36, y + 20]
-            mask_draw.rectangle(t_box, fill=255)
-            tampered_fields.append({
-                "field": f"item_{i}_total",
-                "original": f"{it['total']:,}",
-                "forged": f_tot_str,
-                "bbox": t_box
-            })
-        else:
-            draw_t.text((width // 2 + 5, y), str(it["qty"]), fill=ink_color, font=font_item)
-            p_str = f"{it['price']:,}"
-            draw_t.text((width - 130 - font_item.getbbox(p_str)[2], y), p_str, fill=ink_color, font=font_item)
-            tot_str = f"{it['total']:,}"
-            draw_t.text((width - 40 - font_item.getbbox(tot_str)[2], y), tot_str, fill=ink_color, font=font_item)
-            
-        y += 24
-
-    y += 6
-    draw_t.text((40, y), eq_div, fill=ink_color, font=font_text)
-    y += 24
-    
-    # Financial tampering
-    if tamper_type == "full_financial":
-        # Recalculate forged grand total
-        f_taxable = max(0, new_subtotal - discount_val)
-        f_vat = int(f_taxable * (vat_percent / 100))
-        f_grand = f_taxable + f_vat
-        
-        # Subtotal
-        f_st_str = f"{new_subtotal:,} đ"
-        draw_t.text((40, y), "Tổng tiền hàng:", fill=ink_color, font=font_text)
-        st_x = width - 40 - font_text.getbbox(f_st_str)[2]
-        draw_t.text((st_x, y), f_st_str, fill=(26, 26, 26), font=font_text)
-        st_box = [st_x - 3, y - 2, width - 36, y + 20]
-        mask_draw.rectangle(st_box, fill=255)
-        tampered_fields.append({"field": "subtotal", "original": st_str, "forged": f_st_str, "bbox": st_box})
-        y += 24
-        
-        if has_discount:
-            draw_t.text((40, y), "Chiết khấu / Giảm giá:", fill=ink_color, font=font_text)
-            draw_t.text((width - 40 - font_text.getbbox(dc_str)[2], y), dc_str, fill=ink_color, font=font_text)
-            y += 24
-            
-        # VAT
-        f_vat_str = f"{f_vat:,} đ"
-        draw_t.text((40, y), f"Thuế VAT ({vat_percent}%):", fill=ink_color, font=font_text)
-        vat_x = width - 40 - font_text.getbbox(f_vat_str)[2]
-        draw_t.text((vat_x, y), f_vat_str, fill=(26, 26, 26), font=font_text)
-        vat_box = [vat_x - 3, y - 2, width - 36, y + 20]
-        mask_draw.rectangle(vat_box, fill=255)
-        tampered_fields.append({"field": "vat", "original": vat_str, "forged": f_vat_str, "bbox": vat_box})
-        y += 28
-        
-        # Grand Total
-        f_gt_str = f"{f_grand:,} đ"
-        draw_t.text((40, y), "TỔNG CỘNG:", fill=ink_color, font=font_total)
-        gt_x = width - 40 - font_total.getbbox(f_gt_str)[2]
-        draw_t.text((gt_x, y), f_gt_str, fill=(28, 28, 28), font=font_total)
-        gt_box = [gt_x - 4, y - 3, width - 36, y + 26]
-        mask_draw.rectangle(gt_box, fill=255)
-        tampered_fields.append({"field": "grand_total", "original": gt_str, "forged": f_gt_str, "bbox": gt_box})
-        y += 34
-    elif tamper_type == "grand_total_only":
-        # Keep items same, arbitrarily tamper grand total (e.g. padding an extra 100k or 200k)
-        draw_t.text((40, y), "Tổng tiền hàng:", fill=ink_color, font=font_text)
-        draw_t.text((width - 40 - font_text.getbbox(st_str)[2], y), st_str, fill=ink_color, font=font_text)
-        y += 24
-        if has_discount:
-            draw_t.text((40, y), "Chiết khấu / Giảm giá:", fill=ink_color, font=font_text)
-            draw_t.text((width - 40 - font_text.getbbox(dc_str)[2], y), dc_str, fill=ink_color, font=font_text)
-            y += 24
-        draw_t.text((40, y), f"Thuế VAT ({vat_percent}%):", fill=ink_color, font=font_text)
-        draw_t.text((width - 40 - font_text.getbbox(vat_str)[2], y), vat_str, fill=ink_color, font=font_text)
-        y += 28
-        
-        f_grand = grand_total + rng.choice([100000, 200000, 300000])
-        f_gt_str = f"{f_grand:,} đ"
-        draw_t.text((40, y), "TỔNG CỘNG:", fill=ink_color, font=font_total)
-        gt_x = width - 40 - font_total.getbbox(f_gt_str)[2]
-        draw_t.text((gt_x, y), f_gt_str, fill=(28, 28, 28), font=font_total)
-        gt_box = [gt_x - 4, y - 3, width - 36, y + 26]
-        mask_draw.rectangle(gt_box, fill=255)
-        tampered_fields.append({"field": "grand_total", "original": gt_str, "forged": f_gt_str, "bbox": gt_box})
-        y += 34
-    else: # qty_and_total only, subtotal/grand remain untouched or slightly mismatched
-        draw_t.text((40, y), "Tổng tiền hàng:", fill=ink_color, font=font_text)
-        draw_t.text((width - 40 - font_text.getbbox(st_str)[2], y), st_str, fill=ink_color, font=font_text)
-        y += 24
-        if has_discount:
-            draw_t.text((40, y), "Chiết khấu / Giảm giá:", fill=ink_color, font=font_text)
-            draw_t.text((width - 40 - font_text.getbbox(dc_str)[2], y), dc_str, fill=ink_color, font=font_text)
-            y += 24
-        draw_t.text((40, y), f"Thuế VAT ({vat_percent}%):", fill=ink_color, font=font_text)
-        draw_t.text((width - 40 - font_text.getbbox(vat_str)[2], y), vat_str, fill=ink_color, font=font_text)
-        y += 28
-        draw_t.text((40, y), "TỔNG CỘNG:", fill=ink_color, font=font_total)
-        draw_t.text((width - 40 - font_total.getbbox(gt_str)[2], y), gt_str, fill=ink_color, font=font_total)
-        y += 34
-
-    draw_t.text((40, y), div, fill=ink_color, font=font_text)
-    y += 22
-    draw_t.text((40, y), "Phương thức: Tiền mặt / Thẻ ngân hàng / QR", fill=ink_color, font=font_footer)
-    y += 20
-    draw_t.text((40, y), f"Mã tra cứu: HD{rng.randint(10000000, 99999999)}", fill=ink_color, font=font_footer)
-    y += 28
-    draw_barcode(draw_t, (width - 340) // 2, y, 340, 42, rng)
-    y += 52
-    draw_t.text(((width - font_bold.getbbox(f1)[2]) // 2, y), f1, fill=ink_color, font=font_bold)
-    y += 20
-    draw_t.text(((width - font_footer.getbbox(f2)[2]) // 2, y), f2, fill=ink_color, font=font_footer)
+    if outside_px > 0:
+        raise ValueError(
+            f"ERROR in Sample {sample_index} ({template_type}): "
+            f"{outside_px} diff pixels are OUTSIDE mask! BBox: {outside.getbbox()}"
+        )
+    assert diff_px > 0, f"Sample {sample_index}: diff_px is 0!"
+    assert mask_px >= diff_px, f"Sample {sample_index}: mask_px ({mask_px}) < diff_px ({diff_px})"
 
     meta = {
         "sample_id": f"receipt_{sample_index:04d}",
@@ -525,8 +527,15 @@ def generate_single_receipt(template_type, sample_index, seed=1000):
         "date": date_str,
         "width": width,
         "height": height,
+        "tamper_type": tamper_type,
         "tampering_type": tamper_type,
-        "tampered_fields": tampered_fields
+        "tampered_fields": tampered_fields,
+        "n_regions": len(tampered_fields),
+        "mask_px": mask_px,
+        "diff_px": diff_px,
+        "diff_outside_mask_px": outside_px,
+        "mask_covers_diff": 1.0,
+        "generator_version": "v2"
     }
 
     return bg_auth, bg_tamper, mask, meta
@@ -534,9 +543,10 @@ def generate_single_receipt(template_type, sample_index, seed=1000):
 
 def main():
     print("=" * 65)
-    print("🚀 BẮT ĐẦU SINH TẬP DỮ LIỆU HÓA ĐƠN IN NHIỆT (500 MẪU)")
+    print("🚀 BẮT ĐẦU SINH TẬP DỮ LIỆU HÓA ĐƠN IN NHIỆT (500 MẪU - V2)")
     print("4 Template: Cafe (125), Siêu thị (125), Cửa hàng tiện lợi (125), Custom (125)")
     print(f"Lưu tại: {DATASET_DIR}")
+    print("Tự động kiểm tra: 100% diff pixel phải nằm trọn trong mask (diff ⊆ mask)")
     print("=" * 65)
     
     start_time = time.time()
@@ -550,11 +560,13 @@ def main():
     ]
     
     current_idx = 1
+    total_samples = 500
+    
     for t_name, count in templates:
         print(f"\n📂 Đang sinh template [{t_name.upper()}] ({count} mẫu)...")
         for i in range(count):
             seed = 10000 + current_idx * 17
-            auth_im, fake_im, mask_im, meta = generate_single_receipt(t_name, current_idx, seed=seed)
+            auth_im, fake_im, mask_im, meta = generate_single_receipt_v2(t_name, current_idx, seed=seed)
             
             sample_id = f"receipt_{current_idx:04d}"
             
@@ -573,7 +585,7 @@ def main():
             manifest_records.append(meta)
             
             if (i + 1) % 25 == 0 or (i + 1) == count:
-                print(f"  -> [{t_name}] Đã xong {i+1}/{count} mẫu (Sample ID: {sample_id})")
+                print(f"  -> [{t_name}] Đã xong {i+1}/{count} mẫu (Sample ID: {sample_id}) | Diff: {meta['diff_px']} px | Mask: {meta['mask_px']} px | Outside: 0")
                 
             current_idx += 1
             
@@ -590,14 +602,14 @@ def main():
         
     duration = time.time() - start_time
     print("\n" + "=" * 65)
-    print(f"🎉 HOÀN THÀNH XUẤT 500 MẪU DATASET TRONG {duration:.2f} GIÂY!")
+    print(f"🎉 HOÀN THÀNH XUẤT {total_samples} MẪU DATASET V2 TRONG {duration:.2f} GIÂY!")
     print(f"📁 Authentic Images: {len(os.listdir(AUTHENTIC_DIR))} file ({AUTHENTIC_DIR})")
     print(f"📁 Tampered Images:  {len(os.listdir(TAMPERED_DIR))} file ({TAMPERED_DIR})")
     print(f"📁 Ground-Truth Masks: {len(os.listdir(MASKS_DIR))} file ({MASKS_DIR})")
-    print(f"📋 Manifest JSON:    {manifest_json}")
+    print(f"📋 Manifest JSONL:   {manifest_jsonl}")
+    print(f"📋 Metadata JSON:    {manifest_json}")
     print("=" * 65)
 
 
 if __name__ == "__main__":
     main()
-
