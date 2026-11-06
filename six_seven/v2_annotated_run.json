@@ -1,0 +1,11 @@
+{
+  "ProcessId": 16236,
+  "Started": "2026-11-06T17:16:31.4946121+07:00",
+  "Mode": "Full pipeline with source annotations",
+  "ExpectedImages": 5000,
+  "Results": "benchmarks/results_v2_annotated",
+  "Status": "Complete and verified",
+  "Completed": "2026-11-06T17:59:07+07:00",
+  "TruFor": "Reused existing V2 predictions",
+  "ADCDNet": "5000 predictions regenerated"
+}

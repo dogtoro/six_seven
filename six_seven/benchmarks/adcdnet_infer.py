@@ -15,7 +15,8 @@ import cv2, numpy as np
 
 
 def load_records(data):
-    recs = json.load(open(os.path.join(data, "metadata.json")))
+    with open(os.path.join(data, "metadata.json"), encoding="utf-8-sig") as f:
+        recs = json.load(f)
     if isinstance(recs, dict): recs = recs.get("samples", recs.get("items", list(recs.values())))
     return recs
 

@@ -1,0 +1,18 @@
+{
+  "source_commit": "48c20726262658da76db6b751fc46db4d517b43c",
+  "source_records": 500,
+  "benchmark_records": 5000,
+  "unchanged_image_mask_files": 10000,
+  "existing_predictions_reusable": true,
+  "templates": {
+    "cafe": 125,
+    "supermarket": 125,
+    "convenience": 125,
+    "custom": 125
+  },
+  "tamper_types": {
+    "full_financial": 159,
+    "grand_total_only": 162,
+    "qty_and_total": 179
+  }
+}

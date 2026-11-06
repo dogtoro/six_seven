@@ -1,0 +1,394 @@
+prep 0 / 5000
+prep 200 / 5000
+prep 400 / 5000
+prep 600 / 5000
+prep 800 / 5000
+prep 1000 / 5000
+prep 1200 / 5000
+prep 1400 / 5000
+prep 1600 / 5000
+prep 1800 / 5000
+prep 2000 / 5000
+prep 2200 / 5000
+prep 2400 / 5000
+prep 2600 / 5000
+prep 2800 / 5000
+prep 3000 / 5000
+prep 3200 / 5000
+prep 3400 / 5000
+prep 3600 / 5000
+prep 3800 / 5000
+prep 4000 / 5000
+prep 4200 / 5000
+prep 4400 / 5000
+prep 4600 / 5000
+prep 4800 / 5000
+prepared 5000
+Missed keys: ['output.weight', 'cdm.0.weight', 'cdm.1.weight', 'cdm.2.weight', 'cdm.3.weight']
+Unexpected keys: ['skip_conv.weight', 'refinement.2.norm1.body.weight', 'refinement.2.norm1.body.bias', 'refinement.2.attn.temperature', 'refinement.2.attn.qkv.weight', 'refinement.2.attn.qkv_dwconv.weight', 'refinement.2.attn.project_out.weight', 'refinement.2.norm2.body.weight', 'refinement.2.norm2.body.bias', 'refinement.2.ffn.project_in.weight', 'refinement.2.ffn.dwconv.weight', 'refinement.2.ffn.project_out.weight', 'refinement.3.norm1.body.weight', 'refinement.3.norm1.body.bias', 'refinement.3.attn.temperature', 'refinement.3.attn.qkv.weight', 'refinement.3.attn.qkv_dwconv.weight', 'refinement.3.attn.project_out.weight', 'refinement.3.norm2.body.weight', 'refinement.3.norm2.body.bias', 'refinement.3.ffn.project_in.weight', 'refinement.3.ffn.dwconv.weight', 'refinement.3.ffn.project_out.weight']
+0 receipt_0001_authentic__png max=0.436
+20 receipt_0003_authentic__png max=0.328
+40 receipt_0005_authentic__png max=0.568
+60 receipt_0007_authentic__png max=0.372
+80 receipt_0009_authentic__png max=0.531
+100 receipt_0011_authentic__png max=0.559
+120 receipt_0013_authentic__png max=0.282
+140 receipt_0015_authentic__png max=0.341
+160 receipt_0017_authentic__png max=0.578
+180 receipt_0019_authentic__png max=0.328
+200 receipt_0021_authentic__png max=0.389
+220 receipt_0023_authentic__png max=0.409
+240 receipt_0025_authentic__png max=0.463
+260 receipt_0027_authentic__png max=0.430
+280 receipt_0029_authentic__png max=0.326
+300 receipt_0031_authentic__png max=0.506
+320 receipt_0033_authentic__png max=0.534
+340 receipt_0035_authentic__png max=0.496
+360 receipt_0037_authentic__png max=0.446
+380 receipt_0039_authentic__png max=0.516
+400 receipt_0041_authentic__png max=0.335
+420 receipt_0043_authentic__png max=0.505
+440 receipt_0045_authentic__png max=0.437
+460 receipt_0047_authentic__png max=0.468
+480 receipt_0049_authentic__png max=0.392
+500 receipt_0051_authentic__png max=0.406
+520 receipt_0053_authentic__png max=0.336
+540 receipt_0055_authentic__png max=0.497
+560 receipt_0057_authentic__png max=0.481
+580 receipt_0059_authentic__png max=0.390
+600 receipt_0061_authentic__png max=0.493
+620 receipt_0063_authentic__png max=0.529
+640 receipt_0065_authentic__png max=0.418
+660 receipt_0067_authentic__png max=0.402
+680 receipt_0069_authentic__png max=0.509
+700 receipt_0071_authentic__png max=0.327
+720 receipt_0073_authentic__png max=0.494
+740 receipt_0075_authentic__png max=0.481
+760 receipt_0077_authentic__png max=0.412
+780 receipt_0079_authentic__png max=0.353
+800 receipt_0081_authentic__png max=0.365
+820 receipt_0083_authentic__png max=0.439
+840 receipt_0085_authentic__png max=0.339
+860 receipt_0087_authentic__png max=0.408
+880 receipt_0089_authentic__png max=0.395
+900 receipt_0091_authentic__png max=0.427
+920 receipt_0093_authentic__png max=0.301
+940 receipt_0095_authentic__png max=0.419
+960 receipt_0097_authentic__png max=0.482
+980 receipt_0099_authentic__png max=0.384
+1000 receipt_0101_authentic__png max=0.414
+1020 receipt_0103_authentic__png max=0.409
+1040 receipt_0105_authentic__png max=0.373
+1060 receipt_0107_authentic__png max=0.562
+1080 receipt_0109_authentic__png max=0.528
+1100 receipt_0111_authentic__png max=0.315
+1120 receipt_0113_authentic__png max=0.324
+1140 receipt_0115_authentic__png max=0.302
+1160 receipt_0117_authentic__png max=0.432
+1180 receipt_0119_authentic__png max=0.415
+1200 receipt_0121_authentic__png max=0.583
+1220 receipt_0123_authentic__png max=0.474
+1240 receipt_0125_authentic__png max=0.537
+1260 receipt_0127_authentic__png max=0.346
+1280 receipt_0129_authentic__png max=0.390
+1300 receipt_0131_authentic__png max=0.434
+1320 receipt_0133_authentic__png max=0.304
+1340 receipt_0135_authentic__png max=0.342
+1360 receipt_0137_authentic__png max=0.282
+1380 receipt_0139_authentic__png max=0.304
+1400 receipt_0141_authentic__png max=0.323
+1420 receipt_0143_authentic__png max=0.313
+1440 receipt_0145_authentic__png max=0.346
+1460 receipt_0147_authentic__png max=0.323
+1480 receipt_0149_authentic__png max=0.322
+1500 receipt_0151_authentic__png max=0.396
+1520 receipt_0153_authentic__png max=0.333
+1540 receipt_0155_authentic__png max=0.330
+1560 receipt_0157_authentic__png max=0.436
+1580 receipt_0159_authentic__png max=0.314
+1600 receipt_0161_authentic__png max=0.319
+1620 receipt_0163_authentic__png max=0.337
+1640 receipt_0165_authentic__png max=0.347
+1660 receipt_0167_authentic__png max=0.356
+1680 receipt_0169_authentic__png max=0.365
+1700 receipt_0171_authentic__png max=0.399
+1720 receipt_0173_authentic__png max=0.342
+1740 receipt_0175_authentic__png max=0.319
+1760 receipt_0177_authentic__png max=0.313
+1780 receipt_0179_authentic__png max=0.304
+1800 receipt_0181_authentic__png max=0.393
+1820 receipt_0183_authentic__png max=0.318
+1840 receipt_0185_authentic__png max=0.409
+1860 receipt_0187_authentic__png max=0.331
+1880 receipt_0189_authentic__png max=0.357
+1900 receipt_0191_authentic__png max=0.376
+1920 receipt_0193_authentic__png max=0.381
+1940 receipt_0195_authentic__png max=0.340
+1960 receipt_0197_authentic__png max=0.302
+1980 receipt_0199_authentic__png max=0.371
+2000 receipt_0201_authentic__png max=0.341
+2020 receipt_0203_authentic__png max=0.359
+2040 receipt_0205_authentic__png max=0.342
+2060 receipt_0207_authentic__png max=0.324
+2080 receipt_0209_authentic__png max=0.347
+2100 receipt_0211_authentic__png max=0.308
+2120 receipt_0213_authentic__png max=0.380
+2140 receipt_0215_authentic__png max=0.364
+2160 receipt_0217_authentic__png max=0.365
+2180 receipt_0219_authentic__png max=0.304
+2200 receipt_0221_authentic__png max=0.323
+2220 receipt_0223_authentic__png max=0.423
+2240 receipt_0225_authentic__png max=0.400
+2260 receipt_0227_authentic__png max=0.272
+2280 receipt_0229_authentic__png max=0.325
+2300 receipt_0231_authentic__png max=0.313
+2320 receipt_0233_authentic__png max=0.300
+2340 receipt_0235_authentic__png max=0.326
+2360 receipt_0237_authentic__png max=0.331
+2380 receipt_0239_authentic__png max=0.270
+2400 receipt_0241_authentic__png max=0.300
+2420 receipt_0243_authentic__png max=0.366
+2440 receipt_0245_authentic__png max=0.333
+2460 receipt_0247_authentic__png max=0.323
+2480 receipt_0249_authentic__png max=0.360
+2500 receipt_0251_authentic__png max=0.354
+2520 receipt_0253_authentic__png max=0.369
+2540 receipt_0255_authentic__png max=0.321
+2560 receipt_0257_authentic__png max=0.393
+2580 receipt_0259_authentic__png max=0.316
+2600 receipt_0261_authentic__png max=0.352
+2620 receipt_0263_authentic__png max=0.407
+2640 receipt_0265_authentic__png max=0.323
+2660 receipt_0267_authentic__png max=0.355
+2680 receipt_0269_authentic__png max=0.414
+2700 receipt_0271_authentic__png max=0.307
+2720 receipt_0273_authentic__png max=0.378
+2740 receipt_0275_authentic__png max=0.319
+2760 receipt_0277_authentic__png max=0.310
+2780 receipt_0279_authentic__png max=0.396
+2800 receipt_0281_authentic__png max=0.304
+2820 receipt_0283_authentic__png max=0.373
+2840 receipt_0285_authentic__png max=0.401
+2860 receipt_0287_authentic__png max=0.349
+2880 receipt_0289_authentic__png max=0.354
+2900 receipt_0291_authentic__png max=0.364
+2920 receipt_0293_authentic__png max=0.343
+2940 receipt_0295_authentic__png max=0.356
+2960 receipt_0297_authentic__png max=0.383
+2980 receipt_0299_authentic__png max=0.351
+3000 receipt_0301_authentic__png max=0.345
+3020 receipt_0303_authentic__png max=0.397
+3040 receipt_0305_authentic__png max=0.306
+3060 receipt_0307_authentic__png max=0.371
+3080 receipt_0309_authentic__png max=0.350
+3100 receipt_0311_authentic__png max=0.419
+3120 receipt_0313_authentic__png max=0.347
+3140 receipt_0315_authentic__png max=0.485
+3160 receipt_0317_authentic__png max=0.338
+3180 receipt_0319_authentic__png max=0.384
+3200 receipt_0321_authentic__png max=0.367
+3220 receipt_0323_authentic__png max=0.327
+3240 receipt_0325_authentic__png max=0.343
+3260 receipt_0327_authentic__png max=0.358
+3280 receipt_0329_authentic__png max=0.429
+3300 receipt_0331_authentic__png max=0.328
+3320 receipt_0333_authentic__png max=0.311
+3340 receipt_0335_authentic__png max=0.359
+3360 receipt_0337_authentic__png max=0.350
+3380 receipt_0339_authentic__png max=0.380
+3400 receipt_0341_authentic__png max=0.330
+3420 receipt_0343_authentic__png max=0.340
+3440 receipt_0345_authentic__png max=0.323
+3460 receipt_0347_authentic__png max=0.323
+3480 receipt_0349_authentic__png max=0.323
+3500 receipt_0351_authentic__png max=0.309
+3520 receipt_0353_authentic__png max=0.330
+3540 receipt_0355_authentic__png max=0.312
+3560 receipt_0357_authentic__png max=0.341
+3580 receipt_0359_authentic__png max=0.383
+3600 receipt_0361_authentic__png max=0.386
+3620 receipt_0363_authentic__png max=0.320
+3640 receipt_0365_authentic__png max=0.370
+3660 receipt_0367_authentic__png max=0.327
+3680 receipt_0369_authentic__png max=0.358
+3700 receipt_0371_authentic__png max=0.370
+3720 receipt_0373_authentic__png max=0.429
+3740 receipt_0375_authentic__png max=0.312
+3760 receipt_0377_authentic__png max=0.465
+3780 receipt_0379_authentic__png max=0.389
+3800 receipt_0381_authentic__png max=0.362
+3820 receipt_0383_authentic__png max=0.308
+3840 receipt_0385_authentic__png max=0.430
+3860 receipt_0387_authentic__png max=0.296
+3880 receipt_0389_authentic__png max=0.359
+3900 receipt_0391_authentic__png max=0.364
+3920 receipt_0393_authentic__png max=0.309
+3940 receipt_0395_authentic__png max=0.373
+3960 receipt_0397_authentic__png max=0.516
+3980 receipt_0399_authentic__png max=0.298
+4000 receipt_0401_authentic__png max=0.321
+4020 receipt_0403_authentic__png max=0.343
+4040 receipt_0405_authentic__png max=0.344
+4060 receipt_0407_authentic__png max=0.347
+4080 receipt_0409_authentic__png max=0.279
+4100 receipt_0411_authentic__png max=0.324
+4120 receipt_0413_authentic__png max=0.331
+4140 receipt_0415_authentic__png max=0.387
+4160 receipt_0417_authentic__png max=0.386
+4180 receipt_0419_authentic__png max=0.311
+4200 receipt_0421_authentic__png max=0.397
+4220 receipt_0423_authentic__png max=0.307
+4240 receipt_0425_authentic__png max=0.432
+4260 receipt_0427_authentic__png max=0.374
+4280 receipt_0429_authentic__png max=0.343
+4300 receipt_0431_authentic__png max=0.332
+4320 receipt_0433_authentic__png max=0.362
+4340 receipt_0435_authentic__png max=0.346
+4360 receipt_0437_authentic__png max=0.367
+4380 receipt_0439_authentic__png max=0.434
+4400 receipt_0441_authentic__png max=0.402
+4420 receipt_0443_authentic__png max=0.339
+4440 receipt_0445_authentic__png max=0.338
+4460 receipt_0447_authentic__png max=0.305
+4480 receipt_0449_authentic__png max=0.404
+4500 receipt_0451_authentic__png max=0.411
+4520 receipt_0453_authentic__png max=0.431
+4540 receipt_0455_authentic__png max=0.352
+4560 receipt_0457_authentic__png max=0.412
+4580 receipt_0459_authentic__png max=0.406
+4600 receipt_0461_authentic__png max=0.317
+4620 receipt_0463_authentic__png max=0.427
+4640 receipt_0465_authentic__png max=0.383
+4660 receipt_0467_authentic__png max=0.350
+4680 receipt_0469_authentic__png max=0.392
+4700 receipt_0471_authentic__png max=0.307
+4720 receipt_0473_authentic__png max=0.332
+4740 receipt_0475_authentic__png max=0.314
+4760 receipt_0477_authentic__png max=0.281
+4780 receipt_0479_authentic__png max=0.429
+4800 receipt_0481_authentic__png max=0.394
+4820 receipt_0483_authentic__png max=0.318
+4840 receipt_0485_authentic__png max=0.374
+4860 receipt_0487_authentic__png max=0.314
+4880 receipt_0489_authentic__png max=0.333
+4900 receipt_0491_authentic__png max=0.301
+4920 receipt_0493_authentic__png max=0.302
+4940 receipt_0495_authentic__png max=0.435
+4960 receipt_0497_authentic__png max=0.408
+4980 receipt_0499_authentic__png max=0.280
+=> loading model from ../weights/trufor.pth.tar
+      model       group            value    n  n_tampered  IoU@0.5  F1@0.5  IoU_oracle  F1_oracle  F1_global_dyn  global_thr  det_AUC  det_F1@0.5  det_F1_best
+        ela         all              ALL 5000        2500    0.005   0.010       0.026      0.050          0.051        0.10    0.498       0.667        0.667
+        ela compression           jpeg75 1000         500    0.004   0.009       0.026      0.051          0.052        0.10    0.500       0.667        0.667
+        ela compression           jpeg85 1000         500    0.004   0.008       0.026      0.051          0.052        0.10    0.487       0.667        0.667
+        ela compression           jpeg95 1000         500    0.008   0.016       0.027      0.052          0.053        0.15    0.499       0.667        0.667
+        ela compression              png 1000         500    0.007   0.013       0.027      0.051          0.052        0.15    0.500       0.667        0.667
+        ela compression       social_sim 1000         500    0.003   0.005       0.024      0.046          0.044        0.10    0.505       0.667        0.667
+        ela    template             cafe 1250         625    0.005   0.010       0.025      0.049          0.051        0.10    0.498       0.667        0.667
+        ela    template      convenience 1250         625    0.005   0.010       0.027      0.051          0.052        0.15    0.501       0.667        0.667
+        ela    template           custom 1250         625    0.005   0.010       0.026      0.049          0.050        0.10    0.496       0.667        0.667
+        ela    template      supermarket 1250         625    0.005   0.011       0.026      0.051          0.052        0.15    0.498       0.667        0.667
+        ela tamper_type   full_financial  795         795    0.007   0.013       0.048      0.092          0.091        0.10      NaN       1.000        1.000
+        ela tamper_type grand_total_only  810         810    0.005   0.010       0.021      0.042          0.042        0.10      NaN       1.000        1.000
+        ela tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+        ela tamper_type    qty_and_total  895         895    0.004   0.007       0.011      0.021          0.020        0.15      NaN       1.000        1.000
+ext:adcdnet         all              ALL 5000        2500    0.001   0.002       0.055      0.101          0.074        0.25    0.496       0.239        0.667
+ext:adcdnet compression           jpeg75 1000         500    0.000   0.000       0.042      0.079          0.063        0.25    0.499       0.293        0.668
+ext:adcdnet compression           jpeg85 1000         500    0.000   0.000       0.045      0.083          0.068        0.25    0.491       0.323        0.667
+ext:adcdnet compression           jpeg95 1000         500    0.000   0.000       0.050      0.093          0.074        0.25    0.491       0.163        0.667
+ext:adcdnet compression              png 1000         500    0.000   0.000       0.058      0.106          0.086        0.20    0.488       0.101        0.667
+ext:adcdnet compression       social_sim 1000         500    0.005   0.008       0.081      0.142          0.120        0.30    0.502       0.271        0.667
+ext:adcdnet    template             cafe 1250         625    0.000   0.000       0.049      0.090          0.066        0.20    0.508       0.269        0.667
+ext:adcdnet    template      convenience 1250         625    0.003   0.005       0.061      0.109          0.076        0.25    0.490       0.306        0.667
+ext:adcdnet    template           custom 1250         625    0.001   0.001       0.050      0.092          0.066        0.20    0.491       0.105        0.667
+ext:adcdnet    template      supermarket 1250         625    0.000   0.001       0.062      0.111          0.089        0.25    0.495       0.249        0.667
+ext:adcdnet tamper_type   full_financial  795         795    0.001   0.002       0.082      0.150          0.125        0.20      NaN       0.258        1.000
+ext:adcdnet tamper_type grand_total_only  810         810    0.002   0.003       0.067      0.118          0.067        0.30      NaN       0.293        1.000
+ext:adcdnet tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+ext:adcdnet tamper_type    qty_and_total  895         895    0.000   0.000       0.021      0.041          0.024        0.20      NaN       0.264        1.000
+ ext:trufor         all              ALL 5000        2500    0.064   0.108       0.083      0.142          0.114        0.40    0.497       0.667        0.667
+ ext:trufor compression           jpeg75 1000         500    0.043   0.077       0.062      0.110          0.093        0.35    0.500       0.667        0.667
+ ext:trufor compression           jpeg85 1000         500    0.040   0.073       0.055      0.099          0.079        0.40    0.481       0.667        0.667
+ ext:trufor compression           jpeg95 1000         500    0.043   0.078       0.062      0.111          0.089        0.35    0.490       0.667        0.667
+ ext:trufor compression              png 1000         500    0.081   0.137       0.112      0.187          0.178        0.40    0.487       0.667        0.667
+ ext:trufor compression       social_sim 1000         500    0.110   0.177       0.127      0.202          0.188        0.45    0.511       0.667        0.667
+ ext:trufor    template             cafe 1250         625    0.074   0.122       0.095      0.158          0.131        0.40    0.482       0.667        0.667
+ ext:trufor    template      convenience 1250         625    0.083   0.141       0.105      0.177          0.153        0.40    0.509       0.667        0.667
+ ext:trufor    template           custom 1250         625    0.058   0.100       0.076      0.130          0.109        0.40    0.499       0.667        0.667
+ ext:trufor    template      supermarket 1250         625    0.041   0.070       0.058      0.101          0.079        0.40    0.494       0.667        0.667
+ ext:trufor tamper_type   full_financial  795         795    0.062   0.112       0.092      0.165          0.133        0.30      NaN       1.000        1.000
+ ext:trufor tamper_type grand_total_only  810         810    0.136   0.224       0.162      0.266          0.204        0.45      NaN       1.000        1.000
+ ext:trufor tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+ ext:trufor tamper_type    qty_and_total  895         895    0.000   0.000       0.005      0.009          0.007        0.15      NaN       1.000        1.000
+     random         all              ALL 5000        2500    0.007   0.013       0.007      0.014          0.014        0.05    0.500       0.667        0.667
+     random compression           jpeg75 1000         500    0.007   0.013       0.007      0.014          0.014        0.05    0.470       0.667        0.667
+     random compression           jpeg85 1000         500    0.007   0.013       0.007      0.014          0.014        0.05    0.538       0.667        0.669
+     random compression           jpeg95 1000         500    0.007   0.013       0.007      0.014          0.014        0.05    0.518       0.667        0.668
+     random compression              png 1000         500    0.007   0.013       0.007      0.014          0.014        0.05    0.472       0.667        0.668
+     random compression       social_sim 1000         500    0.007   0.013       0.007      0.014          0.014        0.05    0.501       0.667        0.667
+     random    template             cafe 1250         625    0.007   0.013       0.007      0.013          0.013        0.05    0.518       0.667        0.667
+     random    template      convenience 1250         625    0.007   0.014       0.007      0.014          0.014        0.05    0.506       0.667        0.667
+     random    template           custom 1250         625    0.007   0.014       0.007      0.014          0.014        0.05    0.495       0.667        0.668
+     random    template      supermarket 1250         625    0.007   0.013       0.007      0.013          0.013        0.05    0.479       0.667        0.667
+     random tamper_type   full_financial  795         795    0.013   0.026       0.013      0.026          0.026        0.05      NaN       1.000        1.000
+     random tamper_type grand_total_only  810         810    0.006   0.011       0.006      0.011          0.011        0.05      NaN       1.000        1.000
+     random tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+     random tamper_type    qty_and_total  895         895    0.002   0.005       0.002      0.005          0.005        0.10      NaN       1.000        1.000
+      model       group            value    n  n_tampered  IoU@0.5  F1@0.5  IoU_oracle  F1_oracle  F1_global_dyn  global_thr  det_AUC  det_F1@0.5  det_F1_best
+        ela         all              ALL 5000        2500    0.006   0.012       0.020      0.040          0.040        0.20    0.498       0.667        0.667
+        ela compression           jpeg75 1000         500    0.006   0.011       0.021      0.042          0.042        0.20    0.500       0.667        0.667
+        ela compression           jpeg85 1000         500    0.005   0.011       0.020      0.040          0.040        0.15    0.487       0.667        0.667
+        ela compression           jpeg95 1000         500    0.009   0.017       0.021      0.040          0.040        0.20    0.499       0.667        0.667
+        ela compression              png 1000         500    0.008   0.017       0.021      0.042          0.042        0.20    0.500       0.667        0.667
+        ela compression       social_sim 1000         500    0.003   0.006       0.018      0.035          0.033        0.10    0.505       0.667        0.667
+        ela    template             cafe 1250         625    0.006   0.011       0.020      0.038          0.039        0.15    0.498       0.667        0.667
+        ela    template      convenience 1250         625    0.006   0.013       0.021      0.041          0.041        0.20    0.501       0.667        0.667
+        ela    template           custom 1250         625    0.006   0.012       0.020      0.039          0.040        0.20    0.496       0.667        0.667
+        ela    template      supermarket 1250         625    0.006   0.013       0.021      0.040          0.041        0.20    0.498       0.667        0.667
+        ela tamper_type   full_financial  795         795    0.009   0.017       0.038      0.073          0.073        0.15      NaN       1.000        1.000
+        ela tamper_type grand_total_only  810         810    0.006   0.013       0.016      0.032          0.032        0.20      NaN       1.000        1.000
+        ela tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+        ela tamper_type    qty_and_total  895         895    0.004   0.008       0.008      0.016          0.015        0.20      NaN       1.000        1.000
+ext:adcdnet         all              ALL 5000        2500    0.002   0.002       0.064      0.113          0.076        0.25    0.496       0.239        0.667
+ext:adcdnet compression           jpeg75 1000         500    0.000   0.000       0.046      0.085          0.065        0.25    0.499       0.293        0.668
+ext:adcdnet compression           jpeg85 1000         500    0.000   0.000       0.050      0.091          0.070        0.25    0.491       0.323        0.667
+ext:adcdnet compression           jpeg95 1000         500    0.000   0.000       0.058      0.104          0.078        0.30    0.491       0.163        0.667
+ext:adcdnet compression              png 1000         500    0.000   0.000       0.069      0.121          0.094        0.25    0.488       0.101        0.667
+ext:adcdnet compression       social_sim 1000         500    0.007   0.011       0.096      0.162          0.131        0.30    0.502       0.271        0.667
+ext:adcdnet    template             cafe 1250         625    0.000   0.001       0.054      0.098          0.067        0.25    0.508       0.269        0.667
+ext:adcdnet    template      convenience 1250         625    0.004   0.006       0.070      0.121          0.078        0.25    0.490       0.306        0.667
+ext:adcdnet    template           custom 1250         625    0.001   0.001       0.057      0.102          0.068        0.25    0.491       0.105        0.667
+ext:adcdnet    template      supermarket 1250         625    0.000   0.001       0.074      0.130          0.105        0.30    0.495       0.249        0.667
+ext:adcdnet tamper_type   full_financial  795         795    0.002   0.003       0.095      0.170          0.133        0.25      NaN       0.258        1.000
+ext:adcdnet tamper_type grand_total_only  810         810    0.003   0.004       0.079      0.134          0.076        0.30      NaN       0.293        1.000
+ext:adcdnet tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+ext:adcdnet tamper_type    qty_and_total  895         895    0.000   0.000       0.023      0.043          0.024        0.25      NaN       0.264        1.000
+ ext:trufor         all              ALL 5000        2500    0.079   0.132       0.098      0.161          0.126        0.45    0.497       0.667        0.667
+ ext:trufor compression           jpeg75 1000         500    0.054   0.095       0.072      0.125          0.100        0.40    0.500       0.667        0.667
+ ext:trufor compression           jpeg85 1000         500    0.052   0.091       0.066      0.115          0.090        0.50    0.481       0.667        0.667
+ ext:trufor compression           jpeg95 1000         500    0.056   0.098       0.073      0.127          0.098        0.45    0.490       0.667        0.667
+ ext:trufor compression              png 1000         500    0.112   0.181       0.138      0.220          0.211        0.45    0.487       0.667        0.667
+ ext:trufor compression       social_sim 1000         500    0.122   0.194       0.139      0.217          0.196        0.55    0.511       0.667        0.667
+ ext:trufor    template             cafe 1250         625    0.089   0.146       0.110      0.178          0.141        0.45    0.482       0.667        0.667
+ ext:trufor    template      convenience 1250         625    0.103   0.171       0.124      0.204          0.170        0.45    0.509       0.667        0.667
+ ext:trufor    template           custom 1250         625    0.074   0.123       0.090      0.149          0.122        0.45    0.499       0.667        0.667
+ ext:trufor    template      supermarket 1250         625    0.051   0.087       0.066      0.113          0.085        0.45    0.494       0.667        0.667
+ ext:trufor tamper_type   full_financial  795         795    0.083   0.146       0.107      0.189          0.148        0.40      NaN       1.000        1.000
+ ext:trufor tamper_type grand_total_only  810         810    0.164   0.262       0.191      0.304          0.225        0.50      NaN       1.000        1.000
+ ext:trufor tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+ ext:trufor tamper_type    qty_and_total  895         895    0.000   0.000       0.004      0.007          0.005        0.15      NaN       1.000        1.000
+     random         all              ALL 5000        2500    0.004   0.008       0.004      0.009          0.008        0.05    0.500       0.667        0.667
+     random compression           jpeg75 1000         500    0.004   0.008       0.004      0.008          0.008        0.05    0.470       0.667        0.667
+     random compression           jpeg85 1000         500    0.004   0.008       0.004      0.008          0.008        0.05    0.538       0.667        0.669
+     random compression           jpeg95 1000         500    0.004   0.008       0.004      0.008          0.008        0.10    0.518       0.667        0.668
+     random compression              png 1000         500    0.004   0.008       0.004      0.009          0.008        0.10    0.472       0.667        0.668
+     random compression       social_sim 1000         500    0.004   0.008       0.004      0.009          0.008        0.05    0.501       0.667        0.667
+     random    template             cafe 1250         625    0.004   0.008       0.004      0.008          0.008        0.05    0.518       0.667        0.667
+     random    template      convenience 1250         625    0.004   0.009       0.004      0.009          0.009        0.05    0.506       0.667        0.667
+     random    template           custom 1250         625    0.004   0.008       0.004      0.009          0.008        0.05    0.495       0.667        0.668
+     random    template      supermarket 1250         625    0.004   0.008       0.004      0.008          0.008        0.05    0.479       0.667        0.667
+     random tamper_type   full_financial  795         795    0.008   0.016       0.008      0.016          0.016        0.05      NaN       1.000        1.000
+     random tamper_type grand_total_only  810         810    0.003   0.006       0.003      0.007          0.006        0.05      NaN       1.000        1.000
+     random tamper_type             none 2500           0      NaN     NaN         NaN        NaN          0.000        0.95      NaN       0.000        0.000
+     random tamper_type    qty_and_total  895         895    0.002   0.003       0.002      0.003          0.003        0.20      NaN       1.000        1.000
+V2 results complete in benchmarks\results_v2_annotated

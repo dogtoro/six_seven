@@ -5,7 +5,7 @@ Two ground truths per tampered image:
   mask       = Zang's official mask (edited fields only)
   mask_diff  = every pixel that really differs between authentic and tampered (dilated 2px), may differ from the official bounding-box mask even when that mask covers every changed pixel.
 """
-import argparse, io, json, os
+import argparse, copy, json, math, os
 import numpy as np, scipy.ndimage as ndi
 from PIL import Image
 
@@ -33,7 +33,16 @@ def main():
     meta_map = {}
     if os.path.exists(meta_path):
         with open(meta_path, encoding="utf-8-sig") as f:
-            meta_map = {m["sample_id"]: m for m in json.load(f)}
+            source_meta = json.load(f)
+        meta_map = {m["sample_id"]: m for m in source_meta}
+        if len(meta_map) != len(source_meta): raise ValueError("Duplicate sample IDs in metadata")
+        manifest_path = os.path.join(a.raw, "manifest.jsonl")
+        if os.path.exists(manifest_path):
+            with open(manifest_path, encoding="utf-8-sig") as f:
+                manifest = [json.loads(line) for line in f if line.strip()]
+            if manifest != source_meta: raise ValueError("metadata.json and manifest.jsonl disagree")
+        missing = [k for k in ids if f"receipt_{k}" not in meta_map]
+        if missing: raise ValueError(f"Missing source annotations: {missing[:5]}")
     recs = []
     for k in ids:
         A = Image.open(f"{a.raw}/authentic/receipt_{k}_authentic.png").convert("RGB")
@@ -47,6 +56,13 @@ def main():
         layout = sample_meta.get("template", "unknown")
         tamper_type = sample_meta.get("tamper_type", "unknown")
         for v in VARIANTS:
+            fields = copy.deepcopy(sample_meta.get("tampered_fields", []))
+            if v == "social_sim":
+                sx, sy = int(A.width * .75) / A.width, int(A.height * .75) / A.height
+                for field in fields:
+                    x0, y0, x1, y1 = field["bbox"]
+                    # Source boxes use PIL's inclusive bottom/right coordinates.
+                    field["bbox"] = [math.floor(x0*sx), math.floor(y0*sy), math.ceil((x1+1)*sx)-1, math.ceil((y1+1)*sy)-1]
             ra, _ = save_variant(A, None, v, f"receipt_{k}_authentic", a.out)
             rt, m2 = save_variant(T, M, v, f"receipt_{k}_tampered", a.out)
             _, md2 = save_variant(T, MD, v, f"tmp_{k}", a.out); os.remove(f"{a.out}/images/tmp_{k}__{v}." + ("png" if v == "png" else "jpg"))
@@ -54,9 +70,10 @@ def main():
             common = dict(pair=f"receipt_{k}", template=layout, compression=v, size=list(A.size if v != "social_sim" else (int(A.size[0] * .75), int(A.size[1] * .75))))
             recs.append(dict(id=f"receipt_{k}_authentic__{v}", image=ra, mask=None, mask_diff=None, label=0, tamper_type="none", n_regions=0, **common))
             recs.append(dict(id=f"receipt_{k}_tampered__{v}", image=rt, mask=mr, mask_diff=mdr, label=1, tamper_type=tamper_type, n_regions=n,
-                             tampered_fields=sample_meta.get("tampered_fields", []),
+                             tampered_fields=fields,
                              bbox=boxes, mask_px=int(m.sum()), diff_px=int(d.sum()), mask_covers_diff=round(float((d & m).sum() / d.sum()), 4), **common))
-    json.dump(recs, open(f"{a.out}/metadata.json", "w"), indent=1)
+    with open(f"{a.out}/metadata.json", "w", encoding="utf-8") as f:
+        json.dump(recs, f, indent=1, ensure_ascii=False)
     print("pairs", len(ids), "records", len(recs))
 
 

@@ -14,7 +14,7 @@ THR = np.linspace(0.05, 0.95, 19)
 
 def load_dataset(root, mask_key="mask"):
     mp = os.path.join(root, "metadata.json")
-    recs = json.load(open(mp)) if os.path.exists(mp) else []
+    recs = json.load(open(mp, encoding="utf-8-sig")) if os.path.exists(mp) else []
     if isinstance(recs, dict): recs = recs.get("samples", recs.get("items", list(recs.values())))
     out = []
     for r in recs:

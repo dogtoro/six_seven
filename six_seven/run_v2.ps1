@@ -1,5 +1,5 @@
 # Full V2 benchmark; preserves V1 inputs and results.
-param([string]$Python = 'c:\Src\.conda\python.exe', [ValidateRange(0,500)][int]$Limit = 0)
+param([string]$Python = 'c:\Src\.conda\python.exe', [ValidateRange(0,500)][int]$Limit = 0, [switch]$EvaluateOnly)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 Set-Location (Join-Path $root 'benchmarks')
@@ -21,6 +21,7 @@ if ($Limit -gt 0) {
     Run @('build_dataset_sample.py','--raw','..\dataset_v2','--out',$data,'--limit',"$Limit")
 }
 New-Item -ItemType Directory -Force $pred | Out-Null
+if (-not $EvaluateOnly) {
 Run @('adcdnet_infer.py','--stage','prep','--data',$data,'--work',$work)
 Run @('adcdnet_infer.py','--stage','infer','--data',$data,'--work',$work,'--out',"$pred\adcdnet")
 $img = (Resolve-Path "$data\images").Path
@@ -31,6 +32,8 @@ try {
     & $Python trufor_test.py --gpu 0 --input $img --output $out
     if ($LASTEXITCODE -ne 0) { throw 'TruFor failed' }
 } finally { Pop-Location }
+}
+$results += '_annotated'
 $models = @('ext:trufor','ext:adcdnet','ela','random')
 Run (@('eval_sota.py','--data',$data,'--pred-root',$pred,'--models') + $models + @('--out',"$results\official_mask"))
 Run (@('eval_sota.py','--data',$data,'--pred-root',$pred,'--models') + $models + @('--out',"$results\diff_mask",'--mask-key','mask_diff'))
