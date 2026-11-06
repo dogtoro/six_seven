@@ -1,0 +1,5 @@
+2026-11-06 00:57:06,789 loaded 5000 samples from ..\dataset_sample_v2
+2026-11-06 01:00:19,173 [ext:trufor] done in 192.4s
+2026-11-06 01:03:20,094 [ext:adcdnet] done in 180.9s
+2026-11-06 01:06:51,525 [ela] done in 211.4s
+2026-11-06 01:08:40,335 [random] done in 108.8s
