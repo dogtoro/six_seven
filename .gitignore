@@ -5,7 +5,8 @@ __pycache__/
 .idea/
 *.swp
 .DS_Store
-dataset/
+dataset/*
+!dataset/metadata.json
+!dataset/manifest.jsonl
 thermal_receipts/output/*.png
 *.md
-
