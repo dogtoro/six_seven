@@ -9,10 +9,11 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Fonts
-FONT_REGULAR_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
-FONT_BOLD_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
-FONT_SANS_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+# Fonts (bundled in thermal_receipts/fonts/ for cross-platform portability)
+FONT_DIR = os.environ.get("THERMAL_FONT_DIR", os.path.join(SCRIPT_DIR, "fonts"))
+FONT_REGULAR_PATH = os.path.join(FONT_DIR, "DejaVuSansMono.ttf")
+FONT_BOLD_PATH = os.path.join(FONT_DIR, "DejaVuSansMono-Bold.ttf")
+FONT_SANS_BOLD = os.path.join(FONT_DIR, "DejaVuSans-Bold.ttf")
 
 
 def create_thermal_background(width, height, add_streaks=True, seed=42):

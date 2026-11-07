@@ -1,3 +1,4 @@
+import argparse
 import os
 import json
 import random
@@ -9,15 +10,49 @@ DATASET_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "dataset")
 AUTHENTIC_DIR = os.path.join(DATASET_DIR, "authentic")
 TAMPERED_DIR = os.path.join(DATASET_DIR, "tampered")
 MASKS_DIR = os.path.join(DATASET_DIR, "masks")
+DEFAULT_FONT_DIR = os.path.join(SCRIPT_DIR, "fonts")
 
-os.makedirs(AUTHENTIC_DIR, exist_ok=True)
-os.makedirs(TAMPERED_DIR, exist_ok=True)
-os.makedirs(MASKS_DIR, exist_ok=True)
 
-# Fonts
-FONT_REGULAR_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
-FONT_BOLD_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
-FONT_SANS_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+def resolve_font_paths(font_dir=None):
+    """Resolve DejaVu TrueType font paths portably across Linux and Windows."""
+    candidates = []
+    if font_dir:
+        candidates.append(font_dir)
+    if os.environ.get("THERMAL_FONT_DIR"):
+        candidates.append(os.environ["THERMAL_FONT_DIR"])
+    candidates.append(DEFAULT_FONT_DIR)
+    candidates.append("/usr/share/fonts/truetype/dejavu")
+
+    required = ("DejaVuSansMono.ttf", "DejaVuSansMono-Bold.ttf", "DejaVuSans-Bold.ttf")
+    for cand in candidates:
+        if all(os.path.isfile(os.path.join(cand, fn)) for fn in required):
+            return (
+                os.path.join(cand, "DejaVuSansMono.ttf"),
+                os.path.join(cand, "DejaVuSansMono-Bold.ttf"),
+                os.path.join(cand, "DejaVuSans-Bold.ttf"),
+            )
+    raise FileNotFoundError(
+        f"Could not find required DejaVu fonts {required}. "
+        f"Pass --font-dir or ensure bundled fonts exist in {DEFAULT_FONT_DIR}."
+    )
+
+
+def check_arith_consistent(items, subtotal, discount, vat_percent, vat, grand_total):
+    """Check whether printed receipt line items and summary numbers add up."""
+    if any(it["qty"] * it["price"] != it["total"] for it in items):
+        return False
+    if sum(it["total"] for it in items) != subtotal:
+        return False
+    taxable = max(0, subtotal - discount)
+    if int(taxable * (vat_percent / 100)) != vat:
+        return False
+    if taxable + vat != grand_total:
+        return False
+    return True
+
+
+# Default font paths (overridable via --font-dir)
+FONT_REGULAR_PATH, FONT_BOLD_PATH, FONT_SANS_BOLD = resolve_font_paths()
 
 # ==============================================================================
 # DATA POOLS
@@ -158,18 +193,23 @@ def draw_barcode(draw, x, y, width, height, barcode_seed):
         cur_x += bar_w + space_w
 
 
-def generate_single_receipt_v2(template_type, sample_index, seed=1000):
+def generate_single_receipt_v2(template_type, sample_index, seed=1000, font_dir=None):
     rng_content = random.Random(seed)
     rng_tamper = random.Random(seed + 7777777)
+
+    if font_dir:
+        reg_path, bold_path, sans_bold_path = resolve_font_paths(font_dir)
+    else:
+        reg_path, bold_path, sans_bold_path = FONT_REGULAR_PATH, FONT_BOLD_PATH, FONT_SANS_BOLD
     
     # Font loaders
-    font_title = ImageFont.truetype(FONT_SANS_BOLD, 25)
-    font_sub = ImageFont.truetype(FONT_REGULAR_PATH, 15)
-    font_bold = ImageFont.truetype(FONT_BOLD_PATH, 17)
-    font_text = ImageFont.truetype(FONT_REGULAR_PATH, 16)
-    font_item = ImageFont.truetype(FONT_REGULAR_PATH, 15)
-    font_total = ImageFont.truetype(FONT_BOLD_PATH, 23)
-    font_footer = ImageFont.truetype(FONT_REGULAR_PATH, 14)
+    font_title = ImageFont.truetype(sans_bold_path, 25)
+    font_sub = ImageFont.truetype(reg_path, 15)
+    font_bold = ImageFont.truetype(bold_path, 17)
+    font_text = ImageFont.truetype(reg_path, 16)
+    font_item = ImageFont.truetype(reg_path, 15)
+    font_total = ImageFont.truetype(bold_path, 23)
+    font_footer = ImageFont.truetype(reg_path, 14)
     
     # Select brand & items according to template_type
     if template_type == "cafe":
@@ -518,8 +558,61 @@ def generate_single_receipt_v2(template_type, sample_index, seed=1000):
     assert diff_px > 0, f"Sample {sample_index}: diff_px is 0!"
     assert mask_px >= diff_px, f"Sample {sample_index}: mask_px ({mask_px}) < diff_px ({diff_px})"
 
+    # Printed financial states & arithmetic consistency (Z2)
+    auth_items_printed = [
+        {"name": it["name"], "qty": it["qty"], "price": it["price"], "total": it["total"]}
+        for it in items_data
+    ]
+    tamp_items_printed = []
+    for idx_it, it in enumerate(items_data):
+        if (tamper_type in ["qty_and_total", "full_financial"]) and idx_it == tamper_item_idx:
+            tamp_items_printed.append({
+                "name": it["name"],
+                "qty": forged_qty,
+                "price": it["price"],
+                "total": forged_item_tot,
+            })
+        else:
+            tamp_items_printed.append({
+                "name": it["name"],
+                "qty": it["qty"],
+                "price": it["price"],
+                "total": it["total"],
+            })
+
+    auth_arith = check_arith_consistent(
+        auth_items_printed, subtotal, discount_val, vat_percent, vat_val, grand_total
+    )
+    tamp_arith = check_arith_consistent(
+        tamp_items_printed, f_subtotal, discount_val, vat_percent, f_vat, f_grand
+    )
+    assert auth_arith is True, f"Sample {sample_index}: authentic arith_consistent must be True!"
+    assert tamp_arith is (tamper_type == "full_financial"), (
+        f"Sample {sample_index}: unexpected tampered arith_consistent={tamp_arith} for {tamper_type}!"
+    )
+
+    authentic_fin = {
+        "items": auth_items_printed,
+        "subtotal": subtotal,
+        "discount": discount_val,
+        "vat_percent": vat_percent,
+        "vat": vat_val,
+        "grand_total": grand_total,
+        "arith_consistent": auth_arith,
+    }
+    tampered_fin = {
+        "items": tamp_items_printed,
+        "subtotal": f_subtotal,
+        "discount": discount_val,
+        "vat_percent": vat_percent,
+        "vat": f_vat,
+        "grand_total": f_grand,
+        "arith_consistent": tamp_arith,
+    }
+
     meta = {
         "sample_id": f"receipt_{sample_index:04d}",
+        "seed": seed,
         "template": template_type,
         "template_id": template_id,
         "brand_name": brand_name,
@@ -531,6 +624,9 @@ def generate_single_receipt_v2(template_type, sample_index, seed=1000):
         "tampering_type": tamper_type,
         "tampered_fields": tampered_fields,
         "n_regions": len(tampered_fields),
+        "authentic": authentic_fin,
+        "tampered": tampered_fin,
+        "arith_consistent": tamp_arith,
         "mask_px": mask_px,
         "diff_px": diff_px,
         "diff_outside_mask_px": outside_px,
@@ -542,11 +638,33 @@ def generate_single_receipt_v2(template_type, sample_index, seed=1000):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate 500 Vietnamese POS thermal receipt triplets (V2).")
+    parser.add_argument("--font-dir", default=None, help="Directory containing DejaVu TrueType fonts.")
+    parser.add_argument("--out-dir", default=DATASET_DIR, help="Output dataset directory.")
+    parser.add_argument(
+        "--metadata-only",
+        action="store_true",
+        help="Update metadata.json and manifest.jsonl only, verifying pixel identity against existing images.",
+    )
+    args = parser.parse_args()
+
+    out_dir = os.path.abspath(args.out_dir)
+    auth_dir = os.path.join(out_dir, "authentic")
+    tamp_dir = os.path.join(out_dir, "tampered")
+    masks_dir = os.path.join(out_dir, "masks")
+    os.makedirs(auth_dir, exist_ok=True)
+    os.makedirs(tamp_dir, exist_ok=True)
+    os.makedirs(masks_dir, exist_ok=True)
+
+    # Validate font resolution upfront
+    resolved_fonts = resolve_font_paths(args.font_dir)
+
     print("=" * 65)
     print("🚀 BẮT ĐẦU SINH TẬP DỮ LIỆU HÓA ĐƠN IN NHIỆT (500 MẪU - V2)")
     print("4 Template: Cafe (125), Siêu thị (125), Cửa hàng tiện lợi (125), Custom (125)")
-    print(f"Lưu tại: {DATASET_DIR}")
-    print("Tự động kiểm tra: 100% diff pixel phải nằm trọn trong mask (diff ⊆ mask)")
+    print(f"Lưu tại: {out_dir} (metadata_only={args.metadata_only})")
+    print(f"Font dir: {os.path.dirname(resolved_fonts[0])}")
+    print("Tự động kiểm tra: 100% diff pixel phải nằm trọn trong mask (diff ⊆ mask) + arith_consistent")
     print("=" * 65)
     
     start_time = time.time()
@@ -563,21 +681,29 @@ def main():
     total_samples = 500
     
     for t_name, count in templates:
-        print(f"\n📂 Đang sinh template [{t_name.upper()}] ({count} mẫu)...")
+        print(f"\n📂 Đang xử lý template [{t_name.upper()}] ({count} mẫu)...")
         for i in range(count):
             seed = 10000 + current_idx * 17
-            auth_im, fake_im, mask_im, meta = generate_single_receipt_v2(t_name, current_idx, seed=seed)
+            auth_im, fake_im, mask_im, meta = generate_single_receipt_v2(
+                t_name, current_idx, seed=seed, font_dir=args.font_dir
+            )
             
             sample_id = f"receipt_{current_idx:04d}"
+            auth_path = os.path.join(auth_dir, f"{sample_id}_authentic.png")
+            fake_path = os.path.join(tamp_dir, f"{sample_id}_tampered.png")
+            mask_path = os.path.join(masks_dir, f"{sample_id}_mask.png")
             
-            # Save files
-            auth_path = os.path.join(AUTHENTIC_DIR, f"{sample_id}_authentic.png")
-            fake_path = os.path.join(TAMPERED_DIR, f"{sample_id}_tampered.png")
-            mask_path = os.path.join(MASKS_DIR, f"{sample_id}_mask.png")
-            
-            auth_im.save(auth_path, optimize=True)
-            fake_im.save(fake_path, optimize=True)
-            mask_im.save(mask_path, optimize=True)
+            if args.metadata_only:
+                # Verify pixel-by-pixel identity with existing V2 images on disk
+                for disk_p, gen_im in ((auth_path, auth_im), (fake_path, fake_im), (mask_path, mask_im)):
+                    if os.path.exists(disk_p):
+                        disk_im = Image.open(disk_p).convert(gen_im.mode)
+                        if ImageChops.difference(disk_im, gen_im).getbbox() is not None:
+                            raise ValueError(f"Pixel mismatch against existing file: {disk_p}")
+            else:
+                auth_im.save(auth_path, optimize=True)
+                fake_im.save(fake_path, optimize=True)
+                mask_im.save(mask_path, optimize=True)
             
             meta["authentic_file"] = f"authentic/{sample_id}_authentic.png"
             meta["tampered_file"] = f"tampered/{sample_id}_tampered.png"
@@ -585,13 +711,16 @@ def main():
             manifest_records.append(meta)
             
             if (i + 1) % 25 == 0 or (i + 1) == count:
-                print(f"  -> [{t_name}] Đã xong {i+1}/{count} mẫu (Sample ID: {sample_id}) | Diff: {meta['diff_px']} px | Mask: {meta['mask_px']} px | Outside: 0")
+                print(
+                    f"  -> [{t_name}] Đã xong {i+1}/{count} mẫu ({sample_id}) | "
+                    f"Diff: {meta['diff_px']} px | Arith: {meta['arith_consistent']} | Outside: 0"
+                )
                 
             current_idx += 1
             
     # Write metadata JSON Lines & JSON
-    manifest_jsonl = os.path.join(DATASET_DIR, "manifest.jsonl")
-    manifest_json = os.path.join(DATASET_DIR, "metadata.json")
+    manifest_jsonl = os.path.join(out_dir, "manifest.jsonl")
+    manifest_json = os.path.join(out_dir, "metadata.json")
     
     with open(manifest_jsonl, "w", encoding="utf-8") as f:
         for r in manifest_records:
@@ -602,10 +731,10 @@ def main():
         
     duration = time.time() - start_time
     print("\n" + "=" * 65)
-    print(f"🎉 HOÀN THÀNH XUẤT {total_samples} MẪU DATASET V2 TRONG {duration:.2f} GIÂY!")
-    print(f"📁 Authentic Images: {len(os.listdir(AUTHENTIC_DIR))} file ({AUTHENTIC_DIR})")
-    print(f"📁 Tampered Images:  {len(os.listdir(TAMPERED_DIR))} file ({TAMPERED_DIR})")
-    print(f"📁 Ground-Truth Masks: {len(os.listdir(MASKS_DIR))} file ({MASKS_DIR})")
+    print(f"🎉 HOÀN THÀNH {total_samples} MẪU DATASET V2 TRONG {duration:.2f} GIÂY!")
+    print(f"📁 Authentic Images: {len(os.listdir(auth_dir))} file ({auth_dir})")
+    print(f"📁 Tampered Images:  {len(os.listdir(tamp_dir))} file ({tamp_dir})")
+    print(f"📁 Ground-Truth Masks: {len(os.listdir(masks_dir))} file ({masks_dir})")
     print(f"📋 Manifest JSONL:   {manifest_jsonl}")
     print(f"📋 Metadata JSON:    {manifest_json}")
     print("=" * 65)
