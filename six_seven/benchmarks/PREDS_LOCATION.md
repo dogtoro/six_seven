@@ -1,18 +1,24 @@
-# V3 failure-analysis handoff
+# Published V3 failure-analysis handoff (T4 option b)
 
-## Full raw predictions (local)
+## Confirmed team-accessible paired probability maps
 
-benchmarks/preds_v3/adcdnet/ (512), adcdnet_1024/, adcdnet_2048/, trufor/. Each model/configuration covers 3,000 images. ADCD files are original-size NPY forgery probabilities. TruFor NPZ contains map, confidence and native detection score.
+Each folder below contains 100 distinct receipt IDs, with authentic and tampered heatmap panels of the same receipt/variant (200 PNGs per configuration). Each panel is original | official ground truth | predicted forgery probability.
 
-## Transfer bundle (created after validation)
+- [ADCD 512](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask/vis/ext_adcdnet)
+- [ADCD 1024](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask/vis/ext_adcdnet_1024)
+- [ADCD 2048](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask/vis/ext_adcdnet_2048)
+- [TruFor](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask/vis/ext_trufor)
 
-v3_failure_analysis_maps.zip at the project root: 100 distinct receipt pairs, 200 images, 800 raw prediction files across four neural configurations, matching images and both masks, source and prepared annotations, a prediction manifest and SHA256 hashes. The selection spans all five compression variants (20 pairs each). The ZIP stays local until uploaded; it is too large for ordinary Git files.
+This satisfies the MD's >=100-pair visualization alternative. The run generated 200 paired examples/configuration per GT locally. The full numerical evaluation tables include every image, not only the visualization sample.
 
-## Team-accessible visualization alternative
+## Quantitative reports
 
-The runner uses --vis 200 --vis-authentic 200. Panels contain original | GT | probability heatmap. IDs are paired across labels. Complete local views are in results_v3_realistic/{official_mask,diff_mask}/vis/{ext_adcdnet,ext_adcdnet_1024,ext_adcdnet_2048,ext_trufor}. Baseline views are also generated.
+- [Official-mask reports](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask)
+- [Difference-mask reports](https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/diff_mask)
+- [Resolution comparison](https://github.com/dogtoro/six_seven/blob/dam/six_seven/benchmarks/results_v3_realistic/RESOLUTION_REPORT.md)
 
-After validation, the pipeline publishes 100 distinct authentic/tampered receipt pairs per neural configuration to:
-https://github.com/dogtoro/six_seven/tree/dam/six_seven/benchmarks/results_v3_realistic/official_mask/vis
+Native TruFor scores are in per_image.csv with score_source=native. ELA/random detection metrics are N/A. Both summaries provide compression breakdowns.
 
-Publication is confirmed by v3_published.json with a verified remote commit. Before that file exists, the URL is a planned handoff path. Raw arrays stay in the local ZIP; the shared GitHub PNGs are probability heatmap panels, satisfying option (b). The metadata contains original/forged text, forgery method, source boxes and JPEG settings where provided by the generator.
+## Local optional raw arrays
+
+Raw NPY/NPZ arrays remain in benchmarks/preds_v3/{adcdnet,adcdnet_1024,adcdnet_2048,trufor}/. v3_failure_analysis_maps.zip is a local 100-pair bundle containing 800 raw predictions, images, masks and metadata. These arrays have not been uploaded. The user cancelled full archive publication; its draft release was removed. No Drive link or full raw-map download is claimed.

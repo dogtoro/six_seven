@@ -1,21 +1,22 @@
-# Active work: V3 only
+# V3 benchmark complete — MD-scoped team handoff
 
-At the user request, V1/V2 active-project datasets, predictions, result folders and OCR caches were removed after verifying V3 independence. Shared code, model weights, V3 inputs and Git history were retained. Cleanup: v3_only_cleanup.json. Historical V1/V2 reports remain in GitHub and the separate Git checkout; they are not active inputs.
+The user requested V3 only, replacing the original V2 5,000-image checklist. This experiment has 300 receipt pairs and 3,000 images per configuration. All six configurations and both mask evaluations completed and passed coverage checks.
 
-Standalone command: powershell -ExecutionPolicy Bypass -File ./run_v3.ps1
+## Required deliverables published on dam
 
-Current run: ADCD-Net at max-size 512/1024/2048, TruFor (native detection head), ELA and random (pixel metrics only). 300 pairs, 3000 compression variants. No V2 runs or V2/V3 comparison are run. A V3-only resolution ablation compares identical images at 512/1024/2048. Source authentic hashes are retained in dataset_v3_source_hashes.json; the audit does not require deleted V2 images.
+- Both evaluation tables: 18,000 rows per GT, exact 3,000-image coverage per configuration.
+- TruFor native detection scores with score_source=native, plus per-compression AUC.
+- ELA/random detection metrics N/A, pixel metrics retained.
+- ADCD 512/1024/2048 resolution comparison, probability statistics, pixel F1/IoU and detection AUC.
+- 100 distinct authentic/tampered receipt pairs per neural configuration as probability-heatmap panels on GitHub (T4 option b). The local run generated 200/class/configuration for both GTs.
+- Metadata, audit/provenance, source generator, scoring code, tests, missing-model evidence and updated handoff docs.
 
-Outputs: benchmarks/preds_v3/ and benchmarks/results_v3_realistic/{official_mask,diff_mask}/. Live stage: feedback_stage.txt. Logs: v3_resolution_stdout.log, v3_resolution_stderr.log. Completion requires v3_complete.json and a COMPLETE stage; at launch completion is pending.
+Initial result commit: f2be654c6384820d2508c849ec925dcc7d9106e2. Confirmed links are in benchmarks/PREDS_LOCATION.md. Model weights, runtime binaries and large raw-map archives are not required for option b and are not uploaded.
 
-## ask_dam (1).md applied to current scope
+The later 19.16 GiB bulk upload was cancelled at the user's request; its draft release and partial assets were removed. Local raw maps and the 100-pair raw-map ZIP remain available. No bulk release is part of this handoff.
 
-T1: native TruFor scores, map-max fallback when absent, and score_source CSV column. T2: ELA/random detection N/A. T4: 200 paired authentic/tampered views per model, with team publication pending completion. T5: TextShield dependency/checkpoint blocker and linked CAFTB search evidence in benchmarks/README.md. T6: root README and handoff updated to V3. T7: V3 generator/audit/preparation complete; model run underway. T3 and the V2/V3 comparison are cancelled by the user's V3-only scope change. They are not being claimed as complete.
+## Results and limitations
 
-Resolution update: six configurations (ADCD 512/1024/2048, TruFor, ELA, random), 18,000 rows per ground truth. Outputs include per-image prob_max, prob_mean, prob_fraction_ge_0_5 and results_v3_realistic/resolution_comparison.csv plus RESOLUTION_REPORT.md. The resolution comparison tests V3 sensitivity, not the sole cause of the historical V2 result.
+Official-mask ADCD F1@0.5: 512=0.02653, 1024=0.13735, 2048=0.15018. Detection AUC: 0.56188, 0.68336, 0.70025. Higher resolution helps V3 performance; this does not establish the sole cause of historical V2 behavior. Mean pixel probability decreases while mean per-image maximum probability rises. TextShield was not run (dependencies/checkpoint missing); the original-author CAFTB checkpoint was not verified. See benchmarks/README.md for source links.
 
-## Team-analysis acceptance
-
-T1/T2 are enforced in evaluation and completion checks: score_source=native for every TruFor row; ELA/random detection columns are N/A even if finite baseline scores are supplied. Three ADCD caps use identical V3 image IDs. T4: paired 200/class heatmaps, plus a 100-pair raw-map bundle. Final validation packages maps and publishes verified reports plus at least 100 paired receipts/configuration to dam. v3_complete.json is written only after the report checks, packaging and verified GitHub push succeed. Missing-model evidence remains in benchmarks/README.md. All work is V3 only; the literal V2 5,000-image tasks are cancelled. Resolution statistics and missing models are limitations to report, not assumed evidence of model success.
-
-OCR accelerated on the RTX 4060 after matching-runtime validation; cached masks retained. Current logs: v3_fast_stdout.log and v3_fast_stderr.log. See OCR_ACCELERATION.md.
+V3 generation used pinned upstream code and bundled fonts; authentic images are byte-identical to the source V2 images. Seed/content and strict RGB/mask checks passed. OCR used the same detector with GPU acceleration after ten cached-mask comparisons passed. Source/font and OCR validation details accompany the repository handoff.
