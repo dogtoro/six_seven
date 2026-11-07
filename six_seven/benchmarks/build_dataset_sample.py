@@ -70,7 +70,7 @@ def main():
             common = dict(pair=f"receipt_{k}", template=layout, compression=v, size=list(A.size if v != "social_sim" else (int(A.size[0] * .75), int(A.size[1] * .75))))
             recs.append(dict(id=f"receipt_{k}_authentic__{v}", image=ra, mask=None, mask_diff=None, label=0, tamper_type="none", n_regions=0, **common))
             recs.append(dict(id=f"receipt_{k}_tampered__{v}", image=rt, mask=mr, mask_diff=mdr, label=1, tamper_type=tamper_type, n_regions=n,
-                             tampered_fields=fields,
+                             tampered_fields=fields, forgery_method=sample_meta.get("forgery_method", "none"),
                              bbox=boxes, mask_px=int(m.sum()), diff_px=int(d.sum()), mask_covers_diff=round(float((d & m).sum() / d.sum()), 4), **common))
     with open(f"{a.out}/metadata.json", "w", encoding="utf-8") as f:
         json.dump(recs, f, indent=1, ensure_ascii=False)

@@ -1,0 +1,13 @@
+{
+  "pairs": 300,
+  "expected_benchmark_images": 3000,
+  "changed_pixels_outside_masks": 0,
+  "authentic_images_byte_identical_to_v2": true,
+  "methods": {
+    "splice_same_font": 75,
+    "splice_font": 75,
+    "copy_move": 75,
+    "double_jpeg": 75
+  },
+  "provenance": "v3_generation_provenance.json"
+}

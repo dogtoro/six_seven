@@ -1,0 +1,11 @@
+{
+  "detector": "PP-OCRv5_server_det",
+  "paddle_gpu": "3.3.1 CUDA 12.6",
+  "cudnn": "9.9.0.52",
+  "validated_examples": 10,
+  "all_test_masks_identical": true,
+  "mean_gpu_detection_seconds": 0.09548116999940248,
+  "cached_cpu_masks_preserved": true,
+  "runtime_folder": ".ocr_gpu_runtime",
+  "main_python_environment_unchanged": true
+}

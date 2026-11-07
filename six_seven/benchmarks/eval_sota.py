@@ -25,7 +25,7 @@ def load_dataset(root, mask_key="mask"):
         out.append(dict(id=r.get("id") or os.path.splitext(os.path.basename(img))[0], image=os.path.join(root, img),
                         mask=os.path.join(root, mask) if mask else None, label=int(label),
                         template=r.get("template", "?"), tamper_type=r.get("tamper_type", "?"),
-                        compression=str(r.get("compression", r.get("qf", "?")))))
+                        compression=str(r.get("compression", r.get("qf", "?"))), forgery_method=r.get("forgery_method", "none")))
     assert out, f"no records found in {mp} (adapt load_dataset to Zang's schema)"
     return out
 
@@ -73,6 +73,37 @@ def det_f1(y, s):
     return fixed, best
 
 
+def image_score(model_name, prob, native, mode):
+    if model_name in ("ela", "random"):
+        return float("nan"), "not_applicable"
+    if mode == "native":
+        if native is not None:
+            if not np.isfinite(native) or not 0 <= native <= 1: raise ValueError("Invalid native detection probability")
+            return native, "native"
+    if mode == "top1pct":
+        return float(np.sort(prob.ravel())[-max(1, prob.size // 100):].mean()), "map_top1pct"
+    return float(prob.max()), "map_max"
+
+
+def detection_metrics(labels, scores):
+    if len(set(labels)) < 2 or not np.isfinite(np.asarray(scores)).all():
+        return float("nan"), float("nan"), float("nan")
+    fixed, best = det_f1(labels, scores)
+    return safe_auc(labels, scores), fixed, best
+
+
+def visualization_ids(data, tampered_count, authentic_count):
+    groups = {}
+    for label in (0, 1):
+        groups[label] = {s['id'].replace('_authentic__', '__').replace('_tampered__', '__'): s['id'] for s in data if s['label'] == label}
+    paired = sorted(set(groups[0]) & set(groups[1]))
+    selected = set()
+    for label, count in [(0, authentic_count), (1, tampered_count)]:
+        keys = paired or sorted(groups[label])
+        selected.update(groups[label][keys[i]] for i in np.linspace(0, len(keys)-1, min(count, len(keys)), dtype=int))
+    return selected
+
+
 def require_complete_predictions(model, succeeded, total):
     if succeeded != total:
         raise RuntimeError(f"{model} produced predictions for only {succeeded}/{total} samples; refusing to score a partial run")
@@ -91,8 +122,8 @@ def summarize(df, group):
             tp, fp, fn = (t[f"_{k}{th:.2f}"].sum() for k in ("tp", "fp", "fn"))
             f = 2 * tp / (2 * tp + fp + fn + 1e-9); best = max(best, (f, th))
         row["F1_global_dyn"], row["global_thr"] = best
-        row["det_AUC"] = safe_auc(g.label, g.score)
-        row["det_F1@0.5"], row["det_F1_best"] = det_f1(g.label, g.score)
+        detection = (float("nan"),) * 3 if row["model"] in ("ela", "random") else detection_metrics(g.label, g.score)
+        row["det_AUC"], row["det_F1@0.5"], row["det_F1_best"] = detection
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -101,33 +132,42 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="../dataset_sample"); ap.add_argument("--models", nargs="+", default=["ela"])
     ap.add_argument("--out", default="results"); ap.add_argument("--pred-root", default="preds")
-    ap.add_argument("--vis", type=int, default=30, help="max visualizations per model (tampered first)")
+    ap.add_argument("--vis", type=int, default=30, help="tampered visualizations per model")
+    ap.add_argument("--vis-authentic", type=int, default=None, help="authentic visualizations per model; defaults to --vis")
     ap.add_argument("--mask-key", default="mask", help="metadata key of GT mask: mask (official) or mask_diff (all really-changed pixels)")
-    ap.add_argument("--score", choices=["max", "top1pct"], default="max", help="image-level score from map")
+    ap.add_argument("--score", choices=["max", "top1pct", "native"], default="max", help="native uses saved detection scores, or map max for models without a detection head")
     a = ap.parse_args()
+    if a.vis < 0: ap.error("--vis must be nonnegative")
+    if a.vis_authentic is None: a.vis_authentic = a.vis
+    if a.vis_authentic < 0: ap.error("--vis-authentic must be nonnegative")
     os.makedirs(a.out, exist_ok=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", handlers=[logging.FileHandler(f"{a.out}/run.log"), logging.StreamHandler()])
     data = load_dataset(a.data, a.mask_key); logging.info("loaded %d samples from %s", len(data), a.data)
+    visual_ids = visualization_ids(data, a.vis, a.vis_authentic)
     rows = []
     for mn in a.models:
-        model = M.build(mn, pred_root=a.pred_root); nvis = 0; t0 = time.time()
+        model = M.build(mn, pred_root=a.pred_root); t0 = time.time()
         before = len(rows)
         for s in data:
-            try: prob = np.clip(model.predict(s["image"]), 0, 1)
+            try:
+                prob, native = model.predict(s["image"]) if isinstance(model, M.ExternalMaps) else (model.predict(s["image"]), None)
+                if prob.ndim != 2 or not np.isfinite(prob).all(): raise ValueError("Invalid prediction map")
+                prob = np.clip(prob, 0, 1)
+                score, method = image_score(mn, prob, native, a.score)
             except Exception as e: logging.warning("[%s] %s failed: %s", mn, s["id"], e); continue
             h, w = prob.shape
             gt = np.asarray(Image.open(s["mask"]).convert("L").resize((w, h), Image.NEAREST)) > 127 if s["mask"] else np.zeros((h, w), bool)
-            score = float(prob.max()) if a.score == "max" else float(np.sort(prob.ravel())[-max(1, prob.size // 100):].mean())
-            r = dict(model=mn, id=s["id"], label=s["label"], template=s["template"], tamper_type=s["tamper_type"], compression=s["compression"], score=score)
+            r = dict(model=mn, id=s["id"], label=s["label"], template=s["template"], tamper_type=s["tamper_type"], compression=s["compression"], score=score, score_source=method, forgery_method=s["forgery_method"], prob_max=float(prob.max()), prob_mean=float(prob.mean()), prob_fraction_ge_0_5=float((prob >= 0.5).mean()))
             if s["label"] == 1: r.update(pixel_metrics(prob, gt))
             rows.append(r)
-            if nvis < a.vis and s["label"] == 1: visualize(s["image"], gt, prob, f"{a.out}/vis/{mn.replace(':','_')}/{s['id']}.png"); nvis += 1
+            if s["id"] in visual_ids:
+                visualize(s["image"], gt, prob, f"{a.out}/vis/{mn.replace(':','_')}/{s['id']}.png")
         require_complete_predictions(mn, len(rows) - before, len(data))
         logging.info("[%s] done in %.1fs", mn, time.time() - t0)
     df = pd.DataFrame(rows); df.to_csv(f"{a.out}/per_image.csv", index=False)
     parts = []
     for m, g in df.groupby("model"):
-        parts += [summarize(g, grp) for grp in (None, "compression", "template", "tamper_type")]
+        parts += [summarize(g, grp) for grp in (None, "compression", "template", "tamper_type", "forgery_method")]
     sm = pd.concat(parts); keep = [c for c in sm.columns if not c.startswith("_")]
     sm[keep].to_csv(f"{a.out}/summary.csv", index=False)
     open(f"{a.out}/summary.md", "w").write(sm[keep].round(3).to_markdown(index=False))

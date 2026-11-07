@@ -34,10 +34,14 @@ class ExternalMaps:
         cands += [(".npz", f) for f in glob.glob(os.path.join(self.root, sid + ".*.npz"))]   # TruFor names outputs <image filename>.npz, e.g. x.jpg.npz
         for ext, f in cands:
             if os.path.exists(f):
+                score = None
                 if ext == ".npy": m = np.load(f)
-                elif ext == ".npz": m = np.load(f)["map"]          # TruFor output: keys map, conf, score
+                elif ext == ".npz":
+                    with np.load(f) as data:
+                        m = data["map"]
+                        if "score" in data: score = float(data["score"].item())
                 else: m = np.asarray(Image.open(f).convert("L"), np.float32) / 255.0
-                return m.astype(np.float32)
+                return m.astype(np.float32), score
         raise FileNotFoundError(f"no prediction for {sid} in {self.root}")
 
 

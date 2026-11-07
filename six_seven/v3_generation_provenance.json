@@ -1,0 +1,8 @@
+{
+  "source_commit": "76b49d061d8215f31bc3b12ecb5c2d7dacb032b9",
+  "seed_rule": "10000 + sample_index * 17, verified against all 500 metadata content records",
+  "authentic_source": "original dataset_v2, copied byte-for-byte",
+  "font_note": "Bundled upstream fonts differ slightly from original V2 rendering; complete pixel-identical V2 regeneration is not claimed",
+  "status": "Generated and audited: 300 pairs, 3000 compression variants",
+  "audit": "dataset_v3_audit.json"
+}
