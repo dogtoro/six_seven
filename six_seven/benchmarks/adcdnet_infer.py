@@ -35,9 +35,17 @@ def prep(a):
     # PaddlePaddle 3.x on Windows CPU crashes in oneDNN ("ConvertPirAttribute2RuntimeAttribute not support") -> disable it
     os.environ["FLAGS_use_mkldnn"] = "0"; os.environ["PADDLE_PDX_ENABLE_MKLDNN_BYDEFAULT"] = "False"
     os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "True"
+    from paddle_runtime import activate
+    dll_handles = activate(a.paddle_runtime)
+    if a.ocr_device.startswith('gpu'):
+        os.environ['OMP_NUM_THREADS'] = '1'
+        os.environ['MKL_NUM_THREADS'] = '1'
+        os.environ['OPENBLAS_NUM_THREADS'] = '1'
+        import paddle
+        if not paddle.is_compiled_with_cuda(): raise RuntimeError('GPU OCR requires a CUDA-enabled Paddle runtime')
     from paddleocr import TextDetection
-    try: det = TextDetection(model_name="PP-OCRv5_server_det", enable_mkldnn=False)
-    except TypeError: det = TextDetection(model_name="PP-OCRv5_server_det")
+    det = TextDetection(model_name="PP-OCRv5_server_det", enable_mkldnn=False, device=a.ocr_device, cpu_threads=a.cpu_threads)
+    print('OCR device:',a.ocr_device,'model: PP-OCRv5_server_det',flush=True)
     os.makedirs(f"{a.work}/masks", exist_ok=True); os.makedirs(f"{a.work}/ocr", exist_ok=True); os.makedirs(f"{a.work}/ocr_base", exist_ok=True)
 
     def ocr_mask(path):
@@ -113,4 +121,7 @@ if __name__ == "__main__":
     p.add_argument("--docres", default="../third_party/weights/docres.pkl"); p.add_argument("--qt", default="../third_party/weights/qt_table.pk")
     p.add_argument("--out", default="preds/adcdnet"); p.add_argument("--max-size", type=int, default=512)
     p.add_argument("--limit", type=int, default=0, help="prep only: first N receipts (pair ids 1..N)")
+    p.add_argument('--ocr-device',default='cpu',choices=['cpu','gpu:0'],help='prep only: OCR inference device')
+    p.add_argument('--paddle-runtime',default=None,help='prep only: optional isolated Paddle package directory')
+    p.add_argument('--cpu-threads',type=int,default=10,help='prep only: OCR CPU thread count')
     a = p.parse_args(); {"prep": prep, "infer": infer}[a.stage](a)

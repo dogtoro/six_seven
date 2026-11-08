@@ -1,0 +1,7 @@
+2026-11-07 22:40:02,501 loaded 3000 samples from ..\dataset_sample_v3
+2026-11-07 22:42:15,221 [ext:trufor] done in 132.7s
+2026-11-07 22:43:57,132 [ext:adcdnet] done in 101.9s
+2026-11-07 22:46:17,491 [ela] done in 140.4s
+2026-11-07 22:47:52,570 [random] done in 95.1s
+2026-11-07 22:49:37,541 [ext:adcdnet_1024] done in 105.0s
+2026-11-07 22:51:21,491 [ext:adcdnet_2048] done in 103.9s

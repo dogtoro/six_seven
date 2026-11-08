@@ -1,0 +1,12 @@
+Bundled Open-Source TrueType Fonts for Cross-Platform Reproducibility
+=====================================================================
+
+1. DejaVu Fonts (DejaVuSansMono.ttf, DejaVuSansMono-Bold.ttf, DejaVuSans-Bold.ttf)
+   - License: Bitstream Vera Fonts Copyright / Arev Fonts Copyright / Public Domain (DejaVu License).
+   - Free to use, modify, and redistribute without restriction.
+   - Reference: https://dejavu-fonts.github.io/License.html
+
+2. Liberation Fonts (LiberationSans-*.ttf, LiberationMono-*.ttf)
+   - License: SIL Open Font License (OFL), Version 1.1.
+   - Metric-compatible open-source equivalents to Arial (Liberation Sans) and Courier New (Liberation Mono).
+   - Reference: https://github.com/liberationfonts/liberation-fonts
