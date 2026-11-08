@@ -1,0 +1,301 @@
+model,pair,tid,method,compression,valid,cat,f1,recall,auth_flagged,fp_streak,fp_text,fp_blank
+ext_trufor,receipt_0001,receipt_0001_tampered__jpeg75,splice_same_font,jpeg75,True,misplaced,0.05258467023172905,0.046825396825396826,True,2,1,0
+ext_trufor,receipt_0004,receipt_0004_tampered__jpeg75,copy_move,jpeg75,False,partial+noise,0.3382940108892922,0.3691089108910891,True,0,3,0
+ext_trufor,receipt_0007,receipt_0007_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,6,0
+ext_trufor,receipt_0010,receipt_0010_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,8,0
+ext_trufor,receipt_0013,receipt_0013_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,7,0
+ext_trufor,receipt_0016,receipt_0016_tampered__jpeg75,splice_same_font,jpeg75,True,misplaced,0.0,0.0,True,0,12,0
+ext_trufor,receipt_0019,receipt_0019_tampered__jpeg75,copy_move,jpeg75,False,partial+noise,0.31196388261851016,0.5473267326732674,True,0,7,0
+ext_trufor,receipt_0022,receipt_0022_tampered__jpeg75,copy_move,jpeg75,False,hit,0.6062992125984251,0.6708910891089109,True,0,4,2
+ext_trufor,receipt_0025,receipt_0025_tampered__jpeg75,copy_move,jpeg75,False,partial+noise,0.4838928450322143,0.5651485148514851,True,0,6,0
+ext_trufor,receipt_0028,receipt_0028_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.7239263803680982,0.5673076923076923,True,0,8,1
+ext_trufor,receipt_0031,receipt_0031_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,10,0
+ext_trufor,receipt_0034,receipt_0034_tampered__jpeg75,splice_same_font,jpeg75,True,misplaced,0.0,0.0,True,0,7,0
+ext_trufor,receipt_0037,receipt_0037_tampered__jpeg75,splice_font,jpeg75,True,partial+noise,0.09501029831904856,0.0771638247355925,True,2,4,0
+ext_trufor,receipt_0040,receipt_0040_tampered__jpeg75,copy_move,jpeg75,False,partial+noise,0.45823244552058107,0.5996039603960396,True,0,12,0
+ext_trufor,receipt_0043,receipt_0043_tampered__jpeg75,splice_same_font,jpeg75,True,partial+noise,0.33206470028544244,0.30506993006993005,True,0,3,0
+ext_trufor,receipt_0046,receipt_0046_tampered__jpeg75,copy_move,jpeg75,True,misplaced,0.0,0.0,True,0,5,0
+ext_trufor,receipt_0049,receipt_0049_tampered__jpeg85,copy_move,jpeg85,False,partial+noise,0.17439816583874668,0.1704766173614224,True,0,7,0
+ext_trufor,receipt_0052,receipt_0052_tampered__jpeg85,splice_font,jpeg85,True,misplaced,0.0,0.0,True,0,9,1
+ext_trufor,receipt_0055,receipt_0055_tampered__jpeg85,splice_same_font,jpeg85,True,misplaced,0.0,0.0,True,0,8,0
+ext_trufor,receipt_0058,receipt_0058_tampered__jpeg85,splice_font,jpeg85,True,misplaced,0.0,0.0,True,0,6,0
+ext_trufor,receipt_0061,receipt_0061_tampered__jpeg85,splice_font,jpeg85,True,partial+noise,0.06164775982582789,0.05806173105978847,True,0,11,1
+ext_trufor,receipt_0064,receipt_0064_tampered__jpeg85,splice_font,jpeg85,True,partial+noise,0.11762071796402716,0.0850420893589467,True,0,9,1
+ext_trufor,receipt_0067,receipt_0067_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.7497267759562842,0.5996503496503497,True,0,17,0
+ext_trufor,receipt_0070,receipt_0070_tampered__jpeg85,double_jpeg,jpeg85,False,partial,0.48718695398951656,0.3734375,True,0,14,0
+ext_trufor,receipt_0073,receipt_0073_tampered__jpeg85,splice_same_font,jpeg85,True,partial+noise,0.21019825123365943,0.13764172335600908,True,0,9,0
+ext_trufor,receipt_0126,receipt_0126_tampered__jpeg85,double_jpeg,jpeg85,False,partial,0.23498262452424293,0.1519691780821918,True,0,17,0
+ext_trufor,receipt_0129,receipt_0129_tampered__jpeg85,copy_move,jpeg85,False,partial,0.3352888888888889,0.23595646190416614,True,0,4,3
+ext_trufor,receipt_0132,receipt_0132_tampered__jpeg85,splice_same_font,jpeg85,True,partial+noise,0.21533718689788056,0.15839002267573696,True,0,13,0
+ext_trufor,receipt_0135,receipt_0135_tampered__jpeg85,copy_move,jpeg85,False,partial+noise,0.4034115138592751,0.59125,True,0,12,2
+ext_trufor,receipt_0138,receipt_0138_tampered__jpeg85,double_jpeg,jpeg85,False,partial+noise,0.13814274750575595,0.0898972602739726,True,0,19,2
+ext_trufor,receipt_0141,receipt_0141_tampered__jpeg85,double_jpeg,jpeg85,False,hit,0.52418682235196,0.43645833333333334,True,0,12,0
+ext_trufor,receipt_0144,receipt_0144_tampered__jpeg95,double_jpeg,jpeg95,False,partial+noise,0.22098444027365746,0.1492964659685864,True,0,15,1
+ext_trufor,receipt_0147,receipt_0147_tampered__jpeg95,copy_move,jpeg95,True,misplaced,0.0,0.0,True,0,12,0
+ext_trufor,receipt_0150,receipt_0150_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,19,0
+ext_trufor,receipt_0153,receipt_0153_tampered__jpeg95,double_jpeg,jpeg95,False,partial+noise,0.3507964601769911,0.3440972222222222,True,0,21,0
+ext_trufor,receipt_0156,receipt_0156_tampered__jpeg95,splice_same_font,jpeg95,True,partial,0.19883337560233322,0.11751773758369141,True,0,14,0
+ext_trufor,receipt_0159,receipt_0159_tampered__jpeg95,copy_move,jpeg95,True,misplaced,0.0,0.0,True,0,21,1
+ext_trufor,receipt_0162,receipt_0162_tampered__jpeg95,double_jpeg,jpeg95,False,partial+noise,0.10968586387434553,0.06579773869346733,True,1,8,0
+ext_trufor,receipt_0165,receipt_0165_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,24,0
+ext_trufor,receipt_0168,receipt_0168_tampered__jpeg95,double_jpeg,jpeg95,True,misplaced,0.0,0.0,True,0,17,0
+ext_trufor,receipt_0171,receipt_0171_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,18,0
+ext_trufor,receipt_0174,receipt_0174_tampered__jpeg95,double_jpeg,jpeg95,True,misplaced,0.0,0.0,True,0,17,0
+ext_trufor,receipt_0177,receipt_0177_tampered__jpeg95,splice_same_font,jpeg95,True,misplaced,0.0,0.0,True,0,9,0
+ext_trufor,receipt_0180,receipt_0180_tampered__jpeg95,splice_same_font,jpeg95,True,hit,0.5064459419865222,0.3620653540008379,True,0,22,2
+ext_trufor,receipt_0183,receipt_0183_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.007361461386408561,0.005373669021793213,True,0,18,0
+ext_trufor,receipt_0186,receipt_0186_tampered__jpeg95,copy_move,jpeg95,False,partial+noise,0.11911562466941712,0.08411773494695951,True,0,14,0
+ext_trufor,receipt_0189,receipt_0189_tampered__png,splice_font,png,True,partial,0.2239166821647759,0.13821604867409024,True,0,10,0
+ext_trufor,receipt_0192,receipt_0192_tampered__png,double_jpeg,png,True,misplaced,0.057408513179220334,0.03205983231707317,True,0,11,0
+ext_trufor,receipt_0195,receipt_0195_tampered__png,splice_font,png,True,misplaced,0.0,0.0,True,0,10,1
+ext_trufor,receipt_0198,receipt_0198_tampered__png,double_jpeg,png,True,misplaced,0.0,0.0,True,0,14,0
+ext_trufor,receipt_0251,receipt_0251_tampered__png,splice_same_font,png,True,partial,0.400598546387345,0.273018648018648,True,0,6,0
+ext_trufor,receipt_0254,receipt_0254_tampered__png,splice_font,png,True,partial+noise,0.228364295423652,0.2153846153846154,True,0,8,0
+ext_trufor,receipt_0257,receipt_0257_tampered__png,copy_move,png,False,hit,0.5579649708090074,0.5299009900990099,True,0,11,0
+ext_trufor,receipt_0260,receipt_0260_tampered__png,copy_move,png,False,partial,0.33746094202059945,0.223242994947175,True,0,9,0
+ext_trufor,receipt_0263,receipt_0263_tampered__png,splice_same_font,png,True,misplaced,0.0,0.0,True,0,6,0
+ext_trufor,receipt_0266,receipt_0266_tampered__png,splice_font,png,True,partial,0.2840216655382532,0.18109216490394991,True,0,7,0
+ext_trufor,receipt_0269,receipt_0269_tampered__png,splice_font,png,True,partial+noise,0.2701908957415566,0.24891774891774893,True,0,9,0
+ext_trufor,receipt_0272,receipt_0272_tampered__png,copy_move,png,False,hit,0.5566949897450924,0.7524752475247525,True,0,7,0
+ext_trufor,receipt_0275,receipt_0275_tampered__png,splice_same_font,png,True,hit,0.7091903459755082,0.6763038548752834,True,0,7,0
+ext_trufor,receipt_0278,receipt_0278_tampered__png,splice_font,png,True,partial,0.2002483997324926,0.12030765698542073,True,0,9,0
+ext_trufor,receipt_0281,receipt_0281_tampered__png,splice_font,png,True,partial,0.1878963580358761,0.11191452622490827,True,0,4,0
+ext_trufor,receipt_0284,receipt_0284_tampered__png,splice_font,png,True,partial+noise,0.16867900903318128,0.1104215456674473,True,0,9,0
+ext_trufor,receipt_0287,receipt_0287_tampered__social_sim,double_jpeg,social_sim,True,misplaced,0.0,0.0,True,1,1,3
+ext_trufor,receipt_0290,receipt_0290_tampered__social_sim,double_jpeg,social_sim,False,misplaced,0.0,0.0,True,0,1,1
+ext_trufor,receipt_0293,receipt_0293_tampered__social_sim,splice_same_font,social_sim,True,misplaced,0.0,0.0,True,0,4,1
+ext_trufor,receipt_0296,receipt_0296_tampered__social_sim,double_jpeg,social_sim,False,misplaced,0.0,0.0,True,1,1,3
+ext_trufor,receipt_0299,receipt_0299_tampered__social_sim,splice_same_font,social_sim,True,partial,0.22417398578000838,0.134,True,0,2,1
+ext_trufor,receipt_0302,receipt_0302_tampered__social_sim,double_jpeg,social_sim,False,misplaced,0.0,0.0,True,0,2,2
+ext_trufor,receipt_0305,receipt_0305_tampered__social_sim,splice_font,social_sim,True,misplaced,0.021723797432642123,0.014594389689158454,True,0,5,5
+ext_trufor,receipt_0308,receipt_0308_tampered__social_sim,splice_font,social_sim,True,partial+noise,0.16478190630048467,0.1471861471861472,True,0,4,1
+ext_trufor,receipt_0311,receipt_0311_tampered__social_sim,double_jpeg,social_sim,True,partial+noise,0.09645852749301025,0.06388888888888888,True,0,2,1
+ext_trufor,receipt_0314,receipt_0314_tampered__social_sim,copy_move,social_sim,False,misplaced,0.0,0.0,True,0,2,4
+ext_trufor,receipt_0317,receipt_0317_tampered__social_sim,splice_same_font,social_sim,True,partial,0.3043646195442256,0.197,True,0,2,1
+ext_trufor,receipt_0320,receipt_0320_tampered__social_sim,copy_move,social_sim,True,misplaced,0.0,0.0,True,0,1,1
+ext_trufor,receipt_0323,receipt_0323_tampered__social_sim,copy_move,social_sim,False,misplaced,0.0,0.0,True,0,2,1
+ext_trufor,receipt_0376,receipt_0376_tampered__social_sim,double_jpeg,social_sim,True,misplaced,0.0,0.0,True,0,5,0
+ext_trufor,receipt_0379,receipt_0379_tampered__social_sim,copy_move,social_sim,False,misplaced,0.0,0.0,True,0,3,0
+ext_trufor,receipt_0383,receipt_0383_tampered__jpeg75,copy_move,jpeg75,True,misplaced,0.0,0.0,True,0,11,0
+ext_trufor,receipt_0386,receipt_0386_tampered__jpeg75,copy_move,jpeg75,False,partial+noise,0.36229354102323075,0.5396,True,0,15,0
+ext_trufor,receipt_0389,receipt_0389_tampered__jpeg75,copy_move,jpeg75,True,misplaced,0.0,0.0,True,0,8,0
+ext_trufor,receipt_0392,receipt_0392_tampered__jpeg75,splice_font,jpeg75,True,partial+noise,0.11783018133706903,0.08169652492985106,True,0,10,0
+ext_trufor,receipt_0395,receipt_0395_tampered__jpeg75,copy_move,jpeg75,True,misplaced,0.0,0.0,True,2,17,2
+ext_trufor,receipt_0398,receipt_0398_tampered__jpeg75,splice_font,jpeg75,True,partial+noise,0.2100224382946896,0.2,True,0,10,0
+ext_trufor,receipt_0401,receipt_0401_tampered__jpeg75,splice_same_font,jpeg75,True,partial,0.2463359639233371,0.1515782171349289,True,0,13,0
+ext_trufor,receipt_0404,receipt_0404_tampered__jpeg75,splice_font,jpeg75,True,misplaced,0.0,0.0,True,0,16,1
+ext_trufor,receipt_0407,receipt_0407_tampered__jpeg75,splice_same_font,jpeg75,True,misplaced,0.0,0.0,True,1,9,1
+ext_trufor,receipt_0410,receipt_0410_tampered__jpeg75,splice_same_font,jpeg75,True,partial+noise,0.358021712907117,0.6486013986013986,True,1,3,0
+ext_trufor,receipt_0413,receipt_0413_tampered__jpeg75,splice_font,jpeg75,True,partial+noise,0.15346727154893064,0.16017316017316016,True,0,10,0
+ext_trufor,receipt_0416,receipt_0416_tampered__jpeg75,splice_same_font,jpeg75,True,partial,0.3958920294465145,0.24693877551020407,True,0,16,0
+ext_trufor,receipt_0419,receipt_0419_tampered__jpeg75,splice_font,jpeg75,True,partial+noise,0.13328054895750857,0.14387464387464388,True,0,10,0
+ext_trufor,receipt_0422,receipt_0422_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.5553486447341196,0.391025641025641,True,0,21,0
+ext_trufor,receipt_0425,receipt_0425_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,10,0
+ext_trufor,receipt_0428,receipt_0428_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.5266823365543658,0.3746130030959752,True,0,17,0
+ext_trufor,receipt_0431,receipt_0431_tampered__jpeg85,splice_same_font,jpeg85,True,misplaced,0.0,0.0,True,0,20,0
+ext_trufor,receipt_0434,receipt_0434_tampered__jpeg85,splice_same_font,jpeg85,True,partial,0.18115353371242893,0.10113378684807256,True,0,13,0
+ext_trufor,receipt_0437,receipt_0437_tampered__jpeg85,splice_font,jpeg85,True,misplaced,0.0,0.0,True,0,17,1
+ext_trufor,receipt_0440,receipt_0440_tampered__jpeg85,splice_font,jpeg85,True,partial+noise,0.15903361344537817,0.2048160173160173,True,0,11,0
+ext_trufor,receipt_0443,receipt_0443_tampered__jpeg85,splice_font,jpeg85,True,misplaced,0.028459273797841023,0.019497982967279247,True,0,7,2
+ext_trufor,receipt_0446,receipt_0446_tampered__jpeg85,splice_same_font,jpeg85,True,misplaced,0.011301989150090416,0.015964240102171137,True,0,11,0
+ext_trufor,receipt_0450,receipt_0450_tampered__social_sim,double_jpeg,social_sim,True,misplaced,0.0,0.0,True,0,5,0
+ext_adcdnet,receipt_0001,receipt_0001_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.004073319755600815,0.0020408163265306124,False,0,0,0
+ext_adcdnet,receipt_0004,receipt_0004_tampered__jpeg75,copy_move,jpeg75,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0007,receipt_0007_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0010,receipt_0010_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0013,receipt_0013_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0016,receipt_0016_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0019,receipt_0019_tampered__jpeg75,copy_move,jpeg75,False,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet,receipt_0022,receipt_0022_tampered__jpeg75,copy_move,jpeg75,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0025,receipt_0025_tampered__jpeg75,copy_move,jpeg75,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0028,receipt_0028_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0031,receipt_0031_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0034,receipt_0034_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0037,receipt_0037_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0040,receipt_0040_tampered__jpeg75,copy_move,jpeg75,False,misplaced,0.0,0.0,True,0,2,0
+ext_adcdnet,receipt_0043,receipt_0043_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0046,receipt_0046_tampered__jpeg75,copy_move,jpeg75,True,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet,receipt_0049,receipt_0049_tampered__jpeg85,copy_move,jpeg85,False,silent miss,0.0026857654431512983,0.001344688480502017,False,0,0,0
+ext_adcdnet,receipt_0052,receipt_0052_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0055,receipt_0055_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0058,receipt_0058_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0061,receipt_0061_tampered__jpeg85,splice_font,jpeg85,True,misplaced,0.0,0.0,True,0,3,0
+ext_adcdnet,receipt_0064,receipt_0064_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0067,receipt_0067_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0070,receipt_0070_tampered__jpeg85,double_jpeg,jpeg85,False,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet,receipt_0073,receipt_0073_tampered__jpeg85,splice_same_font,jpeg85,True,partial,0.17215661901802362,0.09421768707482993,True,0,2,0
+ext_adcdnet,receipt_0126,receipt_0126_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0129,receipt_0129_tampered__jpeg85,copy_move,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0132,receipt_0132_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.04391217564870259,0.022448979591836733,False,0,0,0
+ext_adcdnet,receipt_0135,receipt_0135_tampered__jpeg85,copy_move,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0138,receipt_0138_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0141,receipt_0141_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0144,receipt_0144_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0147,receipt_0147_tampered__jpeg95,copy_move,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0150,receipt_0150_tampered__jpeg95,splice_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0153,receipt_0153_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0156,receipt_0156_tampered__jpeg95,splice_same_font,jpeg95,True,partial,0.11951517429296252,0.06355551114220045,False,0,0,0
+ext_adcdnet,receipt_0159,receipt_0159_tampered__jpeg95,copy_move,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0162,receipt_0162_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0165,receipt_0165_tampered__jpeg95,splice_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0168,receipt_0168_tampered__jpeg95,double_jpeg,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0171,receipt_0171_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,2,0
+ext_adcdnet,receipt_0174,receipt_0174_tampered__jpeg95,double_jpeg,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0177,receipt_0177_tampered__jpeg95,splice_same_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0180,receipt_0180_tampered__jpeg95,splice_same_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0183,receipt_0183_tampered__jpeg95,splice_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0186,receipt_0186_tampered__jpeg95,copy_move,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0189,receipt_0189_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0192,receipt_0192_tampered__png,double_jpeg,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0195,receipt_0195_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0198,receipt_0198_tampered__png,double_jpeg,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0251,receipt_0251_tampered__png,splice_same_font,png,True,partial,0.3106079251784396,0.18385780885780886,False,0,0,0
+ext_adcdnet,receipt_0254,receipt_0254_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0257,receipt_0257_tampered__png,copy_move,png,False,silent miss,0.0791175351844808,0.04118811881188119,False,0,0,0
+ext_adcdnet,receipt_0260,receipt_0260_tampered__png,copy_move,png,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0263,receipt_0263_tampered__png,splice_same_font,png,True,hit,0.6061415220293725,0.43486590038314177,False,0,0,0
+ext_adcdnet,receipt_0266,receipt_0266_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0269,receipt_0269_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0272,receipt_0272_tampered__png,copy_move,png,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0275,receipt_0275_tampered__png,splice_same_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0278,receipt_0278_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0281,receipt_0281_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0284,receipt_0284_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0287,receipt_0287_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0290,receipt_0290_tampered__social_sim,double_jpeg,social_sim,False,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet,receipt_0293,receipt_0293_tampered__social_sim,splice_same_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0296,receipt_0296_tampered__social_sim,double_jpeg,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0299,receipt_0299_tampered__social_sim,splice_same_font,social_sim,True,hit,0.5729575454869783,0.4015,True,0,3,0
+ext_adcdnet,receipt_0302,receipt_0302_tampered__social_sim,double_jpeg,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0305,receipt_0305_tampered__social_sim,splice_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0308,receipt_0308_tampered__social_sim,splice_font,social_sim,True,misplaced,0.0,0.0,True,0,0,0
+ext_adcdnet,receipt_0311,receipt_0311_tampered__social_sim,double_jpeg,social_sim,True,misplaced,0.0,0.0,True,0,4,0
+ext_adcdnet,receipt_0314,receipt_0314_tampered__social_sim,copy_move,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0317,receipt_0317_tampered__social_sim,splice_same_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0320,receipt_0320_tampered__social_sim,copy_move,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0323,receipt_0323_tampered__social_sim,copy_move,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0376,receipt_0376_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0379,receipt_0379_tampered__social_sim,copy_move,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0383,receipt_0383_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0386,receipt_0386_tampered__jpeg75,copy_move,jpeg75,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0389,receipt_0389_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0392,receipt_0392_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0395,receipt_0395_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0398,receipt_0398_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0401,receipt_0401_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0404,receipt_0404_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0407,receipt_0407_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0410,receipt_0410_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0413,receipt_0413_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0416,receipt_0416_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0419,receipt_0419_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0422,receipt_0422_tampered__jpeg75,splice_same_font,jpeg75,True,partial,0.2222222222222222,0.125,False,0,0,0
+ext_adcdnet,receipt_0425,receipt_0425_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0428,receipt_0428_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0431,receipt_0431_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0434,receipt_0434_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.00835497346731399,0.004195011337868481,False,0,0,0
+ext_adcdnet,receipt_0437,receipt_0437_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0440,receipt_0440_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0443,receipt_0443_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0446,receipt_0446_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet,receipt_0450,receipt_0450_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0001,receipt_0001_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.6715867158671587,0.5055555555555555,False,0,0,0
+ext_adcdnet_2048,receipt_0004,receipt_0004_tampered__jpeg75,copy_move,jpeg75,False,hit,0.8412115649380449,0.7259405940594059,False,0,0,0
+ext_adcdnet_2048,receipt_0007,receipt_0007_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0010,receipt_0010_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0013,receipt_0013_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet_2048,receipt_0016,receipt_0016_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.6464995678478825,0.4776500638569604,False,0,0,0
+ext_adcdnet_2048,receipt_0019,receipt_0019_tampered__jpeg75,copy_move,jpeg75,False,hit,0.8353321033210331,0.7172277227722772,False,0,0,0
+ext_adcdnet_2048,receipt_0022,receipt_0022_tampered__jpeg75,copy_move,jpeg75,False,hit,0.8827433628318584,0.7900990099009901,True,0,1,0
+ext_adcdnet_2048,receipt_0025,receipt_0025_tampered__jpeg75,copy_move,jpeg75,False,hit,0.8479861411866609,0.7754455445544555,True,0,1,0
+ext_adcdnet_2048,receipt_0028,receipt_0028_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0005822416302765648,0.0002913752913752914,False,0,0,0
+ext_adcdnet_2048,receipt_0031,receipt_0031_tampered__jpeg75,double_jpeg,jpeg75,True,misplaced,0.0008143322475570033,0.00044014084507042255,True,0,3,0
+ext_adcdnet_2048,receipt_0034,receipt_0034_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.7059369202226344,0.5455197132616487,False,0,0,0
+ext_adcdnet_2048,receipt_0037,receipt_0037_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0040,receipt_0040_tampered__jpeg75,copy_move,jpeg75,False,hit,0.7718871595330739,0.6285148514851485,False,0,0,0
+ext_adcdnet_2048,receipt_0043,receipt_0043_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.6987677725118483,0.537004662004662,False,0,0,0
+ext_adcdnet_2048,receipt_0046,receipt_0046_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0049,receipt_0049_tampered__jpeg85,copy_move,jpeg85,False,partial,0.4128527389139199,0.26012251606155684,False,0,0,0
+ext_adcdnet_2048,receipt_0052,receipt_0052_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0055,receipt_0055_tampered__jpeg85,splice_same_font,jpeg85,True,partial,0.13126491646778043,0.070242656449553,False,0,0,0
+ext_adcdnet_2048,receipt_0058,receipt_0058_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0061,receipt_0061_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0064,receipt_0064_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0067,receipt_0067_tampered__jpeg85,splice_same_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0070,receipt_0070_tampered__jpeg85,double_jpeg,jpeg85,False,partial,0.2622187742435997,0.15089285714285713,False,0,0,0
+ext_adcdnet_2048,receipt_0073,receipt_0073_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.6729857819905213,0.5071428571428571,True,0,1,0
+ext_adcdnet_2048,receipt_0126,receipt_0126_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0129,receipt_0129_tampered__jpeg85,copy_move,jpeg85,False,partial,0.18402817221401793,0.10133867133742024,False,0,0,0
+ext_adcdnet_2048,receipt_0132,receipt_0132_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.6545648691938067,0.4865079365079365,False,0,0,0
+ext_adcdnet_2048,receipt_0135,receipt_0135_tampered__jpeg85,copy_move,jpeg85,False,silent miss,0.032585305871503226,0.0165625,False,0,0,0
+ext_adcdnet_2048,receipt_0138,receipt_0138_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0141,receipt_0141_tampered__jpeg85,double_jpeg,jpeg85,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0144,receipt_0144_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.006035396786559008,0.0030268324607329844,False,0,0,0
+ext_adcdnet_2048,receipt_0147,receipt_0147_tampered__jpeg95,copy_move,jpeg95,True,misplaced,0.0,0.0,True,0,0,0
+ext_adcdnet_2048,receipt_0150,receipt_0150_tampered__jpeg95,splice_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0153,receipt_0153_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0156,receipt_0156_tampered__jpeg95,splice_same_font,jpeg95,True,hit,0.5770351937433346,0.405516138702908,False,0,0,0
+ext_adcdnet_2048,receipt_0159,receipt_0159_tampered__jpeg95,copy_move,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0162,receipt_0162_tampered__jpeg95,double_jpeg,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0165,receipt_0165_tampered__jpeg95,splice_font,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0168,receipt_0168_tampered__jpeg95,double_jpeg,jpeg95,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0171,receipt_0171_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet_2048,receipt_0174,receipt_0174_tampered__jpeg95,double_jpeg,jpeg95,True,silent miss,0.006971880083662561,0.003498134328358209,False,0,0,0
+ext_adcdnet_2048,receipt_0177,receipt_0177_tampered__jpeg95,splice_same_font,jpeg95,True,hit,0.6919831223628692,0.5290322580645161,False,0,0,0
+ext_adcdnet_2048,receipt_0180,receipt_0180_tampered__jpeg95,splice_same_font,jpeg95,True,silent miss,0.060729156088148675,0.031315458734813575,False,0,0,0
+ext_adcdnet_2048,receipt_0183,receipt_0183_tampered__jpeg95,splice_font,jpeg95,True,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet_2048,receipt_0186,receipt_0186_tampered__jpeg95,copy_move,jpeg95,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0189,receipt_0189_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0192,receipt_0192_tampered__png,double_jpeg,png,True,misplaced,0.005277293502332376,0.0026676829268292685,False,0,0,0
+ext_adcdnet_2048,receipt_0195,receipt_0195_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0198,receipt_0198_tampered__png,double_jpeg,png,True,misplaced,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0251,receipt_0251_tampered__png,splice_same_font,png,True,hit,0.6965438663121915,0.5343822843822844,False,0,0,0
+ext_adcdnet_2048,receipt_0254,receipt_0254_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0257,receipt_0257_tampered__png,copy_move,png,False,silent miss,0.003952569169960474,0.0019801980198019802,False,0,0,0
+ext_adcdnet_2048,receipt_0260,receipt_0260_tampered__png,copy_move,png,False,misplaced,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0263,receipt_0263_tampered__png,splice_same_font,png,True,hit,0.7216326530612245,0.5644955300127714,False,0,0,0
+ext_adcdnet_2048,receipt_0266,receipt_0266_tampered__png,splice_font,png,True,silent miss,0.0040926225094238015,0.002050507230736024,False,0,0,0
+ext_adcdnet_2048,receipt_0269,receipt_0269_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0272,receipt_0272_tampered__png,copy_move,png,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0275,receipt_0275_tampered__png,splice_same_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0278,receipt_0278_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0281,receipt_0281_tampered__png,splice_font,png,True,silent miss,0.0010786322942508899,0.0005396071659831643,False,0,0,0
+ext_adcdnet_2048,receipt_0284,receipt_0284_tampered__png,splice_font,png,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0287,receipt_0287_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0290,receipt_0290_tampered__social_sim,double_jpeg,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0293,receipt_0293_tampered__social_sim,splice_same_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0296,receipt_0296_tampered__social_sim,double_jpeg,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0299,receipt_0299_tampered__social_sim,splice_same_font,social_sim,True,partial,0.18511796733212338,0.102,False,0,0,0
+ext_adcdnet_2048,receipt_0302,receipt_0302_tampered__social_sim,double_jpeg,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0305,receipt_0305_tampered__social_sim,splice_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0308,receipt_0308_tampered__social_sim,splice_font,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0311,receipt_0311_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0314,receipt_0314_tampered__social_sim,copy_move,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0317,receipt_0317_tampered__social_sim,splice_same_font,social_sim,True,hit,0.5310319500550863,0.3615,False,0,0,0
+ext_adcdnet_2048,receipt_0320,receipt_0320_tampered__social_sim,copy_move,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0323,receipt_0323_tampered__social_sim,copy_move,social_sim,False,partial,0.38688524590163936,0.23983739837398374,False,0,0,0
+ext_adcdnet_2048,receipt_0376,receipt_0376_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0379,receipt_0379_tampered__social_sim,copy_move,social_sim,False,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0383,receipt_0383_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0386,receipt_0386_tampered__jpeg75,copy_move,jpeg75,False,hit,0.8471293520866959,0.7348,False,0,0,0
+ext_adcdnet_2048,receipt_0389,receipt_0389_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0392,receipt_0392_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0395,receipt_0395_tampered__jpeg75,copy_move,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0398,receipt_0398_tampered__jpeg75,splice_font,jpeg75,True,misplaced,0.0,0.0,True,0,1,0
+ext_adcdnet_2048,receipt_0401,receipt_0401_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.628013959390863,0.4577407792808417,True,0,2,0
+ext_adcdnet_2048,receipt_0404,receipt_0404_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0407,receipt_0407_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.725793327908869,0.5696040868454662,False,0,0,0
+ext_adcdnet_2048,receipt_0410,receipt_0410_tampered__jpeg75,splice_same_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0413,receipt_0413_tampered__jpeg75,splice_font,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0416,receipt_0416_tampered__jpeg75,splice_same_font,jpeg75,True,partial,0.23793826790530415,0.13503401360544218,False,0,0,0
+ext_adcdnet_2048,receipt_0419,receipt_0419_tampered__jpeg75,splice_font,jpeg75,True,misplaced,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0422,receipt_0422_tampered__jpeg75,splice_same_font,jpeg75,True,hit,0.6538536968032949,0.48572261072261075,False,0,0,0
+ext_adcdnet_2048,receipt_0425,receipt_0425_tampered__jpeg75,double_jpeg,jpeg75,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0428,receipt_0428_tampered__jpeg85,splice_same_font,jpeg85,True,partial,0.36588080542345436,0.22390092879256965,False,0,0,0
+ext_adcdnet_2048,receipt_0431,receipt_0431_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.7466307277628033,0.5956989247311828,False,0,0,0
+ext_adcdnet_2048,receipt_0434,receipt_0434_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.6428681335590091,0.47369614512471653,False,0,0,0
+ext_adcdnet_2048,receipt_0437,receipt_0437_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0440,receipt_0440_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0443,receipt_0443_tampered__jpeg85,splice_font,jpeg85,True,silent miss,0.0,0.0,False,0,0,0
+ext_adcdnet_2048,receipt_0446,receipt_0446_tampered__jpeg85,splice_same_font,jpeg85,True,hit,0.6717557251908397,0.5057471264367817,False,0,0,0
+ext_adcdnet_2048,receipt_0450,receipt_0450_tampered__social_sim,double_jpeg,social_sim,True,silent miss,0.0,0.0,False,0,0,0

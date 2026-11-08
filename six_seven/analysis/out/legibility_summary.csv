@@ -1,0 +1,11 @@
+field,copy_based,n,garbled,control,forged
+grand_total,False,112,0.295,0.891,0.849
+grand_total,True,78,0.987,0.891,0.497
+item_qty,False,132,0.273,1.0,0.914
+item_qty,True,73,0.055,1.0,1.0
+item_total,False,132,0.591,1.0,0.774
+item_total,True,73,0.014,1.0,1.0
+subtotal,False,57,0.246,0.641,0.828
+subtotal,True,38,0.526,0.638,0.447
+vat,False,57,0.281,0.707,0.804
+vat,True,38,0.816,0.696,0.422

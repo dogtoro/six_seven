@@ -1,0 +1,14 @@
+{
+ "garbled_receipts": 80,
+ "copy_based_receipts": 113,
+ "garbled_by_method": {
+  "copy_move": 0.4385,
+  "double_jpeg": 0.5051,
+  "splice_font": 0.6649,
+  "splice_same_font": 0.0
+ },
+ "garbled_noncopy_receipts": 95,
+ "valid_receipts": 220,
+ "tall_receipts": 56,
+ "arith_recall": 0.6833333333333333
+}
